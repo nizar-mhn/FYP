@@ -15,13 +15,29 @@
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+
+    <!-- Style -->
+    <style>
+       .navbar{
+        background-color: #264653;
+       }
+
+       ul.navbar-nav a:hover{
+        border-radius: 10px;
+        background-color: #2A9D8F !important
+       }
+       
+    </style>
+
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-dark shadow-sm navbarColor">
             <div class="container">
+
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    <img src="image/logoPrintingTransparent.png" alt="School Logo" width="30" height="30">
+                    Student Printing 
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -30,12 +46,18 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
-
+                        
                     </ul>
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('/') }}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('/') }}">History</a>
+                        </li>
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
@@ -71,7 +93,9 @@
                 </div>
             </div>
         </nav>
-
+        <div class="container-fluid" style="background-color:#2A9D8F; height:25px;">
+        </div>
+        
         <main class="py-4">
             @yield('content')
         </main>
