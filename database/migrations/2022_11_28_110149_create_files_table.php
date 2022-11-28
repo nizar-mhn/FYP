@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -17,8 +18,11 @@ return new class extends Migration
             $table->increments('fileID');
             $table->string('fileName','40');
             $table->string('fileType','40');
+            $table->string('mime');
             $table->timestamp('dateUpload',0);
         });
+
+        DB::statement("ALTER TABLE files ADD file  MEDIUMBLOB");
     }
 
     /**
