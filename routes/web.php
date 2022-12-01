@@ -14,23 +14,23 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('main');
+    return view('students/main');
 });
 
 Route::get('/history', function () {
-    return view('history');
+    return view('students/history');
 });
 
 Route::get('/user', function () {
-    return view('user');
+    return view('students/user');
 });
 
 Route::get('/staff', function () {
-    return view('staff_main');
+    return view('staff/staff_main');
 });
 
 Route::get('/orders', function () {
-    return view('staff_order');
+    return view('staff/staff_order');
 });
 
 Auth::routes();
