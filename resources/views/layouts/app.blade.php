@@ -15,7 +15,7 @@
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
-
+    <script type="text/javascript" src="https://apis.google.com/js/api.js"></script>
     <!-- Style -->
     <style>
        .navbar{
@@ -100,5 +100,6 @@
             @yield('content')
         </main>
     </div>
+    @stack('scripts')
 </body>
 </html>
