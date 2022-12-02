@@ -28,7 +28,7 @@
                     <div class="ms-auto dropdown">
                         <button type="button" class="btn uploadButton text-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Upload</button>
                         <ul class="dropdown-menu">
-                            <li><button type="button" class="btn text-wrap dropdown-item">File Upload</button></li>
+                            <li><button type="button" class="btn dropdown-item">File Upload</button></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><button type="button" class="btn text-wrap dropdown-item" onclick="createPicker()">Google Drive Upload</button></li>
                         </ul>
