@@ -36,7 +36,7 @@
             <div class="container">
 
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    <img src="image/logoPrintingTransparent.png" alt="School Logo" width="30" height="30">
+                    <img src="../image/logoPrintingTransparent.png" alt="School Logo" width="30" height="30">
                     Student Printing 
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">

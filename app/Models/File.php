@@ -7,11 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class File extends Model
 {
+    public $timestamps = false;
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'file',
+        'fileName',
+        'fileType',
         'mime',
+        'dateUpload',
+        'file'
     ];
 }

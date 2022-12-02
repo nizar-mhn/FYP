@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\file;
+use Carbon\Carbon;
 
 class fileController extends Controller
 {
@@ -11,15 +12,24 @@ class fileController extends Controller
     {
         $files = File::all();
 
-        return view('document.index', [
-            'files' => $files,
+        return view('students/main', [
+            'documents' => $files,
+        ]);
+    }
+
+    public function show()
+    {
+        $files = File::all();
+
+        return view('students/uploadFile', [
+            'documents' => $files,
         ]);
     }
 
     public function destroy($id)
     {
-        $doc = File::find($id);
-        $doc->delete();
+        $doc = File::where('fileID', $id)->delete();
+        
 
         return redirect()->route('document');
     }
@@ -27,11 +37,10 @@ class fileController extends Controller
     public function update(Request $request)
     {
         $request->validate([
-            'file' => 'mimes:jpeg,bmp,png,pdf,jpg',
-            'name' => 'required|max:255',
+            'file' => 'mimes:jpeg,bmp,png,pdf,jpg,docx,txt',
         ]);
 
-        if ($request->hasFile('file')) {           
+        if ($request->hasFile('file')) {
             $path = $request->file('file')->getRealPath();
             $ext = $request->file->extension();
             $doc = file_get_contents($path);
@@ -39,9 +48,12 @@ class fileController extends Controller
             $mime = $request->file('file')->getClientMimeType();
 
             File::create([
-                'name'=> $request->name .'.'.$ext,
+                'fileName' => $_FILES['file']['name'],
+                'fileType' => $ext,
+                'mime' => $mime,
+                'dateUpload' => Carbon::now(),
                 'file' => $base64,
-                'mime'=> $mime,
+
             ]);
 
             return redirect()->route('document');
@@ -50,16 +62,16 @@ class fileController extends Controller
 
     public function download($id)
     {
-        $document = File::find($id);
+        $document = File::where('fileID', $id)->first();
 
         $file_contents = base64_decode($document->file);
 
         return response($file_contents)
-                         ->header('Cache-Control', 'no-cache private')
-                         ->header('Content-Description', 'File Transfer')
-                         ->header('Content-Type', $document->mime)
-                         ->header('Content-length', strlen($file_contents))
-                         ->header('Content-Disposition', 'attachment; filename=' . $document->name)
-                         ->header('Content-Transfer-Encoding', 'binary');
+            ->header('Cache-Control', 'no-cache private')
+            ->header('Content-Description', 'File Transfer')
+            ->header('Content-Type', $document->mime)
+            ->header('Content-length', strlen($file_contents))
+            ->header('Content-Disposition', 'attachment; filename=' . $document->fileName)
+            ->header('Content-Transfer-Encoding', 'binary');
     }
 }
