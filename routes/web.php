@@ -13,9 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('students/main');
-});
+Route::get('/', [App\Http\Controllers\fileController::class, 'index'])->name('document');
 
 Route::get('/history', function () {
     return view('students/history');
@@ -34,7 +32,6 @@ Route::get('/orders', function () {
 });
 
 
-Route::get('/documents', [App\Http\Controllers\fileController::class, 'index'])->name('document');
 Route::get('/documents/uploadFile', [App\Http\Controllers\fileController::class, 'show'])->name('document');
 Route::post('/documents/upload', [App\Http\Controllers\fileController::class, 'update'])->name('document.update');
 Route::get('/documents/download/{documentId}', [App\Http\Controllers\fileController::class, 'download'])->name('document.download');
