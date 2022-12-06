@@ -17,6 +17,7 @@ return new class extends Migration
             $table->increments('orderID');
             $table->integer('studentID');
             $table->timestamp('orderDate',0);
+            $table->string('status','40');
             $table->foreign('studentID')->references('studentID')->on('students');
         });
     }
