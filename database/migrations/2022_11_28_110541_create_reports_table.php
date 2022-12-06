@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('reports', function (Blueprint $table) {
             $table->increments('reportID');
-            $table->unsignedInteger('adminID');
+            $table->string('adminID');
             $table->string('reportName','40');
             $table->timestamp('reportDate',0);
             $table->string('description','40');

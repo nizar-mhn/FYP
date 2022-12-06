@@ -15,9 +15,8 @@ return new class extends Migration
     {
         Schema::create('programs', function (Blueprint $table) {
             $table->increments('programID');
-            $table->unsignedInteger('courseListID');
+            $table->integer('courseListID');
             $table->string('programName','40');
-            $table->foreign('courseListID')->references('courseListID')->on('course_lists');
         });
     }
 

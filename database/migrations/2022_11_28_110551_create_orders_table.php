@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->increments('orderID');
-            $table->unsignedInteger('studentID');
+            $table->integer('studentID');
             $table->timestamp('programName',0);
             $table->foreign('studentID')->references('studentID')->on('students');
         });

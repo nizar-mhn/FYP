@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('student_files', function (Blueprint $table) {
             $table->unsignedInteger('fileID');
-            $table->unsignedInteger('studentID');
+            $table->integer('studentID');
             $table->foreign('fileID')->references('fileID')->on('files');
             $table->foreign('studentID')->references('studentID')->on('students');
 

@@ -14,10 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::create('admins', function (Blueprint $table) {
-            $table->increments('adminID');
+            $table->string('adminID','10');
             $table->string('adminName','40');
             $table->char('password','60');
             $table->timestamp('dateAdded',0);
+            $table->primary('adminID');
 
         });
     }
