@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('fileName','40');
             $table->string('fileType','40');
             $table->string('mime');
+            $table->integer('noPage');
             $table->timestamp('dateUpload',0);
         });
 

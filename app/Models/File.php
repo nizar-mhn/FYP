@@ -14,7 +14,9 @@ class File extends Model
         'fileName',
         'fileType',
         'mime',
+        'noPage',
         'dateUpload',
-        'file'
+        'file',
+
     ];
 }
