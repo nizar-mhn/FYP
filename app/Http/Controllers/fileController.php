@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\file;
 use App\Models\studentFile;
+use App\Models\courseFile;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Spatie\PdfToImage\Pdf;
@@ -22,6 +23,18 @@ class fileController extends Controller
         $files = File::all();
 
         return view('students/main', [
+            'documents' => $files,
+            'courseList' => $listOfCoursesForCourseListID,
+        ]);
+    }
+
+    public function staffindex()
+    {
+        $currentCourseList = Auth::user()->courseListID;
+        $listOfCoursesForCourseListID = DB::table('course_lists')->where('courseListID',$currentCourseList)->get();
+        $files = File::all();
+
+        return view('staff/staff_main', [
             'documents' => $files,
             'courseList' => $listOfCoursesForCourseListID,
         ]);
@@ -81,6 +94,46 @@ class fileController extends Controller
             ]);
             
             return redirect()->route('document');
+        }
+    }
+
+    public function staffupdate(Request $request)
+    {
+        $request->validate([
+            'file' => 'mimes:jpeg,bmp,png,pdf,jpg,docx,txt',
+        ]);
+
+        if ($request->hasFile('file')) {
+            $path = $request->file('file')->storeAs('PDF', $_FILES['file']['name']);
+            $realPath = storage_path()."\\app\\".str_replace('/','\\',$path);
+            $pdf = new Pdf($realPath);
+            $num = $pdf->getNumberOfPages();
+            $imageData = $pdf->saveImage('image');
+            $base64Img = base64_encode($imageData);
+            $ext = $request->file->extension();
+            $doc = file_get_contents($realPath);
+            $base64 = base64_encode($doc);
+            $mime = $request->file('file')->getClientMimeType();
+
+            $createFile = File::create([
+                'fileName' => $_FILES['file']['name'],
+                'fileType' => $ext,
+                'mime' => $mime,
+                'noPage' => $num,   
+                'dateUpload' => Carbon::now(),
+                'file' => $base64,
+                'thumbnail' => $base64Img,
+            ]);
+
+            $fileID = $createFile->id;
+            $courseID =  $request->input('courseID');
+
+            CourseFile::create([
+                'fileID' => $fileID,
+                'courseID' => $courseID,
+            ]);
+            
+            return redirect()->route('staffMainPage');
         }
     }
 

@@ -22,37 +22,12 @@ Route::get('/', [LoginController::class, 'index']);
 Route::post('/login', [LoginController::class, 'index'])->name('logout');
 Route::post('/', [LoginController::class, 'login'])->name('logged');
 
-//ADMIN
-//Do not required auth
-// Route::get('/adminLogin', [AdminLoginController::class, 'index'])->name('adminLogin');
-// Route::post('/adminLogin', [AdminLoginController::class, 'store']);
-
-// //SUPPLIER
-// Route::get('/supplierLogin', [SupplierLoginController::class, 'index'])->name('supplierLogin');
-// Route::post('/supplierLogin', [SupplierLoginController::class, 'store'])->name('supplierLogin');
-
-
-
 
 
 
 Route::get('/testing', [App\Http\Controllers\userController::class, 'index']);
 
-Route::get('/history', function () {
-    return view('students/history');
-});
 
-Route::get('/user', function () {
-    return view('students/user');
-});
-
-
-
-
-//Route::get('/documents/uploadFile', [App\Http\Controllers\fileController::class, 'show'])->name('document');
-Route::post('/documents/upload', [App\Http\Controllers\fileController::class, 'update'])->name('document.update');
-Route::get('/documents/download/{documentId}', [App\Http\Controllers\fileController::class, 'download'])->name('document.download');
-Route::get('/documents/delete/{documentId}', [App\Http\Controllers\fileController::class, 'destroy'])->name('document.destroy');
 
 Route::get('/welcome', function () {
     return view('welcome');
@@ -61,20 +36,23 @@ Auth::routes();
 
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::group(['middleware' => ['web','auth:student'], 'prefix' => 'students'], function () {
+Route::group(['middleware' => ['web', 'auth:student'], 'prefix' => 'students'], function () {
     Route::get('/mainPage', [App\Http\Controllers\fileController::class, 'index'])->name('document');
     Route::get('/history', [App\Http\Controllers\historyController::class, 'index'])->name('studentHistory');
 
     Route::get('/profile', [App\Http\Controllers\profileController::class, 'index'])->name('profile');
     Route::post('/profile', [App\Http\Controllers\profileController::class, 'index'])->name('profile');
+    Route::post('/documents/upload', [App\Http\Controllers\fileController::class, 'update'])->name('document.update');
+    Route::get('/documents/download/{documentId}', [App\Http\Controllers\fileController::class, 'download'])->name('document.download');
+    Route::get('/documents/delete/{documentId}', [App\Http\Controllers\fileController::class, 'destroy'])->name('document.destroy');
 });
 
-Route::group(['middleware' => ['web','auth:admin'], 'prefix' => 'admins'], function () {
+Route::group(['middleware' => ['web', 'auth:admin'], 'prefix' => 'admins'], function () {
     Route::get('/admin_main', [App\Http\Controllers\adminController::class, 'index'])->name('adminMainPage');
     Route::get('/admin_report', [App\Http\Controllers\adminController::class, 'report'])->name('adminReport');
-    
 });
 
-Route::group(['middleware' => ['web','auth:staff'], 'prefix' => 'staffs'], function () {
-    Route::get('/staff_main', [App\Http\Controllers\staffController::class, 'index'])->name('staffMainPage');
+Route::group(['middleware' => ['web', 'auth:staff'], 'prefix' => 'staffs'], function () {
+    Route::get('/staff_main', [App\Http\Controllers\fileController::class, 'staffindex'])->name('staffMainPage');
+    Route::post('/staff_main/upload', [App\Http\Controllers\fileController::class, 'staffupdate'])->name('document.staffupdate');
 });
