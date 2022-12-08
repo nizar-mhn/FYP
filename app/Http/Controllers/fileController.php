@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\file;
+use App\Models\studentFile;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Spatie\PdfToImage\Pdf;
@@ -43,29 +44,36 @@ class fileController extends Controller
         ]);
 
         if ($request->hasFile('file')) {
-            $path = $request->file('file')->store('PDF');
+            $path = $request->file('file')->storeAs('PDF', $_FILES['file']['name']);
             $realPath = storage_path()."\\app\\".str_replace('/','\\',$path);
-            //D:\Documents\FYP\FYP\storage\app\PDF\4mMIQq7tYY0YWM8IX10dAf3iXxAIw0GyKCfFAkV5.pdf
             $pdf = new Pdf($realPath);
             $num = $pdf->getNumberOfPages();
             $imageData = $pdf->saveImage('image');
             $base64Img = base64_encode($imageData);
-            /*$ext = $request->file->extension();
-            $doc = file_get_contents($path);
+            $ext = $request->file->extension();
+            $doc = file_get_contents($realPath);
             $base64 = base64_encode($doc);
-            Storage::disk('local')->put($_FILES['file']['name'], $doc);
             $mime = $request->file('file')->getClientMimeType();
 
-            /*File::create([
+            $createFile = File::create([
                 'fileName' => $_FILES['file']['name'],
                 'fileType' => $ext,
                 'mime' => $mime,
-                'noPage' => $num,
+                'noPage' => $num,   
                 'dateUpload' => Carbon::now(),
                 'file' => $base64,
-            ]);*/
+                'thumbnail' => $base64Img,
+            ]);
 
-            return redirect()->route('document')->with(['img' => $base64Img]);
+            $fileID = $createFile->id;
+            $studentID =  $request->input('studentID');
+
+            StudentFile::create([
+                'fileID' => $fileID,
+                'studentID' => $studentID,
+            ]);
+            
+            return redirect()->route('document');
         }
     }
 

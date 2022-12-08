@@ -84,6 +84,7 @@
                                                     @csrf
                                                     <div class="form-group">
                                                         <input type="file" class="form-control" name="file" required>
+                                                        <input type="hidden" value="{{ Auth::user()->studentID }}" name="studentID">
                                                     </div>
                                                 </div>
                                             </div>
@@ -134,7 +135,8 @@
                                 @endphp
 
                                 <tr>
-                                    <td class="text-light">{{$document->fileName}} {{ $num }} </td>
+                                    <td class="text-light">{{$document->fileName}}  </td>
+                                    <td> <img src="data:image/png;base64,{{ $document->thumbnail }}" style="height: 100px;width:100px"></td>
                                     <!-- <td><?php
                                                 // $im = new imagick(($document->fileName)[0]);
                                                 // $im->setImageFormat('jpg');

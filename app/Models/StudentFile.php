@@ -7,5 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class StudentFile extends Model
 {
+    public $timestamps = false;
     use HasFactory;
+
+    protected $fillable = [
+        'fileID',
+        'studentID',
+    ];
 }
