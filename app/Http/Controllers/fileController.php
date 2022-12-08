@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\file;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
+use Spatie\PdfToImage\Pdf;
 
 class fileController extends Controller
 {
@@ -21,7 +23,7 @@ class fileController extends Controller
     {
         $files = File::all();
 
-        return view('students/uploadFile', [
+        return view('students/main', [
             'documents' => $files,
         ]);
     }
@@ -41,22 +43,29 @@ class fileController extends Controller
         ]);
 
         if ($request->hasFile('file')) {
-            $path = $request->file('file')->getRealPath();
-            $ext = $request->file->extension();
+            $path = $request->file('file')->store('PDF');
+            $realPath = storage_path()."\\app\\".str_replace('/','\\',$path);
+            //D:\Documents\FYP\FYP\storage\app\PDF\4mMIQq7tYY0YWM8IX10dAf3iXxAIw0GyKCfFAkV5.pdf
+            $pdf = new Pdf($realPath);
+            $num = $pdf->getNumberOfPages();
+            $imageData = $pdf->saveImage('image');
+            $base64Img = base64_encode($imageData);
+            /*$ext = $request->file->extension();
             $doc = file_get_contents($path);
             $base64 = base64_encode($doc);
+            Storage::disk('local')->put($_FILES['file']['name'], $doc);
             $mime = $request->file('file')->getClientMimeType();
 
-            File::create([
+            /*File::create([
                 'fileName' => $_FILES['file']['name'],
                 'fileType' => $ext,
                 'mime' => $mime,
+                'noPage' => $num,
                 'dateUpload' => Carbon::now(),
                 'file' => $base64,
+            ]);*/
 
-            ]);
-
-            return redirect()->route('document');
+            return redirect()->route('document')->with(['img' => $base64Img]);
         }
     }
 

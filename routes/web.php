@@ -32,7 +32,7 @@ Route::get('/orders', function () {
 });
 
 
-Route::get('/documents/uploadFile', [App\Http\Controllers\fileController::class, 'show'])->name('document');
+//Route::get('/documents/uploadFile', [App\Http\Controllers\fileController::class, 'show'])->name('document');
 Route::post('/documents/upload', [App\Http\Controllers\fileController::class, 'update'])->name('document.update');
 Route::get('/documents/download/{documentId}', [App\Http\Controllers\fileController::class, 'download'])->name('document.download');
 Route::get('/documents/delete/{documentId}', [App\Http\Controllers\fileController::class, 'destroy'])->name('document.destroy');

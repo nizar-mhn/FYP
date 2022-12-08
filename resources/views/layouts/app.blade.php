@@ -26,6 +26,16 @@
         border-radius: 10px;
         background-color: #2A9D8F !important
        }
+
+       ul.navbar-nav button:hover{
+        border-radius: 10px;
+        background-color: #2A9D8F !important
+       }
+
+       .dropdown-toggle::after {
+         display:none;
+        }
+       
        
     </style>
 
@@ -52,6 +62,17 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
+                        <li class="nav-item me-2 dropdown">
+                            <button class="btn nav-link position-relative pt-2 dropdown-toggle dropdownNotif" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-bell"></i>
+                                <span class="visually-hidden position-absolute top-90 start-100 translate-middle p-1 bg-danger border border-light rounded-circle">
+                                    <span class="visually-hidden">New alerts</span>
+                                </span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li class="dropdown-item">Notification asda sdasd asd asdas dasd sa</li>
+                            </ul>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/') }}">Home</a>
                         </li>

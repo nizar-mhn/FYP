@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 
-<div class="row">
+<div class="row container">
     @if ($documents->count())
     <h3>Documents</h3>
     <div>
@@ -17,7 +17,7 @@
 
                 @foreach ($documents as $document)
                 <tr>
-                    <td>{{$document->fileName}}</td>
+                    <td>{{$document->fileName}} {{ $document->noPage }}</td>
                     <!-- <td><?php
                         // $im = new imagick(($document->fileName)[0]);
                         // $im->setImageFormat('jpg');
@@ -45,7 +45,6 @@
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </div>
-    </div>
     </div>
 </form>
 @endsection
