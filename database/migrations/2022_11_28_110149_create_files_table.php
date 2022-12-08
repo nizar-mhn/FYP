@@ -23,7 +23,8 @@ return new class extends Migration
             $table->timestamp('dateUpload',0);
         });
 
-        DB::statement("ALTER TABLE files ADD file  MEDIUMBLOB");
+        DB::statement("ALTER TABLE files ADD file MEDIUMBLOB");
+        DB::statement("ALTER TABLE files ADD thumbnail MEDIUMBLOB");
     }
 
     /**

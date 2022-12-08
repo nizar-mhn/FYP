@@ -16,7 +16,8 @@ class File extends Model
         'mime',
         'noPage',
         'dateUpload',
+        'thumbnail',
         'file',
-
+    
     ];
 }
