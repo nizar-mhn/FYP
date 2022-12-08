@@ -64,7 +64,7 @@
                                 @endphp
                                     <div class="col">
                                         <div class="card">
-                                        <a href="">
+                                        <a href="/fileinfo/{{ $currentFile->fileID }}">
                                             <img src="data:image/png;base64,{{ $currentFile->thumbnail }}" class="card-img-top" alt="..." style="height: 100px">
                                         </a>
                                         <div class="card-footer" style="background-color:#2A9D8F">
