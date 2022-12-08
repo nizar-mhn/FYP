@@ -45,8 +45,12 @@
                 </div>
             </nav>
             <div class="tab-content" id="nav-tabContent">
+                @php
+                $count = 1;
+                @endphp
                 @foreach ($courseList as $course)
                 @php
+                $count++;
                 $currentCourseID = $course->courseID;
                 $currentCourse = DB::table('courses')->where('courseID', $currentCourseID)->first();
                 @endphp
@@ -56,8 +60,8 @@
                     <div class="container d-flex p-2">
                         <h1 class="text-light">{{ $currentCourse->courseName }}</h1>
                         <div class="ms-auto">
-                            <button type="button" class="btn uploadButton text-light" data-bs-toggle="modal" data-bs-target="#uploadModal">Upload</button>
-                            <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+                            <button type="button" class="btn uploadButton text-light" data-bs-toggle="modal" data-bs-target="#uploadModal{{$count}}">Upload</button>
+                            <div class="modal fade" id="uploadModal{{$count}}" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
