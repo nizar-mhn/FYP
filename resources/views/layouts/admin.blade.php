@@ -15,27 +15,17 @@
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
-    
+
     <!-- Style -->
     <style>
        .navbar{
-        background-color: #264653;
+        background-color: #E76F51;
        }
 
        ul.navbar-nav a:hover{
         border-radius: 10px;
-        background-color: #2A9D8F !important
+        background-color: #F4A261 !important
        }
-
-       ul.navbar-nav button:hover{
-        border-radius: 10px;
-        background-color: #2A9D8F !important
-       }
-
-       .dropdown-toggle::after {
-         display:none;
-        }
-       
        
     </style>
 
@@ -45,7 +35,7 @@
         <nav class="navbar navbar-expand-md navbar-dark shadow-sm navbarColor">
             <div class="container">
 
-                <a class="navbar-brand" href="{{ route('document') }}">
+                <a class="navbar-brand" href="{{ route('adminMainPage') }}">
                     <img src="../image/logoPrintingTransparent.png" alt="School Logo" width="30" height="30">
                     Student Printing 
                 </a>
@@ -62,19 +52,8 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
-                        <li class="nav-item me-2 dropdown">
-                            <button class="btn nav-link position-relative pt-2 dropdown-toggle dropdownNotif" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="bi bi-bell"></i>
-                                <span class="visually-hidden position-absolute top-90 start-100 translate-middle p-1 bg-danger border border-light rounded-circle">
-                                    <span class="visually-hidden">New alerts</span>
-                                </span>
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li class="dropdown-item">Notification asda sdasd asd asdas dasd sa</li>
-                            </ul>
-                        </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('document') }}">Home</a>
+                            <a class="nav-link" href="{{ route('adminMainPage') }}">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/') }}">History</a>
@@ -82,7 +61,7 @@
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('../') }}">{{ __('Login') }}</a>
+                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                                 </li>
                             @endif
 
@@ -94,7 +73,7 @@
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->studentName }}
+                                    {{ Auth::user()->adminName }}
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
@@ -114,13 +93,12 @@
                 </div>
             </div>
         </nav>
-        <div class="container-fluid" style="background-color:#2A9D8F; height:25px;">
+        <div class="container-fluid" style="background-color:#F4A261; height:25px;">
         </div>
         
         <main class="py-4">
             @yield('content')
         </main>
     </div>
-    @stack('scripts')
 </body>
 </html>

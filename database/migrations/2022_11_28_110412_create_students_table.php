@@ -14,14 +14,15 @@ return new class extends Migration
     public function up()
     {
         Schema::create('students', function (Blueprint $table) {
-            $table->integer('studentID');
+            $table->id();
+            $table->integer('studentID')->unique();
             $table->unsignedInteger('programID');
             $table->integer('year');
             $table->integer('semester');
             $table->integer('group');
             $table->string('studentName','40');
-            $table->char('password','60');
-            $table->primary('studentID');
+            $table->string('password');
+            $table->rememberToken();
             $table->foreign('programID')->references('programID')->on('programs');
 
         });

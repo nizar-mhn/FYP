@@ -35,8 +35,8 @@
         <nav class="navbar navbar-expand-md navbar-dark shadow-sm navbarColor">
             <div class="container">
 
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    <img src="image/logoPrintingTransparent.png" alt="School Logo" width="30" height="30">
+                <a class="navbar-brand" href="{{ route('staffMainPage') }}">
+                    <img src="../image/logoPrintingTransparent.png" alt="School Logo" width="30" height="30">
                     Student Printing 
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -53,7 +53,7 @@
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/') }}">Home</a>
+                            <a class="nav-link" href="{{ route('staffMainPage') }}">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/') }}">History</a>
@@ -73,7 +73,7 @@
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
+                                    {{ Auth::user()->staffName }}
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
