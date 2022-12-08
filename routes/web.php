@@ -31,11 +31,9 @@ Auth::routes();
 Route::group(['middleware' => ['web', 'auth:student'], 'prefix' => 'students'], function () {
     Route::get('/mainPage', [App\Http\Controllers\fileController::class, 'index'])->name('document');
     Route::get('/history', [App\Http\Controllers\historyController::class, 'index'])->name('studentHistory');
-
-    Route::get('/fileinfo/{fileID}', function ($fileID) {
+    Route::get('/{fileID}', function ($fileID) {
         return view('/students/fileInfo')->with('fileID', $fileID);
     });
-
     Route::get('/profile', [App\Http\Controllers\profileController::class, 'index'])->name('profile');
     Route::post('/profile', [App\Http\Controllers\profileController::class, 'index'])->name('profile');
     Route::post('/documents/upload', [App\Http\Controllers\fileController::class, 'update'])->name('document.update');

@@ -25,9 +25,10 @@
                 <form class="pt-4" action="">
                     <h2>Binding Type:</h2>
                     <select class="form-select form-select-lg" aria-label="" style="width: 300px">
-                        <option value="1" selected>Saddle Stitching</option>
-                        <option value="2">Case Binding</option>
-                        <option value="3">Wire-O Binding</option>
+                        <option value="No_binding" selected>No binding</option>
+                        <option value="Saddle_Stitching">Saddle Stitching</option>
+                        <option value="Case_Binding">Case Binding</option>
+                        <option value="Wire-O_Binding">Wire-O Binding</option>
                     </select>
                     <h2 class="pt-2">Color:</h2>
                     <input type="checkbox" class="btn-check" name="checkColor" id="btn-check-outlined" autocomplete="off">
@@ -49,8 +50,8 @@
 
                     <h2 class="pt-3">Amount:</h2>
                     <input type="number" value="1" style="width:80px">
-                    <div class="pt-2">
-                        <button class="btn buyBtn">test</button>
+                    <div class="d-flex  pt-2" style="width: 400px">
+                        <button class="btn buyBtn ms-auto text-light">Order</button>
                     </div>
                     
                 </form>
