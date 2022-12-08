@@ -26,6 +26,10 @@ Route::get('/testing', [App\Http\Controllers\userController::class, 'index']);
 
 Auth::routes();
 
+Route::get('/fileinfo/{fileID}', function ($fileID) {
+    return view('/students/fileInfo')->with('fileID', $fileID);
+});
+
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::group(['middleware' => ['web', 'auth:student'], 'prefix' => 'students'], function () {

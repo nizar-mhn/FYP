@@ -48,33 +48,32 @@
             </nav>
             <div class="tab-content" id="nav-tabContent">
                 @foreach ($courseList as $course)
-                @php
-                $currentCourseID = $course->courseID;
-                $currentCourse = DB::table('courses')->where('courseID', $currentCourseID)->first();
-                @endphp
-                <div class="container p-3 tab-pane fade <?php if ($loop->first) {
-                                                            echo 'active show';
-                                                        }  ?>" style="height: 450px; background-color:#264653" id="nav-{{ $currentCourse->courseCode }}" role="tabpanel" aria-labelledby="nav-{{ $currentCourse->courseCode }}-tab" tabindex="0">
-                    <h1 class="text-light">{{ $currentCourse->courseName }}</h1>
-                    <div class="row row-cols-1 row-cols-md-4 g-4 overflow-auto mt-1" style="height: 370px;">
-                        @php
-                        $fileList = DB::table('course_files')->where('courseID',$currentCourseID)->get();
-                        @endphp
-                        @foreach ($fileList as $fileID)
-                        @php
-                        $currentFile = DB::table('files')->where('fileID', $fileID->fileID)->first();
-                        @endphp
-                        <div class="col">
-                            <div class="card">
-                                <a href="">
-                                    <img src="data:image/png;base64,{{ $currentFile->thumbnail }}" class="card-img-top" alt="..." style="height: 100px">
-                                </a>
-                                <div class="card-footer" style="background-color:#2A9D8F">
-                                    <small class=" text-light">{{ $currentFile->fileName }}</small>
-                                </div>
-                            </div>
+                    @php
+                        $currentCourseID = $course->courseID;
+                        $currentCourse = DB::table('courses')->where('courseID', $currentCourseID)->first();
+                    @endphp
+                    <div class="container p-3 tab-pane fade <?php if($loop->first){echo 'active show';}  ?>" style="height: 450px; background-color:#264653" id="nav-{{ $currentCourse->courseCode }}" role="tabpanel" aria-labelledby="nav-{{ $currentCourse->courseCode }}-tab" tabindex="0">
+                        <h1 class="text-light">{{ $currentCourse->courseName }}</h1>
+                        <div class="row row-cols-1 row-cols-md-4 g-4 overflow-auto mt-1" style="height: 370px;">
+                            @php
+                                $fileList = DB::table('course_files')->where('courseID',$currentCourseID)->get();
+                            @endphp
+                            @foreach ($fileList as $fileID)
+                                @php
+                                    $currentFile = DB::table('files')->where('fileID', $fileID->fileID)->first();
+                                @endphp
+                                    <div class="col">
+                                        <div class="card">
+                                        <a href="/fileinfo/{{ $currentFile->fileID }}">
+                                            <img src="data:image/png;base64,{{ $currentFile->thumbnail }}" class="card-img-top" alt="..." style="height: 100px">
+                                        </a>
+                                        <div class="card-footer" style="background-color:#2A9D8F">
+                                            <small class=" text-light">{{ $currentFile->fileName }}</small>
+                                        </div>
+                                        </div>
+                                    </div>
+                            @endforeach
                         </div>
-                        @endforeach
                     </div>
                 </div>
                 @endforeach
@@ -141,8 +140,8 @@
                     </div>
                 </div>
             </div>
+            <div class="col"></div>
         </div>
-        <div class="col"></div>
     </div>
 </div>
 @endsection
