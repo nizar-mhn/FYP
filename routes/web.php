@@ -63,22 +63,18 @@ Auth::routes();
 
 Route::group(['middleware' => ['web','auth:student'], 'prefix' => 'students'], function () {
     Route::get('/mainPage', [App\Http\Controllers\fileController::class, 'index'])->name('document');
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('welcome');
+    Route::get('/history', [App\Http\Controllers\historyController::class, 'index'])->name('studentHistory');
+
+    Route::get('/profile', [App\Http\Controllers\profileController::class, 'index'])->name('profile');
+    Route::post('/profile', [App\Http\Controllers\profileController::class, 'index'])->name('profile');
 });
 
 Route::group(['middleware' => ['web','auth:admin'], 'prefix' => 'admins'], function () {
-    Route::get('/mainPage', function () {
-        return view('admin/admin_main');
-    })->name('adminMainPage');
+    Route::get('/admin_main', [App\Http\Controllers\adminController::class, 'index'])->name('adminMainPage');
+    Route::get('/admin_report', [App\Http\Controllers\adminController::class, 'report'])->name('adminReport');
     
 });
 
 Route::group(['middleware' => ['web','auth:staff'], 'prefix' => 'staffs'], function () {
-    Route::get('/mainPage', function () {
-        return view('staff/staff_main');
-    })->name('staffMainPage');
-    
-    Route::get('/orders', function () {
-        return view('staff/staff_order');
-    })->name('order');
+    Route::get('/staff_main', [App\Http\Controllers\staffController::class, 'index'])->name('staffMainPage');
 });

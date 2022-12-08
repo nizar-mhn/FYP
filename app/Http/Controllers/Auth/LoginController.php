@@ -62,7 +62,7 @@ class LoginController extends Controller
                 return redirect()->route('adminMainPage');
             }
         } else {
-            return redirect()->route('welcome');
+            return redirect()->route('document');
         }
     }
 }
