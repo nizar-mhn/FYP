@@ -54,15 +54,30 @@
                     @endphp
                     <div class="container p-3 tab-pane fade <?php if($loop->first){echo 'active show';}  ?>" style="height: 450px; background-color:#264653" id="nav-{{ $currentCourse->courseCode }}" role="tabpanel" aria-labelledby="nav-{{ $currentCourse->courseCode }}-tab" tabindex="0">
                         <h1 class="text-light">{{ $currentCourse->courseName }}</h1>
-
-                        <div class="overflow-auto d-flex">
-                           
+                        <div class="row row-cols-1 row-cols-md-4 g-4 overflow-auto mt-1" style="height: 370px;">
+                            @php
+                                $fileList = DB::table('course_files')->where('courseID',$currentCourseID)->get();
+                            @endphp
+                            @foreach ($fileList as $fileID)
+                                @php
+                                    $currentFile = DB::table('files')->where('fileID', $fileID->fileID)->first();
+                                @endphp
+                                    <div class="col">
+                                        <div class="card">
+                                        <a href="">
+                                            <img src="data:image/png;base64,{{ $currentFile->thumbnail }}" class="card-img-top" alt="..." style="height: 100px">
+                                        </a>
+                                        <div class="card-footer" style="background-color:#2A9D8F">
+                                            <small class=" text-light">{{ $currentFile->fileName }}</small>
+                                        </div>
+                                        </div>
+                                    </div>
+                            @endforeach
                         </div>
                     </div>
                 @endforeach
                 
                 <div class="tab-pane fade" id="nav-personalFiles" role="tabpanel" aria-labelledby="nav-personalFiles-tab" tabindex="0">
-
                     <div class="container " style="height: 450px; background-color:#264653">
                         <div class="container d-flex p-2">
                             <h1 class="text-light">Subject Name</h1>
