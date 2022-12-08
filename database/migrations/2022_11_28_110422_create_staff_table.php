@@ -14,11 +14,12 @@ return new class extends Migration
     public function up()
     {
         Schema::create('staff', function (Blueprint $table) {
-            $table->string('staffID','10');
+            $table->id();
+            $table->string('staffID','10')->unique();
             $table->integer('courseListID');
             $table->string('staffName','40');
-            $table->char('password','60');
-            $table->primary('staffID');
+            $table->string('password');
+            $table->rememberToken();
 
         });
     }
