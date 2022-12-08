@@ -8,15 +8,22 @@ use App\Models\studentFile;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Spatie\PdfToImage\Pdf;
+use Illuminate\Support\Facades\Auth;
+use App\Models\program;
+use Illuminate\Support\Facades\DB;
 
 class fileController extends Controller
 {
     public function index()
     {
+        $currentUserProgram = Auth::user()->programID;
+        $currentProgramCourseListID = DB::table('programs')->where('programID',$currentUserProgram)->value('courseListID');
+        $listOfCoursesForCourseListID = DB::table('course_lists')->where('courseListID',$currentProgramCourseListID)->get();
         $files = File::all();
 
         return view('students/main', [
             'documents' => $files,
+            'courseList' => $listOfCoursesForCourseListID,
         ]);
     }
 
