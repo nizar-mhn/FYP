@@ -55,9 +55,6 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('staffMainPage') }}">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/') }}">History</a>
-                        </li>
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">

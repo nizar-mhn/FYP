@@ -62,7 +62,7 @@
             </div>-->
             <!--<div class="container-fluid" style="background-color:#264653; height: 10px">
             </div>-->
-            <div class="container " style="height: 450px; background-color:#264653">
+            <div class="container overflow-scroll" style="height: 450px; background-color:#264653">
                 <div class="container d-flex p-2">
                     <h1 class="text-light">Subject Name</h1>
                     <div class="ms-auto">

@@ -56,7 +56,7 @@
                             <a class="nav-link" href="{{ route('adminMainPage') }}">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/') }}">History</a>
+                            <a class="nav-link" href="{{ route('adminReport')}}">Report</a>
                         </li>
                         @guest
                             @if (Route::has('login'))

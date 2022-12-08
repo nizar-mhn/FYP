@@ -1,4 +1,4 @@
-@extends("layouts.admin")
+@extends("layouts.staff")
 <style>
     .orderDetails:hover{
         background-color: #E76F51 !important;
