@@ -18,20 +18,12 @@ use App\Http\Controllers\Auth\LoginController;
 
 //USER
 //Do not required auth
-Route::get('/', [LoginController::class, 'index']);
-Route::post('/login', [LoginController::class, 'index'])->name('logout');
+Route::get('/', [LoginController::class, 'index'])->name('login');
+Route::post('/login', [LoginController::class, 'logout'])->name('logout');
 Route::post('/', [LoginController::class, 'login'])->name('logged');
-
-
-
 
 Route::get('/testing', [App\Http\Controllers\userController::class, 'index']);
 
-
-
-Route::get('/welcome', function () {
-    return view('welcome');
-});
 Auth::routes();
 
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -39,6 +31,10 @@ Auth::routes();
 Route::group(['middleware' => ['web', 'auth:student'], 'prefix' => 'students'], function () {
     Route::get('/mainPage', [App\Http\Controllers\fileController::class, 'index'])->name('document');
     Route::get('/history', [App\Http\Controllers\historyController::class, 'index'])->name('studentHistory');
+
+    Route::get('/fileinfo/{fileID}', function ($fileID) {
+        return view('/students/fileInfo')->with('fileID', $fileID);
+    });
 
     Route::get('/profile', [App\Http\Controllers\profileController::class, 'index'])->name('profile');
     Route::post('/profile', [App\Http\Controllers\profileController::class, 'index'])->name('profile');

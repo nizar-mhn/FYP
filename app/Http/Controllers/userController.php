@@ -25,7 +25,7 @@ class userController extends Controller
         $user->createStaff();
         $user->createStudent();
 
-        return redirect()->route('document');
+        //return redirect()->route('document');
     }
 
     
@@ -34,60 +34,147 @@ class userController extends Controller
 class user{
     public function createAdmin()
     {
+        Admin::create([
+            'adminID' => 's1111',
+            'adminName' => 'Lai Man Wai',
+            'password' => Hash::make('manwai'),
+        ]);
+
         return Admin::create([
-            'adminID' => 'p1234',
-            'adminName' => 'Man Wai',
-            'password' => Hash::make('manwai123'),
+            'adminID' => 's2222',
+            'adminName' => 'Thomas San',
+            'password' => Hash::make('thomas'),
+            
         ]);
     }
 
     public function createStaff()
     {
-        return Staff::create([
-            'staffID' => 's1234',
+        Staff::create([
+            'staffID' => 'p1111',
             'courseListID' => 1,
-            'staffName' => 'Wai Kit',
-            'password' => Hash::make('waikit123'),
+            'staffName' => 'Ho Wai Kit',
+            'password' => Hash::make('waikit'),
+            
+        ]);
+
+        Staff::create([
+            'staffID' => 'p2222',
+            'courseListID' => 1,
+            'staffName' => 'Goh Shu Hang',
+            'password' => Hash::make('shuhang'),
+            
+        ]);
+
+        return Staff::create([
+            'staffID' => 'p3333',
+            'courseListID' => 2,
+            'staffName' => 'Chew Shen Heng',
+            'password' => Hash::make('shenheng'),
             
         ]);
     }
 
     public function createStudent()
     {
-        return Student::create([
+        Student::create([
             'studentID' => '2105086',
             'programID' => 1,
             'year' => 3,
             'semester' => 2,
             'group' => 7,
-            'studentName' => 'Owen',
+            'studentName' => 'Chan Owen',
+            'password' => Hash::make('owenowen'),
+        ]);
+
+        Student::create([
+            'studentID' => '2105179',
+            'programID' => 1,
+            'year' => 3,
+            'semester' => 2,
+            'group' => 7,
+            'studentName' => 'Nizar Bin Hamid',
+            'password' => Hash::make('owenowen'),
+        ]);
+
+        return Student::create([
+            'studentID' => '1904338',
+            'programID' => 2,
+            'year' => 1,
+            'semester' => 3,
+            'group' => 2,
+            'studentName' => 'Micheal Owen',
             'password' => Hash::make('owenowen'),
         ]);
     }
 
     public function createCourse()
     {
+        Course::create([
+            'courseName' => 'Software Engineering',
+            'courseCode' => 'BACS2163',
+        ]);
+
+        Course::create([
+            'courseName' => 'Computer Networks',
+            'courseCode' => 'BMIT2164',
+        ]);
+
+        Course::create([
+            'courseName' => 'Advance Computer Networks',
+            'courseCode' => 'BMIT3094',
+        ]);
+
+        Course::create([
+            'courseName' => 'Systems Analysis And Design',
+            'courseCode' => 'AACS1304',
+        ]);
+
         return Course::create([
-            'courseID' => 1,
-            'courseName' => 'ACN',
-            'courseCode' => 'BMIT1234',
+            'courseName' => 'Operating Systems',
+            'courseCode' => 'AACS2284',
         ]);
     }
 
     public function createCourseList()
     {
-        return CourseList::create([
+
+        CourseList::create([
             'courseListID' => 1,
             'courseID' => 1,
+        ]);
+
+        CourseList::create([
+            'courseListID' => 1,
+            'courseID' => 2,
+        ]);
+
+        CourseList::create([
+            'courseListID' => 1,
+            'courseID' => 3,
+        ]);
+
+        CourseList::create([
+            'courseListID' => 2,
+            'courseID' => 4,
+        ]);
+
+        return CourseList::create([
+            'courseListID' => 2,
+            'courseID' => 5,
         ]);
     }
 
     public function createProg()
     {
-        return Program::create([
-            'programID' => 1,
+        Program::create([
             'courseListID' => 1,
-            'programName' => 'RSD',
+            'programName' => 'RSD - Bachelor of Information Technology (Honours) in Software Systems Development',
+        ]);
+
+        return Program::create([
+            'courseListID' => 2,
+            'programName' => 'DFT - Diploma in Information Technology',
         ]);
     }
 }

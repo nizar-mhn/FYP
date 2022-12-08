@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('courses', function (Blueprint $table) {
             $table->increments('courseID');
-            $table->string('courseName','40');
+            $table->string('courseName');
             $table->string('courseCode','9');
         });
     }

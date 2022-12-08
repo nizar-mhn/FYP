@@ -65,4 +65,30 @@ class LoginController extends Controller
             return redirect()->route('document');
         }
     }
+
+    public function logout(Request $request)
+    {
+        if(Auth::guard('admin')->check()) // this means that the admin was logged in.
+        {
+            Auth::guard('admin')->logout();
+            return redirect()->route('login');
+        }
+
+        if(Auth::guard('staff')->check()) // this means that the admin was logged in.
+        {
+            Auth::guard('staff')->logout();
+            return redirect()->route('login');
+        }
+
+        if(Auth::guard('student')->check()) // this means that the admin was logged in.
+        {
+            Auth::guard('student')->logout();
+            return redirect()->route('login');
+        }
+    
+        $this->guard()->logout();
+        $request->session()->invalidate();
+    
+        return $this->loggedOut($request) ?: redirect()->route('logoin');
+    }
 }
