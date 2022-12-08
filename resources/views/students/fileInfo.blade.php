@@ -1,5 +1,14 @@
 @extends('layouts.app')
+<style>
+    .buyBtn{
+        background-color: #E76F51 !important;
+    }
 
+    .buyBtn:hover{
+        background-color: #F4A261 !important;
+    }
+
+</style>
 @section('content')
     @php
         $currentFile = DB::table('files')->where('fileID', $fileID)->first();
@@ -40,7 +49,12 @@
 
                     <h2 class="pt-3">Amount:</h2>
                     <input type="number" value="1" style="width:80px">
+                    <div class="pt-2">
+                        <button class="btn buyBtn">test</button>
+                    </div>
+                    
                 </form>
+
             </div>
         </div>
     </div>

@@ -74,7 +74,6 @@
                                     </div>
                             @endforeach
                         </div>
-                        @endforeach
                     </div>
                 </div>
                 @endforeach
@@ -141,8 +140,8 @@
                     </div>
                 </div>
             </div>
+            <div class="col"></div>
         </div>
-        <div class="col"></div>
     </div>
 </div>
 @endsection
