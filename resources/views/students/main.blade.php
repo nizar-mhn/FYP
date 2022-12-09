@@ -24,13 +24,21 @@
 
 @section('content')
 <div class="container-fluid">
-
     <div class="row">
         <div class="col"></div>
         <div class="col-8">
-            <h1 class="fw-bold mb-5">Files</h1>
-            <!--<div class="container-fluid" style="background-color:#264653; height: 10px">
-            </div>-->
+            <div class="d-flex">
+                <h1 class="fw-bold mb-5">Files</h1>
+                @php
+                $paymentAlert = Session::get('paymentAlert');
+                @endphp
+                @isset($paymentAlert)
+                    <div class="alert alert-success ms-auto" id="paymentSuccess" role="alert">
+                        {{ $paymentAlert }}
+                    </div>
+                @endisset
+            </div>
+            
 
             <nav class="navbar-dark">
                 <div class="nav nav-tabs d-flex subjectNavs" id="nav-tab" role="tablist">
@@ -142,7 +150,15 @@
                 </div>
             </div>
         </div>
-        <div class="col"></div>
+        <div class="col">
+           
+        </div>
     </div>
 </div>
+<script>
+    setTimeout(() => {
+        const alert = document.getElementById('paymentSuccess');
+        alert.style.display = 'none'; 
+    }, 3000); 
+</script>
 @endsection

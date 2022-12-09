@@ -58,6 +58,6 @@ class paymentController extends Controller
             'orderPrintingInfoID' => $printingInfoID,
         ]);
 
-        return redirect()->route('document');
+        return redirect()->route('document')->with('paymentAlert','Payment Success');
     }
 }
