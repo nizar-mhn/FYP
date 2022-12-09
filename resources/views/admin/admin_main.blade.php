@@ -43,7 +43,7 @@
                             <td>{{ $data->orderDate }}</td>
                             <td>
 
-                                <button id="barDropdown" class="dropdown-toggle btn text-light" style="background-color: #2A9D8F" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <button id="barDropdown" class="dropdown-toggle btn text-light" style="background-color: #264653" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ $data->status }}
                                 </button>
 
@@ -66,22 +66,13 @@
                                         {{ __('Printed') }}
                                     </a>
                                     @endif
-                                    @if($data->status=="Delivered")
-                                    <a class="dropdown-item disabled" href="{{route('orderStatus',[$data->orderID,'Delivered'])}}">
-                                        {{ __('Delivered') }}
-                                    </a>
-                                    @else
-                                    <a class="dropdown-item" href="{{route('orderStatus',[$data->orderID,'Delivered'])}}">
-                                        {{ __('Delivered') }}
-                                    </a>
-                                    @endif
 
                                 </div>
 
                             </td>
                             <td>
-                                <a class="btn text-light" style="background-color: #2A9D8F" href="{{route('orderStatus',[$data->orderID,'Complete'])}}">
-                                    {{ __('Complete') }}
+                                <a class="btn text-light" style="background-color: #264653" href="{{route('orderStatus',[$data->orderID,'Delivered'])}}">
+                                    {{ __('Delivered') }}
                                 </a>
                             </td>
                         </tr>
