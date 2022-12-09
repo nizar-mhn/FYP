@@ -47,7 +47,7 @@
                     <img src="data:image/png;base64,{{ $file->thumbnail }}" alt="" class="img-fluid p-1 thumbnail border border-2">
                 </div>
                 <div class="col-md-3 text-light">
-                    <h4>{{ $file->fileName }}</h4>
+                    <h5 class="fw-bold">{{ $file->fileName }}</h5>
                     <p>Binding Type: {{ str_replace('_',' ',$orderInfo->bindingType) }}</p>
                     <p>Color: {{ $orderInfo->color }}</p>
                     @if ($orderInfo->pageFormat == 'one-side')
