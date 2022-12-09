@@ -18,7 +18,7 @@
             <div class="col"></div>
             <div class="col-8">
                 <h1 class="mb-5 fw-bold">Orders</h1>
-                <div class="d-flex p-1 mb-4" style="background-color: #E76F51; height: 45px">
+                <div class="d-flex p-1 mb-4" style="background-color: #E76F51 ; height: 45px">
                     <div class="me-auto filterButtons">
                         <button type="button" class="btn text-light text-wrap ">Date <i class="bi bi-sort-up"></i></button>
                         <button type="button" class="btn text-light text-wrap ">Price <i class="bi bi-sort-up"></i></button>

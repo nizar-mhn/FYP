@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->increments('orderID');
             $table->integer('studentID');
-            $table->timestamp('orderDate',0);
+            $table->timestamp('orderDate')->nullable();
             $table->string('status','40');
             $table->foreign('studentID')->references('studentID')->on('students');
         });

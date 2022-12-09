@@ -1,45 +1,102 @@
 @extends("layouts.admin")
 <style>
-    .orderDetails:hover{
+    .orderDetails:hover {
         background-color: #E76F51 !important;
     }
 
-    .filterButtons button:hover{
+    .filterButtons button:hover {
         background-color: #F4A261 !important;
     }
 
-    .searchButton:hover{
+    .searchButton:hover {
         background-color: #2A9D8F !important;
     }
 </style>
 @section('content')
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col"></div>
-            <div class="col-8">
-                <h1 class="mb-5 fw-bold">Orders</h1>
-                <div class="d-flex p-1 mb-4" style="background-color: #E76F51; height: 45px">
-                    <div class="me-auto filterButtons">
-                        <button type="button" class="btn text-light text-wrap ">Date <i class="bi bi-sort-up"></i></button>
-                        <button type="button" class="btn text-light text-wrap ">Price <i class="bi bi-sort-up"></i></button>
-                    </div>
-                    <div class="ms-auto">
-                        <button type="button" class="btn searchButton text-light" style="background-color: #264653"><i class="bi bi-search" style=""></i>  Search</button>
-                    </div>
-                </div>
-                <div class="btn container-fluid mt-3 orderDetails" style="background-color: #F4A261; height: 70px; border-radius:22px"
-                data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                    <div class="row">
-                        <div class="col-2">test</div>
-                        <div class="col-8">test2</div>
-                        <div class="col-2">test3</div>
-                    </div>
-                </div>
-                <div class="collapse" id="collapseExample" style="padding:0px 10px 0px 10px">
-                    <div class="card card-body" style="background-color:#E76F51">Test</div>
+@if ($order)
+<div class="container-fluid">
+    <div class="row">
+        <div class="col"></div>
+        <div class="col-8">
+            <h1 class="fw-bold mb-5">Orders</h1>
+            <div class="container">
+                <table class="table table-bordered mb-5 text-center">
+                    <thead style="background-color: #E76F51">
+                        <tr>
+                            <th scope="col">Order ID</th>
+                            <th scope="col">Student ID</th>
+                            <th scope="col">Student name</th>
+                            <th scope="col">Order Date</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody style="background-color: #F4A261">
+                        @foreach($order as $data)
+                        @php
+                        $currentStudent = DB::table('students')->where('studentID', $data->studentID)->first();
+                        @endphp
+                        <tr>
+                            <th scope="row">{{ $data->orderID }}</th>
+                            <td>{{ $data->studentID }}</td>
+                            <td>{{ $currentStudent->studentName }}</td>
+                            <td>{{ $data->orderDate }}</td>
+                            <td>
+
+                                <button id="barDropdown" class="dropdown-toggle btn text-light" style="background-color: #2A9D8F" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    {{ $data->status }}
+                                </button>
+
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="barDropdown">
+                                    @if($data->status=="Pending")
+                                    <a class="dropdown-item disabled" href="{{route('orderStatus',[$data->orderID,'Pending'])}}">
+                                        {{ __('Pending') }}
+                                    </a>
+                                    @else
+                                    <a class="dropdown-item" href="{{route('orderStatus',[$data->orderID,'Pending'])}}">
+                                        {{ __('Pending') }}
+                                    </a>
+                                    @endif
+                                    @if($data->status=="Printed")
+                                    <a class="dropdown-item disabled" href="{{route('orderStatus',[$data->orderID,'Printed'])}}">
+                                        {{ __('Printed') }}
+                                    </a>
+                                    @else
+                                    <a class="dropdown-item" href="{{route('orderStatus',[$data->orderID,'Printed'])}}">
+                                        {{ __('Printed') }}
+                                    </a>
+                                    @endif
+                                    @if($data->status=="Delivered")
+                                    <a class="dropdown-item disabled" href="{{route('orderStatus',[$data->orderID,'Delivered'])}}">
+                                        {{ __('Delivered') }}
+                                    </a>
+                                    @else
+                                    <a class="dropdown-item" href="{{route('orderStatus',[$data->orderID,'Delivered'])}}">
+                                        {{ __('Delivered') }}
+                                    </a>
+                                    @endif
+
+                                </div>
+
+                            </td>
+                            <td>
+                                <a class="btn text-light" style="background-color: #2A9D8F" href="{{route('orderStatus',[$data->orderID,'Complete'])}}">
+                                    {{ __('Complete') }}
+                                </a>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                <div class="d-flex justify-content-center">
+                    {!! $order->links() !!}
                 </div>
             </div>
-            <div class="col"></div>
         </div>
+        <div class="col"></div>
     </div>
-@endsection   
+</div>
+@else
+empty
+@endif
+@endsection

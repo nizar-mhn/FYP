@@ -45,6 +45,7 @@ Route::group(['middleware' => ['web', 'auth:student'], 'prefix' => 'students'], 
 
 Route::group(['middleware' => ['web', 'auth:admin'], 'prefix' => 'admins'], function () {
     Route::get('/admin_main', [App\Http\Controllers\adminController::class, 'index'])->name('adminMainPage');
+    Route::get('/status/{orderID}/{status}', [App\Http\Controllers\adminController::class, 'status'])->name('orderStatus');
     Route::get('/admin_report', [App\Http\Controllers\adminController::class, 'report'])->name('adminReport');
 });
 

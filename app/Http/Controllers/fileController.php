@@ -80,7 +80,6 @@ class fileController extends Controller
                 'fileType' => $ext,
                 'mime' => $mime,
                 'noPage' => $num,   
-                'dateUpload' => Carbon::now(),
                 'file' => $base64,
                 'thumbnail' => $base64Img,
             ]);
@@ -120,7 +119,6 @@ class fileController extends Controller
                 'fileType' => $ext,
                 'mime' => $mime,
                 'noPage' => $num,   
-                'dateUpload' => Carbon::now(),
                 'file' => $base64,
                 'thumbnail' => $base64Img,
             ]);
