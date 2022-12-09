@@ -22,9 +22,10 @@
             <div class="col-md-6">
                 <h2>File: {{ $currentFile->fileName }}</h2>
                 <h2 class="pt-4">No. Pages: {{ $currentFile->noPage }}</h2>
-                <form class="pt-4" action="">
+                <form class="pt-4" action="{{ route('payment') }}" method="POST">
+                    @csrf
                     <h2>Binding Type:</h2>
-                    <select class="form-select form-select-lg" aria-label="" style="width: 300px">
+                    <select class="form-select form-select-lg" name="binding-type" aria-label="" style="width: 300px">
                         <option value="No_binding" selected>No binding</option>
                         <option value="Saddle_Stitching">Saddle Stitching</option>
                         <option value="Case_Binding">Case Binding</option>
@@ -49,9 +50,9 @@
                     </div>
 
                     <h2 class="pt-3">Amount:</h2>
-                    <input type="number" value="1" style="width:80px">
+                    <input type="number"  name="amount" style="width:80px" min="1" max="10" required>
                     <div class="d-flex  pt-2" style="width: 400px">
-                        <button class="btn buyBtn ms-auto text-light">Order</button>
+                        <button class="btn buyBtn ms-auto text-light" type="submit" value="submit">Order</button>
                     </div>
                     
                 </form>

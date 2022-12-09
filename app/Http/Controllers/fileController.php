@@ -132,7 +132,9 @@ class fileController extends Controller
                 'fileID' => $fileID,
                 'courseID' => $courseID,
             ]);
-            
+
+            //unlink(storage_path('app/PDF/'.$_FILES['file']['name']));
+
             return redirect()->route('staffMainPage');
         }
     }
