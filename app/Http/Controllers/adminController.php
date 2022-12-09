@@ -14,18 +14,31 @@ class adminController extends Controller
         return view('admin/admin_main', ['order' => $orderList]);
     }
 
-    public function status($orderID,$status)
+    public function status($orderID, $status)
     {
         $updateStatus = DB::table('orders')
             ->where('orderID', $orderID)
             ->update(['status' => $status]);
 
-            return redirect()->route('adminMainPage');
+        return redirect()->route('adminMainPage');
     }
 
 
-    public function report()
+    public function report(Request $request)
     {
-        return view('admin/admin_report');
+        
+        $this->data['start_date']  = $request->input('start');
+        $this->data['end_date']  = $request->input('end');
+
+        $this->data['orders'] = Order::select('orders.orderDate', 'order_printing_infos.bindingType', 'order_printing_infos.color', 'order_printing_infos.pageFormat',  'order_printing_infos.numCopies', 'payments.totalPrice','files.noPage','files.fileName')
+            ->join('order_details', 'order_details.orderID', '=', 'orders.orderID')
+            ->join('order_printing_infos', 'order_printing_infos.orderPrintingInfoID', '=', 'order_details.orderPrintingInfoID')
+            ->join('files','files.fileID','=','order_printing_infos.fileID')
+            ->join('payments','payments.orderID','=','orders.orderID')
+            ->whereBetween('orders.orderDate', [$this->data['start_date'], $this->data['end_date']])
+            ->where('orders.status','=','Delivered')
+            ->get();
+
+        return view('admin/admin_report',$this->data);
     }
 }
