@@ -17,7 +17,7 @@
         <h1>File Info</h1>
         <div class="row ">
             <div class="col-md-6">
-                <img src="data:image/png;base64,{{ $currentFile->thumbnail }}" class="thumbnail border border-2" alt="File Picture" style="height: 500px;">
+                <img src="data:image/png;base64,{{ $currentFile->thumbnail }}" class="thumbnail border border-2" alt="File Picture" style="height: 500px; object-fit:cover;width:400px">
             </div>
             <div class="col-md-6">
                 <h2>File: {{ $currentFile->fileName }}</h2>

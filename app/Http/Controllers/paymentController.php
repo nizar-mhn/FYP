@@ -32,7 +32,7 @@ class paymentController extends Controller
         
         $createOrder = Order::create([
             'studentID' => Auth::user()->studentID,
-            'orderDate' => Carbon::now(),
+            'orderDate' => Carbon::now("Asia/Kuala_Lumpur"),
             'status' => 'Pending',
         ]);
         $OrderID = $createOrder->id;
