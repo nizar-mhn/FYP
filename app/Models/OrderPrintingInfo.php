@@ -8,4 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class OrderPrintingInfo extends Model
 {
     use HasFactory;
+
+    public $timestamps = false;
+
+    protected $fillable = [
+        'orderPrintingInfoID',
+        'fileID',
+        'bindingType',
+        'color',
+        'pageFormat',
+        'numCopies',
+    ];
 }
