@@ -77,7 +77,7 @@
                                                         <br />
                                                         @csrf
                                                         <div class="form-group">
-                                                            <input type="file" class="form-control" name="file" required>
+                                                            <input type="file" class="form-control" name="file" accept="application/pdf" required>
                                                             <input type="hidden" value="{{ $currentCourse->courseID }}" name="courseID">
                                                         </div>
                                                     </div>

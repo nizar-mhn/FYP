@@ -101,7 +101,7 @@
                                                             <br />
                                                             @csrf
                                                             <div class="form-group">
-                                                                <input type="file" class="form-control" name="file" required>
+                                                                <input type="file" class="form-control" accept="application/pdf" name="file" required>
                                                                 <input type="hidden" value="{{ Auth::user()->studentID }}" name="studentID">
                                                             </div>
                                                         </div>
