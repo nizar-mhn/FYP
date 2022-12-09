@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('order_printing_infos', function (Blueprint $table) {
             $table->increments('orderPrintingInfoID');
             $table->unsignedInteger('fileID');
-            $table->integer('bindingType');
-            $table->boolean('color');
-            $table->integer('pageFormat');
+            $table->string('bindingType');
+            $table->string('color');
+            $table->string('pageFormat');
             $table->integer('numCopies');
             $table->foreign('fileID')->references('fileID')->on('files');
 
