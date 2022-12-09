@@ -39,7 +39,7 @@ class paymentController extends Controller
 
         Payment::create([
             'orderID' => $OrderID,
-            'totalPrice' => $request->input('totalPayPrice'),
+            'totalPrice' => $request->input('totalPrice'),
             'paymentDate' => Carbon::now(),
         ]);
 
