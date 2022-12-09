@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\order;
+use App\Models\orderDetails;
+use App\Models\orderPrintingInfo;
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class paymentController extends Controller
 {
@@ -24,5 +29,28 @@ class paymentController extends Controller
 
     public function orderCreate(Request $request){
         
+        $createOrder = Order::create([
+            'studentID' => Auth::user()->studentID,
+            'orderDate' => Carbon::now(),
+            'status' => 'Pending',
+        ]);
+
+        $createPrintingInfo = OrderPrintingInfo::create([
+            'fileID' => $request->input('fileID'),
+            'bindingType' => $request->input('bindingType'),
+            'color' => $request->input('checkColor'),
+            'pageFormat' => $request->input('pageFormat'),
+            'numCopies' => $request->input('amount'),
+        ]);
+
+        $OrderID = $createOrder->id;
+        $printingInfoID = $createPrintingInfo->id;
+        
+        OrderDetails::create([
+            'orderID' => $OrderID,
+            'orderPrintingInfoID' => $printingInfoID,
+        ]);
+
+        return redirect()->route('document');
     }
 }

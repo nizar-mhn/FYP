@@ -69,6 +69,7 @@ $totalPayPrice =  $totalPricePerCopy * $amount;
                     <h5 class="pb-2">Price per copy: RM {{ number_format((float)$totalPricePerCopy, 2, '.', '') }}</h5>
                     <h5>Total Price: RM {{ number_format((float)$totalPayPrice, 2, '.', '') }}</h5>
                     <form action="{{ route('orderCreate') }}" method="POST" id="orderValueForm">
+                        @csrf
                         <input type="hidden" value="{{ $file->fileID }}" name="fileID">
                         <input type="hidden" value="{{ $bindingType }}" name="bindingType">
                         <input type="hidden" value="{{ $checkColor }}" name="checkColor">
