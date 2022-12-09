@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\order;
 use App\Models\orderDetails;
 use App\Models\orderPrintingInfo;
+use App\Models\payment;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
@@ -34,6 +35,13 @@ class paymentController extends Controller
             'orderDate' => Carbon::now(),
             'status' => 'Pending',
         ]);
+        $OrderID = $createOrder->id;
+
+        Payment::create([
+            'orderID' => $OrderID,
+            'totalPrice' => $request->input('totalPayPrice'),
+            'paymentDate' => Carbon::now(),
+        ]);
 
         $createPrintingInfo = OrderPrintingInfo::create([
             'fileID' => $request->input('fileID'),
@@ -43,7 +51,7 @@ class paymentController extends Controller
             'numCopies' => $request->input('amount'),
         ]);
 
-        $OrderID = $createOrder->id;
+        
         $printingInfoID = $createPrintingInfo->id;
         
         OrderDetails::create([

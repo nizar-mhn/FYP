@@ -75,6 +75,7 @@ $totalPayPrice =  $totalPricePerCopy * $amount;
                         <input type="hidden" value="{{ $checkColor }}" name="checkColor">
                         <input type="hidden" value="{{ $pageFormat }}" name="pageFormat">
                         <input type="hidden" value="{{ $amount }}" name="amount">
+                        <input type="hidden" value="{{ $totalPayPrice }}" name="totalPrice">
                     </form>
                 </div>
                 <div class="col-md-6">
