@@ -10,7 +10,7 @@ class adminController extends Controller
 {
     public function index()
     {
-        $orderList = Order::whereNot('status', '=', 'Complete')->paginate(10);
+        $orderList = Order::whereNot('status', '=', 'Delivered')->paginate(10);
         return view('admin/admin_main', ['order' => $orderList]);
     }
 
