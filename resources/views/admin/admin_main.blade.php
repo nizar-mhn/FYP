@@ -13,13 +13,13 @@
     }
 </style>
 @section('content')
-@if ($order)
 <div class="container-fluid">
     <div class="row">
         <div class="col"></div>
         <div class="col-8">
             <h1 class="fw-bold mb-5">Orders</h1>
             <div class="container">
+                @if(count($order))
                 <table class="table table-bordered mb-5 text-center">
                     <thead style="background-color: #E76F51">
                         <tr>
@@ -84,12 +84,16 @@
                 <div class="d-flex justify-content-center">
                     {!! $order->links() !!}
                 </div>
+                @else
+                <div class="text-center">
+
+                    <img src="{{asset('image/noOrder.png')}}" alt="No Order Found" class="img-fluid image">
+                    <h3>Currently there's no order made...</h3>
+                </div>
+                @endif
             </div>
         </div>
         <div class="col"></div>
     </div>
 </div>
-@else
-empty
-@endif
 @endsection
