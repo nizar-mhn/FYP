@@ -43,6 +43,14 @@ Route::group(['middleware' => ['web', 'auth:student'], 'prefix' => 'students'], 
     Route::get('/documents/delete/{documentId}', [App\Http\Controllers\fileController::class, 'destroy'])->name('document.destroy');
 });
 
+Route::group(['middleware' => ['web', 'auth:staff'], 'prefix' => 'staffs'], function () {
+    Route::get('/staff_main', [App\Http\Controllers\fileController::class, 'staffindex'])->name('staffMainPage');
+    Route::post('/staff_main/upload', [App\Http\Controllers\fileController::class, 'staffupdate'])->name('document.staffupdate');
+    Route::get('/{fileID}', function ($fileID) {
+        return view('/staff/fileInfo')->with('fileID', $fileID);
+    });
+});
+
 Route::group(['middleware' => ['web', 'auth:admin']], function () {
     Route::get('admins/admin_main', [App\Http\Controllers\adminController::class, 'index'])->name('adminMainPage');
     Route::get('admins/status/{orderID}/{status}', [App\Http\Controllers\adminController::class, 'status'])->name('orderStatus');
@@ -53,10 +61,4 @@ Route::group(['middleware' => ['web', 'auth:admin']], function () {
     Route::get('/download/{orderID}', [App\Http\Controllers\fileController::class, 'download'])->name('pdfDownload');
 });
 
-Route::group(['middleware' => ['web', 'auth:staff'], 'prefix' => 'staffs'], function () {
-    Route::get('/staff_main', [App\Http\Controllers\fileController::class, 'staffindex'])->name('staffMainPage');
-    Route::post('/staff_main/upload', [App\Http\Controllers\fileController::class, 'staffupdate'])->name('document.staffupdate');
-    Route::get('/{fileID}', function ($fileID) {
-        return view('/staff/fileInfo')->with('fileID', $fileID);
-    });
-});
+
