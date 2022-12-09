@@ -103,9 +103,9 @@
                         <div class="col">
                             <div class="card">
                                 <a href="/staffs/{{ $currentFile->fileID }}">
-                                    <img src="data:image/png;base64,{{ $currentFile->thumbnail }}" class="card-img-top" alt="..." style="height: 100px">
+                                    <img src="data:image/png;base64,{{ $currentFile->thumbnail }}" class="card-img-top" alt="..." style="height: 100px;object-fit:cover">
                                 </a>
-                                <div class="card-footer" style="background-color:#2A9D8F">
+                                <div class="card-footer" style="background-color:#F4A261">
                                     <small class=" text-light">{{ $currentFile->fileName }}</small>
                                 </div>
                             </div>
