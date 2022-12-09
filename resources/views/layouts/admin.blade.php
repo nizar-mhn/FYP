@@ -2,6 +2,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
+    <link rel="icon" href="{{asset('image/logoPrintingTransparent.png')}}">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -38,7 +39,7 @@
 
                 <a class="navbar-brand" href="{{ route('adminMainPage') }}">
                     <img src="../image/logoPrintingTransparent.png" alt="School Logo" width="30" height="30">
-                    Student Printing
+                    TAR UMT Printing
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>

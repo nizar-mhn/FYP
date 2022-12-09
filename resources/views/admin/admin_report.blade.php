@@ -53,7 +53,7 @@
                             <thead>
                                 <tr>
                                     <th>Date</th>
-                                    <th>Title</th>
+                                    <th>File Title</th>
                                     <th class="text-right">No. Copies</th>
                                     <th class="text-right">Pages</th>
                                     <th class="text-right">Total</th>
@@ -78,10 +78,10 @@
                             <tfoot>
                                 <tr>
                                     <th></th>
-                                    <th class="text-end">Total Orders:</th>
-                                    <th class="text-right">{{ count($orders) }}</th>
-                                    <th class="text-right">Total:</th>
-                                    <th class="text-right">RM{{ $orders->sum('totalPrice') }}</th>
+                                    <th></th>
+                                    <th class="text-end">Total Orders: {{ count($orders) }}</th>
+                                    <th></th>
+                                    <th>Total: RM{{ $orders->sum('totalPrice') }}</th>
                                 </tr>
                             </tfoot>
                             @endif
