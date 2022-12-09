@@ -37,7 +37,7 @@
                         $currentStudent = DB::table('students')->where('studentID', $data->studentID)->first();
                         @endphp
                         <tr>
-                            <th scope="row">{{ $data->orderID }}</th>
+                            <th scope="row"><a href="/admins/{{ $data->orderID }}">{{ $data->orderID }}</a></th>
                             <td>{{ $data->studentID }}</td>
                             <td>{{ $currentStudent->studentName }}</td>
                             <td>{{ $data->orderDate }}</td>
@@ -66,7 +66,6 @@
                                         {{ __('Printed') }}
                                     </a>
                                     @endif
-
                                 </div>
 
                             </td>
