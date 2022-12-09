@@ -37,7 +37,7 @@
                         $currentStudent = DB::table('students')->where('studentID', $data->studentID)->first();
                         @endphp
                         <tr>
-                            <th scope="row"><a href="/admins/{{ $data->orderID }}">{{ $data->orderID }}</a></th>
+                            <th scope="row">{{$data->orderID}}</th>
                             <td>{{ $data->studentID }}</td>
                             <td>{{ $currentStudent->studentName }}</td>
                             <td>{{ $data->orderDate }}</td>
@@ -69,10 +69,13 @@
                                 </div>
 
                             </td>
+                            @php
+                            $currentOrder = DB::table('order_details')->where('orderPrintingInfoID', $data->orderID)->first();
+                            $currentOrderInfo = DB::table('order_printing_infos')->where('orderPrintingInfoID', $currentOrder->orderPrintingInfoID)->first();
+                            $currentfile = DB::table('files')->where('fileID', $currentOrderInfo->fileID)->first();
+                            @endphp
                             <td>
-                                <a class="btn text-light" style="background-color: #264653" href="{{route('orderStatus',[$data->orderID,'Delivered'])}}">
-                                    {{ __('Delivered') }}
-                                </a>
+                                <a class="btn text-light" style="background-color: #264653" href="/{{ $currentfile->fileID }}/{{$data->orderID}}">View Details</a>
                             </td>
                         </tr>
                         @endforeach

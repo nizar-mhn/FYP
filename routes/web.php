@@ -43,12 +43,12 @@ Route::group(['middleware' => ['web', 'auth:student'], 'prefix' => 'students'], 
     Route::get('/documents/delete/{documentId}', [App\Http\Controllers\fileController::class, 'destroy'])->name('document.destroy');
 });
 
-Route::group(['middleware' => ['web', 'auth:admin'], 'prefix' => 'admins'], function () {
-    Route::get('/admin_main', [App\Http\Controllers\adminController::class, 'index'])->name('adminMainPage');
-    Route::get('/status/{orderID}/{status}', [App\Http\Controllers\adminController::class, 'status'])->name('orderStatus');
-    Route::get('/admin_report', [App\Http\Controllers\adminController::class, 'report'])->name('adminReport');
-    Route::get('/{fileID}', function ($fileID) {
-        return view('/admin/fileInfo')->with('fileID', $fileID);
+Route::group(['middleware' => ['web', 'auth:admin']], function () {
+    Route::get('admins/admin_main', [App\Http\Controllers\adminController::class, 'index'])->name('adminMainPage');
+    Route::get('admins/status/{orderID}/{status}', [App\Http\Controllers\adminController::class, 'status'])->name('orderStatus');
+    Route::get('admins/admin_report', [App\Http\Controllers\adminController::class, 'report'])->name('adminReport');
+    Route::get('/{fileID}/{orderID}', function ($fileID,$orderID) {
+        return view('/admin/fileInfo')->with('fileID', $fileID)->with('orderID',$orderID);
     });
     Route::get('/download/{orderID}', [App\Http\Controllers\fileController::class, 'download'])->name('pdfDownload');
 });

@@ -23,7 +23,10 @@ $currentFile = DB::table('files')->where('fileID', $fileID)->first();
             <h2 class="pt-4">No. Pages: {{ $currentFile->noPage }}</h2>
 
             <a class="btn text-light" style="background-color: #264653" href="{{route('pdfDownload',[$currentFile->fileID])}}">
-                {{ __('Download') }}
+                {{ __('Download file') }}
+            </a>
+            <a class="btn text-light" style="background-color: #264653" href="{{route('orderStatus',[$orderID,'Delivered'])}}">
+                {{ __('Complete Order') }}
             </a>
         </div>
     </div>
