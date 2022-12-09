@@ -35,6 +35,7 @@ Route::group(['middleware' => ['web', 'auth:student'], 'prefix' => 'students'], 
         return view('/students/fileInfo')->with('fileID', $fileID);
     });
     Route::post('/payment',[App\Http\Controllers\paymentController::class, 'index'])->name('payment');
+    Route::post('/',[App\Http\Controllers\paymentController::class, 'orderCreate'])->name('orderCreate');
     Route::get('/profile', [App\Http\Controllers\profileController::class, 'index'])->name('profile');
     Route::post('/profile', [App\Http\Controllers\profileController::class, 'index'])->name('profile');
     Route::post('/documents/upload', [App\Http\Controllers\fileController::class, 'update'])->name('document.update');

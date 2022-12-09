@@ -52,6 +52,7 @@
                     <h2 class="pt-3">Amount:</h2>
                     <input type="number"  name="amount" style="width:80px" min="1" max="10" required>
                     <div class="d-flex  pt-2" style="width: 400px">
+                        <input type="hidden" name="fileID" value="{{ $currentFile->fileID }}">
                         <button class="btn buyBtn ms-auto text-light" type="submit" value="submit">Order</button>
                     </div>
                     
