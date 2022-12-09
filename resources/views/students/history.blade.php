@@ -21,6 +21,7 @@
         <div class="col"></div>
         <div class="col-8 p-2">
             <h1 class="fw-bold mb-5">History</h1>
+            @if (count($printingInfoID))
             <div class="row align-items-center " style="background-color: #264653; height: 45px">
                 <div class="col-md-2 text-light text-center">
                     Image  
@@ -43,7 +44,7 @@
                 $payment = Payment::where('orderID',$id->orderID)->first();
             @endphp
             <div class="row mt-3 align-items-center orderDetails" style="background-color: #2A9D8F; border-radius:22px">
-                <div class="col-md-2">
+                <div class="col-md-2">  
                     <img src="data:image/png;base64,{{ $file->thumbnail }}" alt="" class="img-fluid p-1 thumbnail border border-2">
                 </div>
                 <div class="col-md-3 text-light">
@@ -66,6 +67,16 @@
                 </div>
             </div>
             @endforeach 
+            @else
+                <div class="row">
+                    <div class="col"></div>
+                    <div class="col-10 text-center pt-5">
+                        <h1><i class="bi bi-clock-history fa-lg"></i></h1>
+                        <h1>You have not ordered anything</h1>
+                    </div>
+                    <div class="col"></div>
+                </div>
+            @endif
         </div>
         <div class="col"></div>
     </div>
