@@ -23,7 +23,9 @@ Route::post('/login', [LoginController::class, 'logout'])->name('logout');
 Route::post('/', [LoginController::class, 'login'])->name('logged');
 
 Route::get('/testing', [App\Http\Controllers\userController::class, 'index']);
-
+Route::get('/map',function(){
+    return view('students.choosePickUp');
+})->name('login');
 Auth::routes();
 
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -34,6 +36,7 @@ Route::group(['middleware' => ['web', 'auth:student'], 'prefix' => 'students'], 
     Route::get('/{fileID}', function ($fileID) {
         return view('/students/fileInfo')->with('fileID', $fileID);
     });
+    Route::post('/pickup',[App\Http\Controllers\paymentController::class, 'chooseLocation'])->name('chooseLocation');
     Route::post('/payment',[App\Http\Controllers\paymentController::class, 'index'])->name('payment');
     Route::post('/',[App\Http\Controllers\paymentController::class, 'orderCreate'])->name('orderCreate');
     Route::get('/profile', [App\Http\Controllers\profileController::class, 'index'])->name('profile');

@@ -39,7 +39,7 @@
             <div class="col-lg-6">
                 <h2 class="fw-bold">{{ $currentFile->fileName }}</h2><hr>
                 <h2 class="pt-3">No. Pages: {{ $currentFile->noPage }}</h2>
-                <form class="pt-4" action="{{ route('payment') }}" method="POST">
+                <form class="pt-4" action="{{ route('chooseLocation') }}" method="POST">
                     @csrf
                     <div class="row">
                         <div class="col">

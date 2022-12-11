@@ -28,6 +28,22 @@ class paymentController extends Controller
         ]);
     }
 
+    public function chooseLocation(Request $request){
+        $bindingType = $request->input('binding-type');
+        $color = $request->input('checkColor','off');
+        $pageFormat = $request->input('pageFormat');
+        $amount = $request->input('amount');
+        $fileID = $request->input('fileID');
+
+        return view('students/choosePickUp', [
+            'bindingType' => $bindingType,
+            'checkColor' => $color,
+            'pageFormat' => $pageFormat,
+            'amount' => $amount,
+            'file' => $fileID,
+        ]);
+    }
+
     public function orderCreate(Request $request){
         
         $createOrder = Order::create([
