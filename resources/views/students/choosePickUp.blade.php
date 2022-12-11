@@ -23,7 +23,8 @@
             <div class="col-lg-6">
                 <h1 class="fw-bold">Choose delivery location</h1>
                 <hr>
-                <form action="" method="POST">
+                <form action="{{ route('payment') }}" method="POST">
+                    @csrf
                     <select class="form-select form-select-lg" name="deliveryLocation" aria-label="" style="width: 300px" id="mapLocationSelect">
                         <option value="SelfPickUp" selected>Self Pickup (Red Bricks)</option>
                         <option value="Block_K">Block K</option>
@@ -32,6 +33,11 @@
                         <option value="Block_C">Block C</option>
                         <option value="Block_R">Block R</option>
                     </select>
+                    <input type="hidden" name="binding-type" value="{{ $bindingType }}">
+                    <input type="hidden" name="checkColor" value="{{ $checkColor }}">
+                    <input type="hidden" name="pageFormat" value="{{ $pageFormat }}">
+                    <input type="hidden" name="amount" value="{{ $amount }}">
+                    <input type="hidden" name="fileID" value="{{ $fileID }}">
                     <div class="row">
                         <div class="col-lg-4 mt-5">
                             <button class="btn submitBtn text-light" type="submit">

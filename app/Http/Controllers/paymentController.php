@@ -18,12 +18,14 @@ class paymentController extends Controller
         $color = $request->input('checkColor','off');
         $pageFormat = $request->input('pageFormat');
         $amount = $request->input('amount');
+        $deliveryLocation = $request->input('deliveryLocation');
         $file = DB::table('files')->where('fileID', $request->input('fileID'))->first();
         return view('students/payment', [
             'bindingType' => $bindingType,
             'checkColor' => $color,
             'pageFormat' => $pageFormat,
             'amount' => $amount,
+            'location' => $deliveryLocation,
             'file' => $file,
         ]);
     }
@@ -40,7 +42,7 @@ class paymentController extends Controller
             'checkColor' => $color,
             'pageFormat' => $pageFormat,
             'amount' => $amount,
-            'file' => $fileID,
+            'fileID' => $fileID,
         ]);
     }
 
@@ -64,6 +66,7 @@ class paymentController extends Controller
             'color' => $request->input('checkColor'),
             'pageFormat' => $request->input('pageFormat'),
             'numCopies' => $request->input('amount'),
+            'location' => $request->input('deliveryLocation'),
         ]);
 
         

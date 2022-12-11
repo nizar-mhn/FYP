@@ -63,6 +63,10 @@ $totalPayPrice =  $totalPricePerCopy * $amount;
                 <h4>Amount:</h4>
                 <h4 class="ms-auto">{{ $amount }} copies</h4>
             </div>
+            <div class="d-flex pb-2">
+                <h4>Delivery location:</h4>
+                <h4 class="ms-auto">{{ str_replace('_',' ',$location) }}</h4>
+            </div>
             <hr>
             <div class="row">
                 <div class="col-md-6">
@@ -75,6 +79,7 @@ $totalPayPrice =  $totalPricePerCopy * $amount;
                         <input type="hidden" value="{{ $checkColor }}" name="checkColor">
                         <input type="hidden" value="{{ $pageFormat }}" name="pageFormat">
                         <input type="hidden" value="{{ $amount }}" name="amount">
+                        <input type="hidden" value="{{ $location }}" name="deliveryLocation">
                         <input type="hidden" value="{{ $totalPayPrice }}" name="totalPrice">
                     </form>
                 </div>

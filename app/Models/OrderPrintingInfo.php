@@ -18,5 +18,6 @@ class OrderPrintingInfo extends Model
         'color',
         'pageFormat',
         'numCopies',
+        'location'
     ];
 }
