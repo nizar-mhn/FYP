@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.supplier')
 <!-- Style -->
 <Style>
     .uploadButton {
@@ -26,7 +26,7 @@
             </div>
             @endif
             @endisset
-            <form action="{{ route('adminReport') }}" method="get" enctype="multipart/form-data">
+            <form action="{{ route('supplierReport') }}" method="get" enctype="multipart/form-data">
                 <div class="row">
                     <label for="join" class="col-md-2 col-form-label text-md-end">{{ __('Start Date') }}</label>
                     <div class="col-md-3">

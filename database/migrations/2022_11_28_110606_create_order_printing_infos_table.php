@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('color');
             $table->string('pageFormat');
             $table->integer('numCopies');
+            $table->string('location');
             $table->foreign('fileID')->references('fileID')->on('files');
 
         });
