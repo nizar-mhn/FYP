@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('mime');
             $table->integer('noPage');
             $table->timestamp('dateUpload',0);
-            $table->string('availability');
+            $table->string('availability')->default('Available');
         });
 
         DB::statement("ALTER TABLE files ADD file MEDIUMBLOB");
