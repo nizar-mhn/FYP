@@ -52,6 +52,10 @@ return [
             'driver' => 'session',
             'provider' => 'staffs',
         ],
+        'supplier' =>[
+            'driver' => 'session',
+            'provider' => 'suppliers',
+        ],
     ],
 
     /*
@@ -85,6 +89,11 @@ return [
         'staffs' => [
             'driver' => 'eloquent',
             'model' => App\Models\Staff::class,
+        ],
+
+        'suppliers' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Supplier::class,
         ],
 
         'users' => [
@@ -123,6 +132,12 @@ return [
         ],
         'staffs' => [
             'provider' => 'staffs',
+            'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'suppliers' => [
+            'provider' => 'suppliers',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,

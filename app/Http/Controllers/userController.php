@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Admin;
+use App\Models\Supplier;
 use App\Models\Staff;
 use App\Models\Student;
 use App\Models\Course;
@@ -24,6 +25,7 @@ class userController extends Controller
         $user->createAdmin();
         $user->createStaff();
         $user->createStudent();
+        $user->createSupplier();
 
         //return redirect()->route('document');
     }
@@ -34,15 +36,24 @@ class userController extends Controller
 class user{
     public function createAdmin()
     {
-        Admin::create([
-            'adminID' => 's1111',
-            'adminName' => 'Lai Man Wai',
+        return Admin::create([
+            'adminID' => 'a1111',
+            'adminName' => 'Super Admin',
+            'password' => Hash::make('admin'),
+        ]);
+    }
+
+    public function createSupplier()
+    {
+        Supplier::create([
+            'supplierID' => 's1111',
+            'supplierName' => 'Lai Man Wai',
             'password' => Hash::make('manwai'),
         ]);
 
-        return Admin::create([
-            'adminID' => 's2222',
-            'adminName' => 'Thomas San',
+        return Supplier::create([
+            'supplierID' => 's2222',
+            'supplierName' => 'Thomas San',
             'password' => Hash::make('thomas'),
             
         ]);

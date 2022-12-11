@@ -13,13 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('payments', function (Blueprint $table) {
-            $table->increments('paymentID');
-            $table->unsignedInteger('orderID');
-            $table->double('totalPrice',10,2);
-            $table->timestamp('paymentDate',0);
-            $table->foreign('orderID')->references('orderID')->on('orders');
-        
+        Schema::create('suppliers', function (Blueprint $table) {
+            $table->id();
+            $table->string('supplierID','10')->unique();
+            $table->string('supplierName','40');
+            $table->string('password');
+            $table->rememberToken();
         });
     }
 
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('payments');
+        Schema::dropIfExists('suppliers');
     }
 };
