@@ -22,6 +22,7 @@ return new class extends Migration
             $table->integer('group');
             $table->string('studentName','40');
             $table->string('password');
+            $table->string('email');
             $table->rememberToken();
             $table->foreign('programID')->references('programID')->on('programs');
 

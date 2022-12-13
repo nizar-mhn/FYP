@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('courseListID');
             $table->string('staffName','40');
             $table->string('password');
+            $table->string('email');
             $table->rememberToken();
 
         });

@@ -87,7 +87,7 @@
                 </div>
             </div>
             @else
-            @isset($error)
+            @isset($info)
             @if($info!="")
             <div class="alert alert-info ms-auto text-center" id="info" role="alert">
                 @php

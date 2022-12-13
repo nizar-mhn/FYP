@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.supplier')
 <style>
     .buyBtn {
         background-color: #E76F51 !important;

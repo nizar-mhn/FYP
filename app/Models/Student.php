@@ -20,6 +20,7 @@ class Student extends Authenticatable
         'group',
         'studentName',
         'password',
+        'email',
         'remember_token'
     ];
 

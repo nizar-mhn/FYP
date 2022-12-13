@@ -17,6 +17,7 @@ class Staff extends Authenticatable
         'courseListID',
         'staffName',
         'password',
+        'email',
         'remember_token'
     ];
 

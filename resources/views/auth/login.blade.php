@@ -56,7 +56,7 @@
                 <div class="row justify-content-center">
                     <div class="col-md-8">
                         <div class="card">
-                            <div class="card-header text-center fs-4">Login</div>
+                            <div class="card-header text-center fs-4">{{ __('Login') }}</div>
 
                             <div class="card-body">
                                 <form method="POST" action="{{ route('logged') }}">
@@ -92,6 +92,12 @@
                                                     {{ __('Remember Me') }}
                                                 </label>
                                             </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <div class="col-md-6 offset-md-4">
+                                           <span>New here? Let's </span><a href="{{route('register')}}">Register</a><span> Now</span>
                                         </div>
                                     </div>
 

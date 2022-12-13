@@ -48,7 +48,7 @@ class user{
         Supplier::create([
             'supplierID' => 's1111',
             'supplierName' => 'Lai Man Wai',
-            'password' => Hash::make('manwai'),
+            'password' => Hash::make('manwai'),   
         ]);
 
         return Supplier::create([
@@ -66,6 +66,7 @@ class user{
             'courseListID' => 1,
             'staffName' => 'Ho Wai Kit',
             'password' => Hash::make('waikit'),
+            'email' => 'chan',
             
         ]);
 
@@ -74,6 +75,7 @@ class user{
             'courseListID' => 1,
             'staffName' => 'Goh Shu Hang',
             'password' => Hash::make('shuhang'),
+            'email' => 'chan',
             
         ]);
 
@@ -82,6 +84,7 @@ class user{
             'courseListID' => 2,
             'staffName' => 'Chew Shen Heng',
             'password' => Hash::make('shenheng'),
+            'email' => 'chan',
             
         ]);
     }
@@ -96,6 +99,7 @@ class user{
             'group' => 7,
             'studentName' => 'Chan Owen',
             'password' => Hash::make('owenowen'),
+            'email' => 'chan',
         ]);
 
         Student::create([
@@ -106,6 +110,7 @@ class user{
             'group' => 7,
             'studentName' => 'Nizar Bin Hamid',
             'password' => Hash::make('owenowen'),
+            'email' => 'chan',
         ]);
 
         return Student::create([
@@ -116,6 +121,7 @@ class user{
             'group' => 2,
             'studentName' => 'Micheal Owen',
             'password' => Hash::make('owenowen'),
+            'email' => 'chan',
         ]);
     }
 
