@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\userController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,11 +22,11 @@ use App\Http\Controllers\Auth\RegisterController;
 Route::get('/', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'logout'])->name('logout');
 Route::post('/', [LoginController::class, 'login'])->name('logged');
-Route::get('/register', [RegisterController::class, 'index'])->name('register');
-Route::get('/register/userInfo', [RegisterController::class, 'selectUser'])->name('selectUser');
-Route::post('/register', [RegisterController::class, 'createUser'])->name('register');
+Route::get('/register', [userController::class, 'index'])->name('register');
+Route::get('/register/userInfo', [userController::class, 'selectUser'])->name('selectUser');
+Route::post('/registerUser', [userController::class, 'createUser'])->name('registerUser');
 
-Route::get('/testing', [App\Http\Controllers\userController::class, 'index']);
+Route::get('/testing', [App\Http\Controllers\userController::class, 'create']);
 Route::get('/map',function(){
     return view('students.choosePickUp');
 })->name('login');

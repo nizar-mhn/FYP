@@ -16,15 +16,12 @@ return new class extends Migration
         Schema::create('students', function (Blueprint $table) {
             $table->id();
             $table->integer('studentID')->unique();
-            $table->unsignedInteger('programID');
-            $table->integer('year');
-            $table->integer('semester');
-            $table->integer('group');
             $table->string('studentName','40');
             $table->string('password');
             $table->string('email');
+            $table->unsignedInteger('programDetailsID');
             $table->rememberToken();
-            $table->foreign('programID')->references('programID')->on('programs');
+            $table->foreign('programDetailsID')->references('programDetailsID')->on('program_details');
 
         });
     }
