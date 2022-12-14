@@ -43,12 +43,12 @@ use App\Models\payment;
             $file = DB::table('files')->where('fileID',$orderInfo->fileID)->first();
             $payment = Payment::where('orderID',$id->orderID)->first();
             @endphp
-            <div class="row mt-3 align-items-center orderDetails" style="background-color: #2A9D8F; border-radius:22px">
+            <div class="row mt-3 align-items-center orderDetails p-2" style="background-color: #2A9D8F; border-radius:22px">
                 <div class="col-md-2">
                     <img src="data:image/png;base64,{{ $file->thumbnail }}" alt="" class="img-fluid p-1 thumbnail border border-2">
                 </div>
                 <div class="col-md-3 text-light">
-                    <h5 class="fw-bold">{{ $file->fileName }}</h5>
+                    <h5 class="fw-bold text-break">{{ $file->fileName }}</h5>
                     <p>Binding Type: {{ str_replace('_',' ',$orderInfo->bindingType) }}</p>
                     @if($orderInfo->color=="on")
                     <p>Color: Yes</p>

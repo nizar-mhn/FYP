@@ -92,7 +92,7 @@
                                         @endphp
                                         <div class="col">
                                             <div class="card">
-                                                <div class="card-header text-light" style="background-color: #2A9D8F">
+                                                <div class="card-header text-light text-break" style="background-color: #2A9D8F">
                                                     <small class=" text-light">{{ $currentFile->fileName }}</small>
                                                 </div>
                                                 <a href="/students/{{ $currentFile->fileID }}">
