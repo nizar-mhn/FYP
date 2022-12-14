@@ -92,13 +92,20 @@
                                         @endphp
                                         <div class="col">
                                             <div class="card">
+                                                <div class="card-header text-light" style="background-color: #2A9D8F">
+                                                    <small class=" text-light">{{ $currentFile->fileName }}</small>
+                                                </div>
                                                 <a href="/students/{{ $currentFile->fileID }}">
                                                     <img src="data:image/png;base64,{{ $currentFile->thumbnail }}"
                                                         class="card-img-top" alt="..."
                                                         style="height: 100px; object-fit: cover;">
                                                 </a>
-                                                <div class="card-footer" style="background-color:#2A9D8F">
-                                                    <small class=" text-light">{{ $currentFile->fileName }}</small>
+                                                <div class="card-footer text-light" style="background-color:#2A9D8F">
+                                                    @php
+                                                        $dateTime = explode(' ', $currentFile->dateUpload) 
+                                                    @endphp
+                                                    Date: {{ $dateTime[0] }} <br>
+                                                    Time: {{ $dateTime[1] }}
                                                 </div>
                                             </div>
                                         </div>
