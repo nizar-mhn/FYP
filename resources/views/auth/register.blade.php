@@ -70,9 +70,9 @@
                                         </label>
                                     </div>
                                     <div class="form-check form-check-inline mb-3">
-                                        <input class="form-check-input" type="radio" name="user" id="user2" value="Lecturer">
+                                        <input class="form-check-input" type="radio" name="user" id="user2" value="Staff">
                                         <label class="form-check-label" for="user2">
-                                            Lecturer
+                                            Staff
                                         </label>
                                     </div>
 
@@ -88,21 +88,50 @@
                             @else
                             <div class="card-header text-center fs-4">{{ __('Register as ') }}{{$user}}</div>
                             @if($user=='Student')
+                            @if(!isset($prog))
                             <div class="card-body">
-                                <form method="POST" action="{{ route('registerUser') }}">
+                                <form class="text-center" method="GET" action="{{route('selectProgram')}}">
+                                    <div class="row mb-3">
+                                        <label for="prog" class="col-md-4 col-form-label text-md-end">{{ __('Program Name') }}</label>
+
+                                        <div class="col-md-6">
+                                            <select name="prog" id="prog" class="form-select" required>
+                                                @foreach ($programs as $data)
+                                                <option value="{{$data->programID}}">{{$data->programName}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-0">
+                                        <div>
+                                            <input type="hidden" name="user" value="{{$user}}">
+                                            <button type="submit" class="btn btn-primary">
+                                                {{ __('Next') }}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            @else
+                            <div class="card-body">
+                                <form method="GET" action="{{ route('validation') }}">
                                     @csrf
 
                                     <div class="row mb-3">
                                         <label for="studentID" class="col-md-4 col-form-label text-md-end">{{ __('Student ID') }}</label>
 
                                         <div class="col-md-6">
-                                            <input id="studentID" type="text" class="form-control @error('studentID') is-invalid @enderror" name="studentID" value="{{ old('studentID') }}" required autocomplete="studentID" autofocus placeholder="eg. 2105086">
-
-                                            @error('studentID')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
+                                            @if(isset($userID))
+                                            <input id="studentID" type="text" class="form-control" name="studentID" value="{{ $userID }}" required autocomplete="studentID" autofocus placeholder="eg. 2105086">
+                                            @else
+                                            <input id="studentID" type="text" class="form-control" name="studentID" value="" required autocomplete="studentID" autofocus placeholder="eg. 2105086">
+                                            @endif
+                                            @if(isset($errorID))
+                                            <div class="alert-danger alert">
+                                                {{ $errorID }}
+                                            </div>
+                                            @endif
                                         </div>
                                     </div>
 
@@ -110,13 +139,16 @@
                                         <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
 
                                         <div class="col-md-6">
-                                            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus placeholder="eg. Alex Chong">
-
-                                            @error('name')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
+                                            @if(isset($name))
+                                            <input id="name" type="text" class="form-control" name="name" value="{{ $name }}" required autocomplete="name" autofocus placeholder="eg. Alex Chong">
+                                            @else
+                                            <input id="name" type="text" class="form-control" name="name" value="" required autocomplete="name" autofocus placeholder="eg. Alex Chong">
+                                            @endif
+                                            @if(isset($errorName))
+                                            <div class="alert-danger alert">
+                                                {{ $errorName }}
+                                            </div>
+                                            @endif
                                         </div>
                                     </div>
 
@@ -124,31 +156,16 @@
                                         <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
 
                                         <div class="col-md-6">
-                                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="eg. alex@gmail.com">
-
-                                            @error('email')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="row mb-3">
-                                        <label for="progName" class="col-md-4 col-form-label text-md-end">{{ __('Program Name') }}</label>
-
-                                        <div class="col-md-6">
-                                            <select name="progName" id="progName" class="form-select" required>
-                                                <option selected disabled value="0">Choose your Program</option>
-                                                @foreach ($programs as $data)
-                                                <option value="{{$data->programID}}">{{$data->programName}}</option>
-                                                @endforeach
-                                            </select>
-
-                                            @error('progName')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
+                                            @if(isset($name))
+                                            <input id="email" type="email" class="form-control" name="email" value="{{ $email }}" required autocomplete="email" placeholder="eg. alex@gmail.com">
+                                            @else
+                                            <input id="email" type="email" class="form-control" name="email" value="" required autocomplete="email" placeholder="eg. alex@gmail.com">
+                                            @endif
+                                            @if(isset($errorEmail))
+                                            <div class="alert-danger alert">
+                                                {{ $errorEmail }}
+                                            </div>
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="row mb-3">
@@ -157,17 +174,20 @@
 
                                         <div class="col-md-6">
                                             <select name="year" id="year" class="form-select" required>
-                                                <option selected disabled value="0">Choose your Year</option>
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
+                                                @if(isset($year))
+                                                @foreach ($programDetails as $data)
+                                                @if($year == $data->year)
+                                                <option value="{{$data->year}}" selected>{{$data->year}}</option>
+                                                @else
+                                                <option value="{{$data->year}}">{{$data->year}}</option>
+                                                @endif
+                                                @endforeach
+                                                @else
+                                                @foreach ($programDetails as $data)
+                                                <option value="{{$data->year}}">{{$data->year}}</option>
+                                                @endforeach
+                                                @endif
                                             </select>
-
-                                            @error('year')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
                                         </div>
                                     </div>
                                     <div class="row mb-3">
@@ -175,16 +195,20 @@
 
                                         <div class="col-md-6">
                                             <select name="sem" id="sem" class="form-select" required>
-                                                <option selected disabled value="0">Choose your Semester</option>
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
+                                                @if(isset($sem))
+                                                @foreach ($programDetailsSem as $data)
+                                                @if($sem == $data->semester)
+                                                <option value="{{$data->semester}}" selected>{{$data->semester}}</option>
+                                                @else
+                                                <option value="{{$data->semester}}">{{$data->semester}}</option>
+                                                @endif
+                                                @endforeach
+                                                @else
+                                                @foreach ($programDetailsSem as $data)
+                                                <option value="{{$data->semester}}">{{$data->semester}}</option>
+                                                @endforeach
+                                                @endif
                                             </select>
-                                            @error('sem')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
                                         </div>
                                     </div>
 
@@ -192,13 +216,13 @@
                                         <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
 
                                         <div class="col-md-6">
-                                            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password" placeholder="min 8 characters, 1 uppercase, 1 lowercase, 1 number">
+                                            <input id="password" type="password" class="form-control" name="password" required autocomplete="new-password" placeholder="min 8 characters, 1 uppercase, 1 lowercase, 1 number">
 
-                                            @error('password')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
+                                            @if(isset($errorPassword))
+                                            <div class="alert-danger alert">
+                                                {{ $errorPassword }}
+                                            </div>
+                                            @endif
                                         </div>
                                     </div>
 
@@ -207,12 +231,19 @@
 
                                         <div class="col-md-6">
                                             <input id="password-confirm" type="password" class="form-control" name="confirmPassword" required autocomplete="new-password">
+
+                                            @if(isset($errorConfirmPass))
+                                            <div class="alert-danger alert">
+                                                {{ $errorConfirmPass }}
+                                            </div>
+                                            @endif
                                         </div>
                                     </div>
 
                                     <div class="row mb-0">
                                         <div class="col-md-6 offset-md-4">
-                                            <input type="hidden" name="user" value="student">
+                                            <input type="hidden" name="prog" value="{{$prog}}">
+                                            <input type="hidden" name="user" value="{{$user}}">
                                             <button type="submit" class="btn btn-primary">
                                                 {{ __('Register') }}
                                             </button>
@@ -220,22 +251,27 @@
                                     </div>
                                 </form>
                             </div>
-                            @elseif($user=='Lecturer')
+                            @endif
+
+                            @elseif($user=='Staff')
                             <div class="card-body">
-                                <form method="POST" action="{{ route('registerUser') }}">
+                                <form method="GET" action="{{ route('validation') }}">
                                     @csrf
 
                                     <div class="row mb-3">
                                         <label for="staffID" class="col-md-4 col-form-label text-md-end">{{ __('Staff ID') }}</label>
 
                                         <div class="col-md-6">
-                                            <input id="staffID" type="text" class="form-control @error('staffID') is-invalid @enderror" name="staffID" value="{{ old('staffID') }}" required autocomplete="staffID" autofocus>
-
-                                            @error('staffID')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
+                                            @if(isset($userID))
+                                            <input id="staffID" type="text" class="form-control" name="staffID" value="{{ $userID }}" required autocomplete="studentID" autofocus placeholder="eg. p1234">
+                                            @else
+                                            <input id="staffID" type="text" class="form-control" name="staffID" value="" required autocomplete="studentID" autofocus placeholder="eg. p1234">
+                                            @endif
+                                            @if(isset($errorID))
+                                            <div class="alert-danger alert">
+                                                {{ $errorID }}
+                                            </div>
+                                            @endif
                                         </div>
                                     </div>
 
@@ -243,13 +279,16 @@
                                         <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
 
                                         <div class="col-md-6">
-                                            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-
-                                            @error('name')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
+                                            @if(isset($name))
+                                            <input id="name" type="text" class="form-control" name="name" value="{{ $name }}" required autocomplete="name" autofocus placeholder="eg. Alex Chong">
+                                            @else
+                                            <input id="name" type="text" class="form-control" name="name" value="" required autocomplete="name" autofocus placeholder="eg. Alex Chong">
+                                            @endif
+                                            @if(isset($errorName))
+                                            <div class="alert-danger alert">
+                                                {{ $errorName }}
+                                            </div>
+                                            @endif
                                         </div>
                                     </div>
 
@@ -257,27 +296,41 @@
                                         <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
 
                                         <div class="col-md-6">
-                                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-
-                                            @error('email')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
+                                            @if(isset($name))
+                                            <input id="email" type="email" class="form-control" name="email" value="{{ $email }}" required autocomplete="email" placeholder="eg. alex@gmail.com">
+                                            @else
+                                            <input id="email" type="email" class="form-control" name="email" value="" required autocomplete="email" placeholder="eg. alex@gmail.com">
+                                            @endif
+                                            @if(isset($errorEmail))
+                                            <div class="alert-danger alert">
+                                                {{ $errorEmail }}
+                                            </div>
+                                            @endif
                                         </div>
                                     </div>
 
                                     <div class="row mb-3">
-                                        <label for="course" class="col-md-4 col-form-label text-md-end">{{ __('Course') }}</label>
+                                        <label for="course" class="col-md-4 col-form-label text-md-end">{{ __('Courses') }}</label>
 
                                         <div class="col-md-6">
-                                            <input id="course" type="text" class="form-control @error('course') is-invalid @enderror" name="course" value="{{ old('course') }}" required autocomplete="course">
+                                            <select name="course[]" id="course" class="form-select" required multiple>
+                                                <option disabled>You may select multiple Courses by CTRL+Click</option>
+                                                @if(isset($course))
 
-                                            @error('course')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
+                                                @foreach ($courses as $data)
+                                                @if(in_array($data->courseID,$course))
+                                                <option value="{{$data->courseID}}" selected>{{$data->courseCode}} - {{$data->courseName}}</option>
+                                                @else
+                                                <option value="{{$data->courseID}}">{{$data->courseCode}} - {{$data->courseName}}</option>
+                                                @endif
+                                                @endforeach
+                                                
+                                                @else
+                                                @foreach ($courses as $data)
+                                                <option value="{{$data->courseID}}">{{$data->courseCode}} - {{$data->courseName}}</option>
+                                                @endforeach
+                                                @endif
+                                            </select>
                                         </div>
                                     </div>
 
@@ -285,13 +338,13 @@
                                         <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
 
                                         <div class="col-md-6">
-                                            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                                            <input id="password" type="password" class="form-control" name="password" required autocomplete="new-password" placeholder="min 8 characters, 1 uppercase, 1 lowercase, 1 number">
 
-                                            @error('password')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
+                                            @if(isset($errorPassword))
+                                            <div class="alert-danger alert">
+                                                {{ $errorPassword }}
+                                            </div>
+                                            @endif
                                         </div>
                                     </div>
 
@@ -299,13 +352,19 @@
                                         <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
 
                                         <div class="col-md-6">
-                                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                            <input id="password-confirm" type="password" class="form-control" name="confirmPassword" required autocomplete="new-password">
+
+                                            @if(isset($errorConfirmPass))
+                                            <div class="alert-danger alert">
+                                                {{ $errorConfirmPass }}
+                                            </div>
+                                            @endif
                                         </div>
                                     </div>
 
                                     <div class="row mb-0">
                                         <div class="col-md-6 offset-md-4">
-                                            <input type="hidden" name="user" value="lecturer">
+                                            <input type="hidden" name="user" value="{{$user}}">
                                             <button type="submit" class="btn btn-primary">
                                                 {{ __('Register') }}
                                             </button>

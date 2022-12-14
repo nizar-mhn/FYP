@@ -23,7 +23,10 @@ Route::get('/', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'logout'])->name('logout');
 Route::post('/', [LoginController::class, 'login'])->name('logged');
 Route::get('/register', [userController::class, 'index'])->name('register');
-Route::get('/register/userInfo', [userController::class, 'selectUser'])->name('selectUser');
+Route::get('/register/userProg', [userController::class, 'selectUser'])->name('selectUser');
+Route::get('/register/userInfo', [userController::class, 'selectProg'])->name('selectProgram');
+Route::get('/register/userError', [userController::class, 'validation'])->name('validation');
+//Route::get('/register/staffError', [userController::class, 'validationStaff'])->name('validationStaff');
 Route::post('/registerUser', [userController::class, 'createUser'])->name('registerUser');
 
 Route::get('/testing', [App\Http\Controllers\userController::class, 'create']);
