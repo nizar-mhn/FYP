@@ -17,8 +17,8 @@ class fileController extends Controller
 {
     public function index()
     {
-        $currentUserProgram = Auth::user()->programID;
-        $currentProgramCourseListID = DB::table('programs')->where('programID',$currentUserProgram)->value('courseListID');
+        $currentUserProgramDetailsID = Auth::user()->programDetailsID;
+        $currentProgramCourseListID = DB::table('program_details')->where('programDetailsID',$currentUserProgramDetailsID)->value('courseListID');
         $listOfCoursesForCourseListID = DB::table('course_lists')->where('courseListID',$currentProgramCourseListID)->get();
         $files = File::all();
 

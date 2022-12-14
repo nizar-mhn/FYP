@@ -26,10 +26,10 @@ use App\Models\payment;
                 <div class="col-md-2 text-light text-center">
                     Image
                 </div>
-                <div class="col-md-3 text-light text-center">
+                <div class="col-md-4 text-light text-center">
                     Order Info
                 </div>
-                <div class="col-md-2 offset-md-3 text-light">
+                <div class="col-md-2 text-light">
                     Price
                 </div>
                 <div class="col-md-2 text-light">
@@ -47,7 +47,7 @@ use App\Models\payment;
                 <div class="col-md-2">
                     <img src="data:image/png;base64,{{ $file->thumbnail }}" alt="" class="img-fluid p-1 thumbnail border border-2">
                 </div>
-                <div class="col-md-3 text-light">
+                <div class="col-md-4 text-light">
                     <h5 class="fw-bold text-break">{{ $file->fileName }}</h5>
                     <p>Binding Type: {{ str_replace('_',' ',$orderInfo->bindingType) }}</p>
                     @if($orderInfo->color=="on")
@@ -62,7 +62,7 @@ use App\Models\payment;
                     @endif
                     <p>Number of Copies: {{ $orderInfo->numCopies }}</p>
                 </div>
-                <div class="col-md-2 offset-md-3 text-light">
+                <div class="col-md-2 text-light">
                     <h4>Price: </h4>
                     <h4>RM {{number_format((float)$payment->totalPrice, 2, '.', '')}}</h4>
                 </div>
