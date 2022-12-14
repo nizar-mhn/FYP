@@ -14,13 +14,10 @@ class Student extends Authenticatable
 
     protected $fillable = [
         'studentID',
-        'programID',
-        'year',
-        'semester',
-        'group',
         'studentName',
         'password',
         'email',
+        'programDetailsID',
         'remember_token'
     ];
 

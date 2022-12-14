@@ -50,15 +50,6 @@
                     {{ Auth::user()->semester }}
                     </div>
                 </div>
-                <hr>
-                <div class="row p-2">
-                    <div class="col-md-6">
-                        Tutorial Group
-                    </div>
-                    <div class="col-md-6">
-                    {{ Auth::user()->group }}
-                    </div>
-                </div>
             </div>
             <div class="container-fluid" style="background-color: #2A9D8F; height:10px">
             </div>
