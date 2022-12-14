@@ -33,7 +33,7 @@ class invoiceController extends Controller
 
         $client = new Party([
             'name'=> 'TARUMT Printing',
-            'phone' => '03-232423123',
+            'phone' => '03-4145 0123',
 
         ]);
 
@@ -105,7 +105,7 @@ class invoiceController extends Controller
 
         $client = new Party([
             'name'=> 'TARUMT Printing',
-            'phone' => '03-232423123',
+            'phone' => '03-4145 0123',
 
         ]);
 
@@ -148,6 +148,7 @@ class invoiceController extends Controller
             ->currencyFormat('{SYMBOL}{VALUE}')
             ->currencyThousandsSeparator(',')
             ->currencyDecimalPoint('.')
+            ->name('Receipt')
             ->payUntilDays(0)
             ->filename('Order:#'.$request->orderID.'_Customer:'.Auth::user()->studentName)
             ->logo(public_path('image/logoPrintingTransparent.png'))
