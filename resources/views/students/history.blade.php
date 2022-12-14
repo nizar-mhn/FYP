@@ -6,12 +6,12 @@ use App\Models\payment;
     .orderDetails:hover {
         background-color: #264653 !important;
     }
-
-    .filterButtons button:hover {
-        background-color: #2A9D8F !important;
+    
+    .invoiceBtn{
+        background-color: #E76F51 !important;
     }
 
-    .searchButton:hover {
+    .invoiceBtn:hover{
         background-color: #F4A261 !important;
     }
 </style>
@@ -34,6 +34,9 @@ use App\Models\payment;
                 </div>
                 <div class="col-md-2 text-light">
                     Status
+                </div>
+                <div class="col-md-2 text-light">
+                    Receipt
                 </div>
             </div>
             @foreach ($printingInfoID as $id)
@@ -67,7 +70,37 @@ use App\Models\payment;
                     <h4>RM {{number_format((float)$payment->totalPrice, 2, '.', '')}}</h4>
                 </div>
                 <div class="col-md-2 text-light">
-                    {{ $id->status }}
+                    <p class="fw-bold">{{ $id->status }}</p>
+                </div>
+                <div class="col-md-2">
+                    <form action="{{ route('invoiceView') }}" method="post">
+                        @csrf
+                        <input type="hidden" name="orderID" value="{{ $id->orderID }}">
+                        <input type="hidden" name="orderDate" value="{{ $id->orderDate }}">
+                        <input type="hidden" name="fileName" value="{{ $file->fileName }}">
+                        <input type="hidden" name="bindingType" value="{{ str_replace('_',' ',$orderInfo->bindingType) }}">
+                        <input type="hidden" name="color" value="{{ $orderInfo->color }}">
+                        <input type="hidden" name="pageFormat" value="{{ $orderInfo->pageFormat }}">
+                        <input type="hidden" name="numCopies" value="{{ $orderInfo->numCopies }}">
+                        <input type="hidden" name="location" value="{{ $orderInfo->location }}">
+                        <input type="hidden" name="noPage" value="{{ $file->noPage }}">
+                        <input type="hidden" name="price" value="{{number_format((float)$payment->totalPrice, 2, '.', '')}}">
+                        <button class="btn text-light invoiceBtn" type="submit">View</button>
+                    </form>
+                    <form action="{{ route('downloadInvoice') }}" method="post">
+                        @csrf
+                        <input type="hidden" name="orderID" value="{{ $id->orderID }}">
+                        <input type="hidden" name="orderDate" value="{{ $id->orderDate }}">
+                        <input type="hidden" name="fileName" value="{{ $file->fileName }}">
+                        <input type="hidden" name="bindingType" value="{{ str_replace('_',' ',$orderInfo->bindingType) }}">
+                        <input type="hidden" name="color" value="{{ $orderInfo->color }}">
+                        <input type="hidden" name="pageFormat" value="{{ $orderInfo->pageFormat }}">
+                        <input type="hidden" name="numCopies" value="{{ $orderInfo->numCopies }}">
+                        <input type="hidden" name="location" value="{{ $orderInfo->location }}">
+                        <input type="hidden" name="noPage" value="{{ $file->noPage }}">
+                        <input type="hidden" name="price" value="{{number_format((float)$payment->totalPrice, 2, '.', '')}}">
+                        <button class="btn text-light invoiceBtn" type="submit">Download</button>
+                    </form>
                 </div>
             </div>
             @endforeach

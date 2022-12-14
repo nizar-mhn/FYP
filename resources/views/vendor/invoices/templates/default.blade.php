@@ -149,7 +149,7 @@
                             </h4>
                         @endif
                         <p>{{ __('invoices::invoice.serial') }} <strong>{{ $invoice->getSerialNumber() }}</strong></p>
-                        <p>{{ __('invoices::invoice.date') }}: <strong>{{ $invoice->getDate() }}</strong></p>
+                        <p>Order date: <strong>{{ $invoice->getDate() }}</strong></p>
                     </td>
                 </tr>
             </tbody>
@@ -367,9 +367,7 @@
         <p>
             {{ trans('invoices::invoice.amount_in_words') }}: {{ $invoice->getTotalAmountInWords() }}
         </p>
-        <p>
-            {{ trans('invoices::invoice.pay_until') }}: {{ $invoice->getPayUntilDate() }}
-        </p>
+    
 
         <script type="text/php">
             if (isset($pdf) && $PAGE_COUNT > 1) {

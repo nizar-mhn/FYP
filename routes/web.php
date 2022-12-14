@@ -40,6 +40,8 @@ Route::group(['middleware' => ['web', 'auth:student'], 'prefix' => 'students'], 
     Route::get('/{fileID}', function ($fileID) {
         return view('/students/fileInfo')->with('fileID', $fileID);
     });
+    Route::post('/invoiceView',[App\Http\Controllers\invoiceController::class,'viewInvoice'])->name('invoiceView');
+    Route::post('/history',[App\Http\Controllers\invoiceController::class,'downloadInvoice'])->name('downloadInvoice');
     Route::post('/pickup',[App\Http\Controllers\paymentController::class, 'chooseLocation'])->name('chooseLocation');
     Route::post('/payment',[App\Http\Controllers\paymentController::class, 'index'])->name('payment');
     Route::post('/',[App\Http\Controllers\paymentController::class, 'orderCreate'])->name('orderCreate');
