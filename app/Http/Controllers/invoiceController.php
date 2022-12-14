@@ -113,8 +113,8 @@ class invoiceController extends Controller
             'name' => Auth::user()->studentName,
             'custom_fields'=>[
                 'email' => Auth::user()->email,
-                'student id' => Auth::user()->studentID,
-                'order id'=> $request->orderID,
+                'student ID' => Auth::user()->studentID,
+                'order ID'=> $request->orderID,
                 'Deliver location' => $request->location,
             ],
         ]);
