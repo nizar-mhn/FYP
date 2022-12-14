@@ -12,6 +12,7 @@ use App\Models\Course;
 use App\Models\Program;
 use App\Models\ProgramDetails;
 use App\Models\CourseList;
+use Illuminate\Support\Facades\DB;
 
 
 class userController extends Controller
@@ -26,7 +27,7 @@ class userController extends Controller
         $user->createProgDetails();
         $user->createAdmin();
         $user->createStaff();
-        $user->createStudent();
+        //$user->createStudent();
         $user->createSupplier();
     }
 
@@ -39,43 +40,113 @@ class userController extends Controller
     {
         if ($request->input('user') != null) {
             $this->data['programs'] = Program::all();
-            return view('auth.register', $this->data)->with('user', $request->input('user'));
+            $this->data['user'] = $request->input('user');
+            return view('auth.register', $this->data);
         }
     }
 
-    public function createUser(Request $request)
+    public function selectProg(Request $request)
     {
-        if ($request->input('user') == "student") {
+        if ($request->input('prog') != null) {
+            $this->data['user'] = $request->input('user');
+            $this->data['prog'] = $request->input('prog');
+            $this->data['programDetails'] = DB::table('program_details')->where('programID', '=', $request->input('prog'))->groupBy('year')->get();
+            $this->data['programDetailsSem'] = DB::table('program_details')->where('programID', '=', $request->input('prog'))->groupBy('semester')->get();
+            return view('auth.register', $this->data);
+        }
+    }
 
-            $this->data['error'] = "";
+    public function validation(Request $request)
+    {
+        if ($request->input('user') == "Student") {
 
-            $userID = $request->input('studentID');
-            $name = $request->input('name');
-            $email = $request->input('email');
-            $program = $request->input('progName');
-            $year = $request->input('year');
-            $sem = $request->input('sem');
-            $group = $request->input('group');
-            $password = $request->input('password');
-            $confirmPassword = $request->input('confirmPassword');
+            $error = false;
+            $this->data['userID'] = $request->input('studentID');
+            $this->data['name'] = $request->input('name');
+            $this->data['email'] = $request->input('email');
+            $this->data['prog'] = $request->input('prog');
+            $this->data['year'] = $request->input('year');
+            $this->data['sem'] = $request->input('sem');
+            $this->data['password'] = $request->input('password');
+            $this->data['confirmPassword'] = $request->input('confirmPassword');
+
+            //Name
+            if ($this->data['name'] == null) {
+                $this->data['errorName'] = "Please enter your Name.";
+                $error = true;
+            } else if (!preg_match("/^[a-zA-Z ]*$/", $this->data['name'])) {
+                $this->data['errorName'] = "Only alphabets and white space are allowed";
+                $error = true;
+            }
+
+            //ID
+            if ($this->data['userID'] == null) {
+                $this->data['errorID'] = "Please enter your Student ID.";
+                $error = true;
+            } else if (strlen($this->data['userID']) != 7) {
+                $this->data['errorID'] = "Invalid Student ID.";
+                $error = true;
+            }
+
+            //email
+            if ($this->data['email'] == null) {
+                $this->data['errorEmail'] = "Please enter your Email";
+                $error = true;
+            } elseif (!filter_var($this->data['email'], FILTER_VALIDATE_EMAIL)) {
+                $this->data['errorEmail'] = "Email Must be a valid email address.";
+                $error = true;
+            }
+
+            //password
+            if ($this->data['password'] == null) {
+                $this->data['errorPassword'] = "Please enter your Password.";
+                $error = true;
+            } elseif (!preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/", $this->data['password'])) {
+                $this->data['errorPassword'] = "Minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter and 1 number.";
+                $error = true;
+            }
+            //confirm password
+            if ($this->data['confirmPassword'] == null) {
+                $this->data['errorConfirmPass'] = "Please enter your Confirm Password.";
+                $error = true;
+            } elseif ($this->data['confirmPassword'] != $this->data['password']) {
+                $this->data['errorConfirmPass'] = "Please enter the same Password for the Confirm Password.";
+                $error = true;
+            }
 
 
+            if ($error) {
+                $this->data['user'] = $request->input('user');
+                $this->data['prog'] = $request->input('prog');
+                $this->data['programDetails'] = DB::table('program_details')->where('programID', '=', $request->input('prog'))->groupBy('year')->get();
+                $this->data['programDetailsSem'] = DB::table('program_details')->where('programID', '=', $request->input('prog'))->groupBy('semester')->get();
+                return view('auth.register', $this->data);
+                //return redirect()->route('selectProgram',$this->data)->with('user', $request->input('user'))->with('prog', $request->input('prog'));
+                //return view('auth.register', $this->data)->with('user', $request->input('user'))->with('prog', $request->input('prog'));
+            } else {
+                $programDetailsID = ProgramDetails::where('programID', '=', $this->data['prog'])->where('year', '=', $this->data['year'])->where('semester', '=', $this->data['sem'])->first();
+
+                Student::create([
+                    'studentID' => $this->data['userID'],
+                    'studentName' => $this->data['name'],
+                    'password' => Hash::make($this->data['password']),
+                    'email' => $this->data['email'],
+                    'programDetailsID' => $programDetailsID->programDetailsID,
+                ]);
 
 
-            // Student::create([
-            //     'studentID' => '2105086',
-            //     'programID' => 1,
-            //     'year' => 3,
-            //     'semester' => 2,
-            //     'group' => 7,
-            //     'studentName' => 'Chan Owen',
-            //     'password' => Hash::make('owenowen'),
-            //     'email' => 'chan',
-            // ]);
-        } elseif ($request->input('user') == "lecturer") {
+                return redirect()->route('login')->with('info', 'You have register successfully.');
+            }
+        } elseif ($request->input('user') == "Staff") {
             dd('234');
         } else {
         }
+    }
+
+
+    public function validationStaff(Request $request)
+    {
+
 
         //return view('auth.register');
     }

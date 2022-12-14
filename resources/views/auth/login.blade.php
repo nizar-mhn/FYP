@@ -68,6 +68,11 @@
                                             <strong>{{ session('danger') }}</strong>
                                         </span>
                                         @endif
+                                        @if(session('info'))
+                                        <span class="alert alert-info text-center">
+                                            <strong>{{ session('info') }}</strong>
+                                        </span>
+                                        @endif
                                         <label for="id" class="col-md-4 col-form-label text-md-end">{{ __('Login ID') }}</label>
 
                                         <div class="col-md-6">
