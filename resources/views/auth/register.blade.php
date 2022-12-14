@@ -187,7 +187,6 @@
                                                 <option value="{{$data->year}}">{{$data->year}}</option>
                                                 @endforeach
                                                 @endif
-
                                             </select>
                                         </div>
                                     </div>
@@ -210,11 +209,6 @@
                                                 @endforeach
                                                 @endif
                                             </select>
-                                            @error('sem')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
                                         </div>
                                     </div>
 
@@ -268,13 +262,16 @@
                                         <label for="staffID" class="col-md-4 col-form-label text-md-end">{{ __('Staff ID') }}</label>
 
                                         <div class="col-md-6">
-                                            <input id="staffID" type="text" class="form-control @error('staffID') is-invalid @enderror" name="staffID" value="{{ old('staffID') }}" required autocomplete="staffID" autofocus>
-
-                                            @error('staffID')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
+                                            @if(isset($userID))
+                                            <input id="staffID" type="text" class="form-control" name="staffID" value="{{ $userID }}" required autocomplete="studentID" autofocus placeholder="eg. p1234">
+                                            @else
+                                            <input id="staffID" type="text" class="form-control" name="staffID" value="" required autocomplete="studentID" autofocus placeholder="eg. p1234">
+                                            @endif
+                                            @if(isset($errorID))
+                                            <div class="alert-danger alert">
+                                                {{ $errorID }}
+                                            </div>
+                                            @endif
                                         </div>
                                     </div>
 
@@ -282,13 +279,16 @@
                                         <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
 
                                         <div class="col-md-6">
-                                            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-
-                                            @error('name')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
+                                            @if(isset($name))
+                                            <input id="name" type="text" class="form-control" name="name" value="{{ $name }}" required autocomplete="name" autofocus placeholder="eg. Alex Chong">
+                                            @else
+                                            <input id="name" type="text" class="form-control" name="name" value="" required autocomplete="name" autofocus placeholder="eg. Alex Chong">
+                                            @endif
+                                            @if(isset($errorName))
+                                            <div class="alert-danger alert">
+                                                {{ $errorName }}
+                                            </div>
+                                            @endif
                                         </div>
                                     </div>
 
@@ -296,27 +296,41 @@
                                         <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
 
                                         <div class="col-md-6">
-                                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-
-                                            @error('email')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
+                                            @if(isset($name))
+                                            <input id="email" type="email" class="form-control" name="email" value="{{ $email }}" required autocomplete="email" placeholder="eg. alex@gmail.com">
+                                            @else
+                                            <input id="email" type="email" class="form-control" name="email" value="" required autocomplete="email" placeholder="eg. alex@gmail.com">
+                                            @endif
+                                            @if(isset($errorEmail))
+                                            <div class="alert-danger alert">
+                                                {{ $errorEmail }}
+                                            </div>
+                                            @endif
                                         </div>
                                     </div>
 
                                     <div class="row mb-3">
-                                        <label for="course" class="col-md-4 col-form-label text-md-end">{{ __('Course') }}</label>
+                                        <label for="course" class="col-md-4 col-form-label text-md-end">{{ __('Courses') }}</label>
 
                                         <div class="col-md-6">
-                                            <input id="course" type="text" class="form-control @error('course') is-invalid @enderror" name="course" value="{{ old('course') }}" required autocomplete="course">
+                                            <select name="course[]" id="course" class="form-select" required multiple>
+                                                <option disabled>You may select multiple Courses by CTRL+Click</option>
+                                                @if(isset($course))
 
-                                            @error('course')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
+                                                @foreach ($courses as $data)
+                                                @if(in_array($data->courseID,$course))
+                                                <option value="{{$data->courseID}}" selected>{{$data->courseCode}} - {{$data->courseName}}</option>
+                                                @else
+                                                <option value="{{$data->courseID}}">{{$data->courseCode}} - {{$data->courseName}}</option>
+                                                @endif
+                                                @endforeach
+                                                
+                                                @else
+                                                @foreach ($courses as $data)
+                                                <option value="{{$data->courseID}}">{{$data->courseCode}} - {{$data->courseName}}</option>
+                                                @endforeach
+                                                @endif
+                                            </select>
                                         </div>
                                     </div>
 
@@ -324,13 +338,13 @@
                                         <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
 
                                         <div class="col-md-6">
-                                            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                                            <input id="password" type="password" class="form-control" name="password" required autocomplete="new-password" placeholder="min 8 characters, 1 uppercase, 1 lowercase, 1 number">
 
-                                            @error('password')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
+                                            @if(isset($errorPassword))
+                                            <div class="alert-danger alert">
+                                                {{ $errorPassword }}
+                                            </div>
+                                            @endif
                                         </div>
                                     </div>
 
@@ -338,7 +352,13 @@
                                         <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
 
                                         <div class="col-md-6">
-                                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                            <input id="password-confirm" type="password" class="form-control" name="confirmPassword" required autocomplete="new-password">
+
+                                            @if(isset($errorConfirmPass))
+                                            <div class="alert-danger alert">
+                                                {{ $errorConfirmPass }}
+                                            </div>
+                                            @endif
                                         </div>
                                     </div>
 

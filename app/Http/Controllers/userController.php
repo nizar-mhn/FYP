@@ -40,6 +40,7 @@ class userController extends Controller
     {
         if ($request->input('user') != null) {
             $this->data['programs'] = Program::all();
+            $this->data['courses'] = Course::orderby('courseCode')->get();
             $this->data['user'] = $request->input('user');
             return view('auth.register', $this->data);
         }
@@ -60,6 +61,7 @@ class userController extends Controller
     {
         if ($request->input('user') == "Student") {
 
+
             $error = false;
             $this->data['userID'] = $request->input('studentID');
             $this->data['name'] = $request->input('name');
@@ -79,21 +81,33 @@ class userController extends Controller
                 $error = true;
             }
 
+
+
             //ID
+            $studentID = DB::table('students')->where('studentID', '=', $this->data['userID'])->get();
             if ($this->data['userID'] == null) {
                 $this->data['errorID'] = "Please enter your Student ID.";
                 $error = true;
             } else if (strlen($this->data['userID']) != 7) {
                 $this->data['errorID'] = "Invalid Student ID.";
                 $error = true;
+            } else if (count($studentID)) {
+                $this->data['errorID'] = "This Student ID has been registered.";
+                $error = true;
             }
 
+
             //email
+            $studentEmail = DB::table('students')->where('email', '=', $this->data['email'])->get();
+            $staffEmail = DB::table('staff')->where('email', '=', $this->data['email'])->get();
             if ($this->data['email'] == null) {
                 $this->data['errorEmail'] = "Please enter your Email";
                 $error = true;
             } elseif (!filter_var($this->data['email'], FILTER_VALIDATE_EMAIL)) {
                 $this->data['errorEmail'] = "Email Must be a valid email address.";
+                $error = true;
+            } else if (count($studentEmail)||count($staffEmail)) {
+                $this->data['errorEmail'] = "This email address has been registered.";
                 $error = true;
             }
 
@@ -138,7 +152,94 @@ class userController extends Controller
                 return redirect()->route('login')->with('info', 'You have register successfully.');
             }
         } elseif ($request->input('user') == "Staff") {
-            dd('234');
+            $error = false;
+            $this->data['userID'] = $request->input('staffID');
+            $this->data['name'] = $request->input('name');
+            $this->data['email'] = $request->input('email');
+            $this->data['course'] = $request->input('course');
+            //dd($this->data['course']);
+            $this->data['password'] = $request->input('password');
+            $this->data['confirmPassword'] = $request->input('confirmPassword');
+
+            //Name
+            if ($this->data['name'] == null) {
+                $this->data['errorName'] = "Please enter your Name.";
+                $error = true;
+            } else if (!preg_match("/^[a-zA-Z ]*$/", $this->data['name'])) {
+                $this->data['errorName'] = "Only alphabets and white space are allowed";
+                $error = true;
+            }
+
+            //ID
+            $staffID = DB::table('staff')->where('staffID', '=', $this->data['userID'])->get();
+            if ($this->data['userID'] == null) {
+                $this->data['errorID'] = "Please enter your Staff ID.";
+                $error = true;
+            } else if (strlen($this->data['userID']) != 5 || $this->data['userID'][0] != 'p') {
+                $this->data['errorID'] = "Invalid Staff ID.";
+                $error = true;
+            } else if (count($staffID)) {
+                $this->data['errorID'] = "This Staff ID has been registered.";
+                $error = true;
+            }
+
+            //email
+            $studentEmail = DB::table('students')->where('email', '=', $this->data['email'])->get();
+            $staffEmail = DB::table('staff')->where('email', '=', $this->data['email'])->get();
+            if ($this->data['email'] == null) {
+                $this->data['errorEmail'] = "Please enter your Email";
+                $error = true;
+            } elseif (!filter_var($this->data['email'], FILTER_VALIDATE_EMAIL)) {
+                $this->data['errorEmail'] = "Email Must be a valid email address.";
+                $error = true;
+            } else if (count($staffEmail)||count($studentEmail)) {
+                $this->data['errorEmail'] = "This email address has been registered.";
+                $error = true;
+            }
+
+            //password
+            if ($this->data['password'] == null) {
+                $this->data['errorPassword'] = "Please enter your Password.";
+                $error = true;
+            } elseif (!preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/", $this->data['password'])) {
+                $this->data['errorPassword'] = "Minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter and 1 number.";
+                $error = true;
+            }
+            //confirm password
+            if ($this->data['confirmPassword'] == null) {
+                $this->data['errorConfirmPass'] = "Please enter your Confirm Password.";
+                $error = true;
+            } elseif ($this->data['confirmPassword'] != $this->data['password']) {
+                $this->data['errorConfirmPass'] = "Please enter the same Password for the Confirm Password.";
+                $error = true;
+            }
+
+
+            if ($error) {
+                $this->data['user'] = $request->input('user');
+                $this->data['courses'] = Course::orderby('courseCode')->get();
+                return view('auth.register', $this->data);
+            } else {
+                $courseList = CourseList::orderby('courseListID', 'DESC')->first();
+                $courseListID = $courseList->courseListID + 1;
+                //dd($courseListID->courseListID);
+                foreach ($this->data['course'] as $courses) {
+                    CourseList::create([
+                        'courseListID' => $courseListID,
+                        'courseID' => $courses,
+                    ]);
+                }
+                Staff::create([
+                    'staffID' => $this->data['userID'],
+                    'staffName' => $this->data['name'],
+                    'password' => Hash::make($this->data['password']),
+                    'email' => $this->data['email'],
+                    'courseListID' => $courseListID,
+                ]);
+
+
+                return redirect()->route('login')->with('info', 'You have register successfully.');
+            }
         } else {
         }
     }
