@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedInteger('programID'); 
             $table->integer('year'); 
             $table->integer('semester'); 
-            $table->integer('courseListID'); 
+            $table->integer('courseListID')->nullable(); 
             $table->foreign('programID')->references('programID')->on('programs');
         });
     }
