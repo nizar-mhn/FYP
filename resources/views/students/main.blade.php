@@ -185,10 +185,10 @@
                                             <div class="col">
                                                 <div class="card">
                                                     <div class="card-header text-light text-break" style="background-color: #2A9D8F">
-                                                        <small class=" text-light">{{ $currentFile->fileName }}</small>
+                                                        <small class=" text-light">{{ $currentStudentFile->fileName }}</small>
                                                     </div>
-                                                    <a href="/students/{{ $currentFile->fileID }}">
-                                                        <img src="data:image/png;base64,{{ $currentFile->thumbnail }}"
+                                                    <a href="/students/{{ $currentStudentFile->fileID }}">
+                                                        <img src="data:image/png;base64,{{ $currentStudentFile->thumbnail }}"
                                                             class="card-img-top" alt="..."
                                                             style="height: 100px; object-fit: cover;">
                                                     </a>
