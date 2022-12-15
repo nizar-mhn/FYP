@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Staff;
+use App\Models\Student;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
@@ -60,13 +62,27 @@ class LoginController extends Controller
                         return redirect()->route('supplierMainPage');
                     }
                 } else {
-                    return redirect()->route('staffMainPage');
+                    $currentUser = Staff::where('staffID', $id)->first();
+                    if (!$currentUser->is_email_verified) {
+                        auth()->logout();
+                        return redirect()->route('login')
+                            ->with('danger', 'You need to confirm your account. We have sent you an activation code, please check your email.');
+                    } else {
+                        return redirect()->route('staffMainPage');
+                    }
                 }
             } else {
                 return redirect()->route('adminMainPage');
             }
         } else {
-            return redirect()->route('document');
+            $currentUser = Student::where('studentID', $id)->first();
+            if (!$currentUser->is_email_verified) {
+                auth()->logout();
+                return redirect()->route('login')
+                    ->with('danger', 'You need to confirm your account. We have sent you an activation code, please check your email.');
+            } else {
+                return redirect()->route('document');
+            }
         }
     }
 

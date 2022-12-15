@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Notifications\Notifiable;
 
 class Student extends Authenticatable
 {
@@ -18,7 +20,8 @@ class Student extends Authenticatable
         'password',
         'email',
         'programDetailsID',
-        'remember_token'
+        'remember_token',
+        'is_email_verified'
     ];
 
     /**
@@ -30,5 +33,9 @@ class Student extends Authenticatable
         'password',
         'remember_token',
         
+    ];
+
+    protected $casts = [
+        'email_verified_at' => 'datetime',
     ];
 }

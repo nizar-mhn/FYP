@@ -28,11 +28,14 @@ Route::get('/register/userInfo', [userController::class, 'selectProg'])->name('s
 Route::get('/register/userError', [userController::class, 'validation'])->name('validation');
 //Route::get('/register/staffError', [userController::class, 'validationStaff'])->name('validationStaff');
 Route::post('/registerUser', [userController::class, 'createUser'])->name('registerUser');
+Route::get('account/verify/{token}', [userController::class, 'verifyStudentAccount'])->name('student.verify');
+Route::get('accountStaff/verify/{token}', [userController::class, 'verifyStaffAccount'])->name('staff.verify');
 
 Route::get('/testing', [App\Http\Controllers\userController::class, 'create']);
-Route::get('/map',function(){
+Route::get('/map', function () {
     return view('students.choosePickUp');
 })->name('login');
+
 Auth::routes();
 
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -43,11 +46,11 @@ Route::group(['middleware' => ['web', 'auth:student'], 'prefix' => 'students'], 
     Route::get('/{fileID}', function ($fileID) {
         return view('/students/fileInfo')->with('fileID', $fileID);
     });
-    Route::post('/invoiceView',[App\Http\Controllers\invoiceController::class,'viewInvoice'])->name('invoiceView');
-    Route::post('/history',[App\Http\Controllers\invoiceController::class,'downloadInvoice'])->name('downloadInvoice');
-    Route::post('/pickup',[App\Http\Controllers\paymentController::class, 'chooseLocation'])->name('chooseLocation');
-    Route::post('/payment',[App\Http\Controllers\paymentController::class, 'index'])->name('payment');
-    Route::post('/',[App\Http\Controllers\paymentController::class, 'orderCreate'])->name('orderCreate');
+    Route::post('/invoiceView', [App\Http\Controllers\invoiceController::class, 'viewInvoice'])->name('invoiceView');
+    Route::post('/history', [App\Http\Controllers\invoiceController::class, 'downloadInvoice'])->name('downloadInvoice');
+    Route::post('/pickup', [App\Http\Controllers\paymentController::class, 'chooseLocation'])->name('chooseLocation');
+    Route::post('/payment', [App\Http\Controllers\paymentController::class, 'index'])->name('payment');
+    Route::post('/', [App\Http\Controllers\paymentController::class, 'orderCreate'])->name('orderCreate');
     Route::get('/profile', [App\Http\Controllers\profileController::class, 'index'])->name('profile');
     Route::post('/profile', [App\Http\Controllers\profileController::class, 'index'])->name('profile');
     Route::post('/documents/upload', [App\Http\Controllers\fileController::class, 'update'])->name('document.update');
@@ -65,8 +68,6 @@ Route::group(['middleware' => ['web', 'auth:staff'], 'prefix' => 'staffs'], func
 
 Route::group(['middleware' => ['web', 'auth:admin']], function () {
     Route::get('admins/admin_main', [App\Http\Controllers\adminController::class, 'index'])->name('adminMainPage');
-
-    
 });
 
 Route::group(['middleware' => ['web', 'auth:supplier']], function () {
@@ -75,10 +76,7 @@ Route::group(['middleware' => ['web', 'auth:supplier']], function () {
     Route::get('suppliers/supplier_report', [App\Http\Controllers\supplierController::class, 'report'])->name('supplierReport');
     Route::get('suppliers/reports', [App\Http\Controllers\supplierController::class, 'report'])->name('reportGenerate');
     Route::get('/download/{fileID}', [App\Http\Controllers\fileController::class, 'download'])->name('pdfDownload');
-    Route::get('/{fileID}/{orderID}', function ($fileID,$orderID) {
-        return view('/suppliers/fileInfo')->with('fileID', $fileID)->with('orderID',$orderID);
+    Route::get('/{fileID}/{orderID}', function ($fileID, $orderID) {
+        return view('/suppliers/fileInfo')->with('fileID', $fileID)->with('orderID', $orderID);
     });
-    
 });
-
-

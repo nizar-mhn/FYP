@@ -13,6 +13,12 @@ use App\Models\Program;
 use App\Models\ProgramDetails;
 use App\Models\CourseList;
 use Illuminate\Support\Facades\DB;
+use App\Models\StudentVerify;
+use App\Models\StaffVerify;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 
 class userController extends Controller
@@ -106,7 +112,7 @@ class userController extends Controller
             } elseif (!filter_var($this->data['email'], FILTER_VALIDATE_EMAIL)) {
                 $this->data['errorEmail'] = "Email Must be a valid email address.";
                 $error = true;
-            } else if (count($studentEmail)||count($staffEmail)) {
+            } else if (count($studentEmail) || count($staffEmail)) {
                 $this->data['errorEmail'] = "This email address has been registered.";
                 $error = true;
             }
@@ -140,7 +146,7 @@ class userController extends Controller
             } else {
                 $programDetailsID = ProgramDetails::where('programID', '=', $this->data['prog'])->where('year', '=', $this->data['year'])->where('semester', '=', $this->data['sem'])->first();
 
-                Student::create([
+                $newUser = Student::create([
                     'studentID' => $this->data['userID'],
                     'studentName' => $this->data['name'],
                     'password' => Hash::make($this->data['password']),
@@ -148,8 +154,20 @@ class userController extends Controller
                     'programDetailsID' => $programDetailsID->programDetailsID,
                 ]);
 
+                $token = Str::random(64);
 
-                return redirect()->route('login')->with('info', 'You have register successfully.');
+                StudentVerify::create([
+                    'user_id' => $newUser->id,
+                    'token' => $token
+                ]);
+
+                Mail::send('email.emailVerificationEmail', ['token' => $token], function ($message) use ($request) {
+                    $message->to($this->data['email']);
+                    $message->subject('Email Verification Mail');
+                });
+
+
+                return redirect()->route('login')->with('info', 'You have register successfully. Please check your email to verify your Account.');
             }
         } elseif ($request->input('user') == "Staff") {
             $error = false;
@@ -192,7 +210,7 @@ class userController extends Controller
             } elseif (!filter_var($this->data['email'], FILTER_VALIDATE_EMAIL)) {
                 $this->data['errorEmail'] = "Email Must be a valid email address.";
                 $error = true;
-            } else if (count($staffEmail)||count($studentEmail)) {
+            } else if (count($staffEmail) || count($studentEmail)) {
                 $this->data['errorEmail'] = "This email address has been registered.";
                 $error = true;
             }
@@ -229,7 +247,7 @@ class userController extends Controller
                         'courseID' => $courses,
                     ]);
                 }
-                Staff::create([
+                $newUser = Staff::create([
                     'staffID' => $this->data['userID'],
                     'staffName' => $this->data['name'],
                     'password' => Hash::make($this->data['password']),
@@ -237,19 +255,66 @@ class userController extends Controller
                     'courseListID' => $courseListID,
                 ]);
 
+                $token = Str::random(64);
 
-                return redirect()->route('login')->with('info', 'You have register successfully.');
+                StaffVerify::create([
+                    'user_id' => $newUser->id,
+                    'token' => $token
+                ]);
+
+                Mail::send('email.emailVerificationEmailStaff', ['token' => $token], function ($message) use ($request) {
+                    $message->to($this->data['email']);
+                    $message->subject('Email Verification Mail');
+                });
+
+
+                return redirect()->route('login')->with('info', 'You have register successfully. Please check your email to verify your Account.');
             }
         } else {
         }
     }
 
 
-    public function validationStaff(Request $request)
+    public function verifyStudentAccount($token)
     {
+        $verifyUser = StudentVerify::where('token', $token)->first();
 
+        $message = 'Sorry your email cannot be identified.';
 
-        //return view('auth.register');
+        if (!is_null($verifyUser)) {
+            $user = Student::where('id',$verifyUser->user_id)->first();
+
+            if (!$user->is_email_verified) {
+                $user->is_email_verified = 1;
+                $user->save();
+                $message = "Your e-mail is verified. You can now login.";
+            } else {
+                $message = "Your e-mail is already verified. You can now login.";
+            }
+        }
+
+        return redirect()->route('login')->with('info', $message);
+    }
+
+    public function verifyStaffAccount($token)
+    {
+        $verifyUser = StaffVerify::where('token', $token)->first();
+
+        $message = 'Sorry your email cannot be identified.';
+
+        if (!is_null($verifyUser)) {
+            $user = Staff::where('id',$verifyUser->user_id)->first();
+            
+            if (!$user->is_email_verified) {
+                $user->is_email_verified = 1;
+                $user->save();
+                $message = "Your e-mail is verified. You can now login.";
+            } else {
+                $message = "Your e-mail is already verified. You can now login.";
+            }
+        }
+
+        return redirect()->route('login')->with('info', $message);
     }
 }
 

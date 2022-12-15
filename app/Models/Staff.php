@@ -5,10 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Notifications\Notifiable;
 
 class Staff extends Authenticatable
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
 
     public $timestamps = false;
 
@@ -18,7 +20,9 @@ class Staff extends Authenticatable
         'staffName',
         'password',
         'email',
-        'remember_token'
+        'remember_token',
+        'is_email_verified'
+
     ];
 
     /**
@@ -29,6 +33,10 @@ class Staff extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
-        
+
+    ];
+
+    protected $casts = [
+        'email_verified_at' => 'datetime',
     ];
 }
