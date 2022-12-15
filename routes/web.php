@@ -63,17 +63,11 @@ Route::group(['middleware' => ['web', 'auth:staff'], 'prefix' => 'staffs'], func
     });
 });
 
-// Route::group(['middleware' => ['web', 'auth:admin']], function () {
-//     Route::get('admins/admin_main', [App\Http\Controllers\adminController::class, 'index'])->name('adminMainPage');
-//     Route::get('admins/status/{orderID}/{status}', [App\Http\Controllers\adminController::class, 'status'])->name('orderStatus');
-//     Route::get('admins/admin_report', [App\Http\Controllers\adminController::class, 'report'])->name('adminReport');
-//     Route::get('admins/reports', [App\Http\Controllers\adminController::class, 'report'])->name('reportGenerate');
-//     Route::get('/download/{fileID}', [App\Http\Controllers\fileController::class, 'download'])->name('pdfDownload');
-//     Route::get('/{fileID}/{orderID}', function ($fileID,$orderID) {
-//         return view('/admin/fileInfo')->with('fileID', $fileID)->with('orderID',$orderID);
-//     });
+Route::group(['middleware' => ['web', 'auth:admin']], function () {
+    Route::get('admins/admin_main', [App\Http\Controllers\adminController::class, 'index'])->name('adminMainPage');
+
     
-// });
+});
 
 Route::group(['middleware' => ['web', 'auth:supplier']], function () {
     Route::get('suppliers/supplier_main', [App\Http\Controllers\supplierController::class, 'index'])->name('supplierMainPage');

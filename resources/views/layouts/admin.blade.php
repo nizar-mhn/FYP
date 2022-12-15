@@ -21,12 +21,12 @@
     <!-- Style -->
     <style>
         .navbar {
-            background-color: #E76F51;
+            background-color: #12355B;
         }
 
         ul.navbar-nav a:hover {
             border-radius: 10px;
-            background-color: #F4A261 !important
+            background-color: #56CBF9 !important
         }
     </style>
 
@@ -55,11 +55,9 @@
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('adminMainPage') }}">Home</a>
+                            <a class="nav-link text-light" href="{{ route('adminMainPage') }}">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('adminReport')}}">Report</a>
-                        </li>
+
                         @guest
                         @if (Route::has('login'))
                         <li class="nav-item">
@@ -74,7 +72,7 @@
                         @endif
                         @else
                         <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 {{ Auth::user()->adminName }}
                             </a>
 
@@ -94,7 +92,7 @@
                 </div>
             </div>
         </nav>
-        <div class="container-fluid" style="background-color:#F4A261; height:25px;">
+        <div class="container-fluid" style="background-color:#56CBF9; height:25px;">
         </div>
 
         <main class="py-4">

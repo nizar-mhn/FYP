@@ -244,7 +244,7 @@
                                         <div class="col-md-6 offset-md-4">
                                             <input type="hidden" name="prog" value="{{$prog}}">
                                             <input type="hidden" name="user" value="{{$user}}">
-                                            <button type="submit" class="btn btn-primary">
+                                            <button type="submit" class="btn" style="background-color:#E76F51; color:white;">
                                                 {{ __('Register') }}
                                             </button>
                                         </div>
@@ -365,7 +365,7 @@
                                     <div class="row mb-0">
                                         <div class="col-md-6 offset-md-4">
                                             <input type="hidden" name="user" value="{{$user}}">
-                                            <button type="submit" class="btn btn-primary">
+                                            <button type="submit" class="btn" style="background-color:#E76F51; color:white;">
                                                 {{ __('Register') }}
                                             </button>
                                         </div>
