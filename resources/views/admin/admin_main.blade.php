@@ -106,7 +106,7 @@
                                             <br />
                                             @csrf
                                             <label for="programName" class="">{{ __('Program Name') }}</label>
-                                            <input type="text" name="programName" id="programName">
+                                            <input type="text" name="programName" id="programName" required>
                                         </div>
                                     </div>
                                 </div>
@@ -309,7 +309,7 @@
                                         <br />
                                         @csrf
                                         <label for="programName" class="">{{ __('Program Name') }}</label>
-                                        <input type="text" name="programName" id="programName">
+                                        <input type="text" name="programName" id="programName" required>
                                     </div>
                                 </div>
                             </div>

@@ -41,7 +41,7 @@
                                                         @csrf
                                                         <label for="courseName"
                                                             class="">{{ __('Course Name') }}</label>
-                                                        <input type="text" name="courseName" id="courseName">
+                                                        <input type="text" name="courseName" id="courseName" required>
                                                         
                                                     </div>
                                                 </div>
@@ -51,7 +51,7 @@
                                                         @csrf
                                                         <label for="courseCode"
                                                             class="">{{ __('Course Code') }}</label>
-                                                        <input type="text" name="courseCode" id="courseCode">
+                                                        <input type="text" name="courseCode" id="courseCode" required>
                                                         
                                                     </div>
                                                 </div>
@@ -93,7 +93,7 @@
                             </div>
                             <div class="col-md-3 text-center">
                                 <a href="" class="btn text-light" style="background-color: #12355B"
-                                    data-bs-toggle="modal" id="newCourseButton" data-bs-target="#courseEdit{{ $course->courseID }}">Edit Text</a>
+                                    data-bs-toggle="modal" id="newCourseButton" data-bs-target="#courseEdit{{ $course->courseID }}">Edit</a>
                                 <div class="modal fade" id="courseEdit{{ $course->courseID }}" tabindex="-1" aria-labelledby="courseEditLabel{{ $course->courseID }}"
                                     aria-hidden="true">
                                     <div class="modal-dialog">
@@ -113,7 +113,7 @@
                                                         @csrf
                                                         <label for="courseName"
                                                             class="">{{ __('Course Name') }}</label>
-                                                        <input type="text" name="courseName" id="courseName" value="{{$course->courseName}}">
+                                                        <input type="text" name="courseName" id="courseName" value="{{$course->courseName}}" required>
                                                         
                                                     </div>
                                                 </div>
@@ -123,7 +123,7 @@
                                                         @csrf
                                                         <label for="courseCode"
                                                             class="">{{ __('Course Code') }}</label>
-                                                        <input type="text" name="courseCode" id="courseCode" value="{{$course->courseCode}}">
+                                                        <input type="text" name="courseCode" id="courseCode" value="{{$course->courseCode}}" required>
                                                         
                                                     </div>
                                                 </div>
@@ -131,7 +131,7 @@
                                                 <div class="modal-footer">
                                                     <input type="hidden" name="courseID" value="{{$course->courseID}}">
                                                     <button type="submit" class="btn btn-primary"
-                                                        id="newProgramButtonModal">Edit</button>
+                                                        id="newProgramButtonModal">Save</button>
                                                 </div>
                                             </form>
                                         </div>
