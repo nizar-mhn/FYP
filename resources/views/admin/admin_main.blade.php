@@ -222,10 +222,10 @@
                     </div>
                 </div>
                 <div class="row border p-1 rounded shadow mb-2 text-light" style="background-color:#12355B">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         Year: {{ $programYear }}
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         Semester: {{ $programSem }}
                     </div>
                 </div>
