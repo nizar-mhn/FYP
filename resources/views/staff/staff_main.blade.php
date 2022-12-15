@@ -112,8 +112,9 @@
                             <div class="row row-cols-1 row-cols-md-4 g-4 overflow-auto mt-1" style="height: 370px;">
                                 @php
                                     $fileList = DB::table('course_files')
-                                        ->where('courseID', $currentCourseID)
-                                        ->orderbyDesc('fileID')
+                                        ->join('files','files.fileID','=','course_files.fileID')
+                                        ->where('course_files.courseID', $currentCourseID)
+                                        ->orderbyDesc('files.dateUpload')
                                         ->get();
                                 @endphp
                                 @if (count($fileList))

@@ -64,10 +64,11 @@ Route::group(['middleware' => ['web', 'auth:student'], 'prefix' => 'students'], 
 Route::group(['middleware' => ['web', 'auth:staff'], 'prefix' => 'staffs'], function () {
     Route::get('/staff_main', [App\Http\Controllers\fileController::class, 'staffindex'])->name('staffMainPage');
     Route::post('/staff_main/upload', [App\Http\Controllers\fileController::class, 'staffupdate'])->name('document.staffupdate');
+    Route::get('/updateFile', [App\Http\Controllers\staffController::class, 'setAvailability'])->name('updateAvailability');
     Route::get('/{fileID}', function ($fileID) {
         return view('/staff/fileInfo')->with('fileID', $fileID);
     });
-    Route::get('/fileUpdate', [App\Http\Controllers\staffController::class, 'updateAvailability'])->name('updateAvailability');
+    
 });
 
 Route::group(['middleware' => ['web', 'auth:admin']], function () {

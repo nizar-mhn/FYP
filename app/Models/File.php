@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class File extends Model
 {
+    protected $primaryKey = 'fileID';
     public $timestamps = false;
     use HasFactory;
 

@@ -12,14 +12,15 @@ class staffController extends Controller
         return view('staff/staff_main');
     }
 
-    public function setAvailability(Request $request){
+    public function setAvailability(Request $request)
+    {
         $fileID = $request->input('fileID');
         $availability = $request->input('availability');
         $currentFile = File::where('fileID', $fileID)->first();
-        if($availability){
-            $currentFile->availability = "Not Available";
+        if ($availability) {
+            $currentFile->availability = "NotAvailable";
             $currentFile->save();
-        }else{
+        } else {
             $currentFile->availability = "Available";
             $currentFile->save();
         }

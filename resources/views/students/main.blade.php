@@ -80,8 +80,10 @@
                             <div class="row row-cols-1 row-cols-md-4 g-4 overflow-auto mt-1" style="height: 370px;">
                                 @php
                                     $fileList = DB::table('course_files')
-                                        ->where('courseID', $currentCourseID)
-                                        ->orderbyDesc('fileID')
+                                        ->join('files','files.fileID','=','course_files.fileID')
+                                        ->where('course_files.courseID', $currentCourseID)
+                                        ->where('files.availability','=','Available')
+                                        ->orderbyDesc('files.dateUpload')
                                         ->get();
                                 @endphp
                                 @if (count($fileList))
@@ -171,9 +173,10 @@
                                 <div class="row row-cols-1 row-cols-md-4 g-4 overflow-auto mt-1" style="height: 370px;">
                                     @php
                                         $studentfileList = DB::table('student_files')
-                                            ->where('studentID', Auth::user()->studentID)
-                                            ->orderbyDesc('fileID')
-                                            ->get();
+                                        ->join('files','files.fileID','=','student_files.fileID')
+                                        ->where('student_files.studentID', Auth::user()->studentID)
+                                        ->orderbyDesc('files.dateUpload')
+                                        ->get();
                                     @endphp
                                     @if (count($studentfileList))
                                         @foreach ($studentfileList as $fileID)
