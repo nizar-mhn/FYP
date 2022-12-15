@@ -127,7 +127,7 @@
                             <div class="container d-flex p-2">
                                 <h1 class="text-light">My Files</h1>
                                 <div class="ms-auto">
-                                    <button type="button" class="btn uploadButton text-light" data-bs-toggle="modal"
+                                    <button type="button" class="btn uploadButton text-light" id="uploadButton" onclick="showModalUpload()" data-bs-toggle="modal"
                                         data-bs-target="#uploadModal">Upload</button>
                                     <div class="modal fade" id="uploadModal" tabindex="-1"
                                         aria-labelledby="uploadModalLabel" aria-hidden="true">
@@ -158,7 +158,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                                        <button type="submit" class="btn btn-primary" id="uploadBtnModal" onclick="hideAfterUpload()">Submit</button>
                                                     </div>
                                                 </form>
                                             </div>
@@ -220,5 +220,14 @@
             const alert = document.getElementById('paymentSuccess');
             alert.style.display = 'none';
         }, 3000);
+
+        function hideAfterUpload(){
+            document.getElementById('uploadBtnModal').style.display = 'none';
+        }
+
+        function showModalUpload(){
+            document.getElementById('uploadBtnModal').style.display = 'block';
+        }
+        
     </script>
 @endsection
