@@ -11,7 +11,7 @@ class supplierController extends Controller
 {
     public function index()
     {
-        $orderList = Order::whereNot('status', '=', 'Delivered')->paginate(10);
+        $orderList = Order::whereNot('status', '=', 'Completed')->paginate(10);
         return view('supplier/supplier_main', ['order' => $orderList]);
     }
 
@@ -41,9 +41,10 @@ class supplierController extends Controller
             ->join('order_printing_infos', 'order_printing_infos.orderPrintingInfoID', '=', 'order_details.orderPrintingInfoID')
             ->join('files', 'files.fileID', '=', 'order_printing_infos.fileID')
             ->join('payments', 'payments.orderID', '=', 'orders.orderID')
-            ->whereBetween('orders.orderDate', [$start_date,  $end_date])
-            ->where('orders.status', '=', 'Delivered')
+            ->whereBetween('orders.orderDate', [$this->data['start_date'],  $end_date])
+            ->where('orders.status', '=', 'Completed')
             ->get();
+
 
         $errorMsg = "";
         $infoMsg = "";

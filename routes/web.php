@@ -76,12 +76,12 @@ Route::group(['middleware' => ['web', 'auth:admin']], function () {
 });
 
 Route::group(['middleware' => ['web', 'auth:supplier']], function () {
-    Route::get('suppliers/supplier_main', [App\Http\Controllers\supplierController::class, 'index'])->name('supplierMainPage');
-    Route::get('suppliers/status/{orderID}/{status}', [App\Http\Controllers\supplierController::class, 'status'])->name('orderStatus');
-    Route::get('suppliers/supplier_report', [App\Http\Controllers\supplierController::class, 'report'])->name('supplierReport');
-    Route::get('suppliers/reports', [App\Http\Controllers\supplierController::class, 'report'])->name('reportGenerate');
+    Route::get('supplier/supplier_main', [App\Http\Controllers\supplierController::class, 'index'])->name('supplierMainPage');
+    Route::get('supplier/status/{orderID}/{status}', [App\Http\Controllers\supplierController::class, 'status'])->name('orderStatus');
+    Route::get('supplier/supplier_report', [App\Http\Controllers\supplierController::class, 'report'])->name('supplierReport');
+    Route::get('supplier/reports', [App\Http\Controllers\supplierController::class, 'report'])->name('reportGenerate');
     Route::get('/download/{fileID}', [App\Http\Controllers\fileController::class, 'download'])->name('pdfDownload');
     Route::get('/{fileID}/{orderID}', function ($fileID, $orderID) {
-        return view('/suppliers/fileInfo')->with('fileID', $fileID)->with('orderID', $orderID);
+        return view('/supplier/fileInfo')->with('fileID', $fileID)->with('orderID', $orderID);
     });
 });

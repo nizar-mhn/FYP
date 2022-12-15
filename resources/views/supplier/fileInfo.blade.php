@@ -39,7 +39,7 @@ $currentFile = DB::table('files')->where('fileID', $fileID)->first();
             <a class="btn text-light" style="background-color: #264653" href="{{route('pdfDownload',[$currentFile->fileID])}}">
                 {{ __('Download file') }}
             </a>
-            <a class="btn text-light" style="background-color: #264653" href="{{route('orderStatus',[$orderID,'Delivered'])}}">
+            <a class="btn text-light" style="background-color: #264653" href="{{route('orderStatus',[$orderID,'Completed'])}}">
                 {{ __('Complete Order') }}
             </a>
         </div>

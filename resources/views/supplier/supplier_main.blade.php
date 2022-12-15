@@ -52,19 +52,37 @@
                                     <a class="dropdown-item disabled" href="{{route('orderStatus',[$data->orderID,'Pending'])}}">
                                         {{ __('Pending') }}
                                     </a>
-                                    @else
-                                    <a class="dropdown-item" href="{{route('orderStatus',[$data->orderID,'Pending'])}}">
-                                        {{ __('Pending') }}
-                                    </a>
-                                    @endif
-                                    @if($data->status=="Printed")
-                                    <a class="dropdown-item disabled" href="{{route('orderStatus',[$data->orderID,'Printed'])}}">
-                                        {{ __('Printed') }}
-                                    </a>
-                                    @else
                                     <a class="dropdown-item" href="{{route('orderStatus',[$data->orderID,'Printed'])}}">
                                         {{ __('Printed') }}
                                     </a>
+                                    <a class="dropdown-item" href="{{route('orderStatus',[$data->orderID,'Delivering'])}}">
+                                        {{ __('Delivering') }}
+                                    </a>
+                                    @endif
+
+                                    @if($data->status=="Printed")
+                                    <a class="dropdown-item" href="{{route('orderStatus',[$data->orderID,'Pending'])}}">
+                                        {{ __('Pending') }}
+                                    </a>
+                                    <a class="dropdown-item disabled" href="{{route('orderStatus',[$data->orderID,'Printed'])}}">
+                                        {{ __('Printed') }}
+                                    </a>
+                                    <a class="dropdown-item" href="{{route('orderStatus',[$data->orderID,'Delivering'])}}">
+                                        {{ __('Delivering') }}
+                                    </a>
+                                    @endif
+
+                                    @if($data->status=="Delivering")
+                                    <a class="dropdown-item" href="{{route('orderStatus',[$data->orderID,'Pending'])}}">
+                                        {{ __('Pending') }}
+                                    </a>
+                                    <a class="dropdown-item" href="{{route('orderStatus',[$data->orderID,'Printed'])}}">
+                                        {{ __('Printed') }}
+                                    </a>
+                                    <a class="dropdown-item disabled" href="{{route('orderStatus',[$data->orderID,'Delivering'])}}">
+                                        {{ __('Delivering') }}
+                                    </a>
+
                                     @endif
                                 </div>
 
