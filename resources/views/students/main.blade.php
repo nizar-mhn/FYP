@@ -39,6 +39,10 @@
                     @endisset
                 </div>
 
+                @if(!count($courseList))
+                <h4>No courses currently.</h4>
+                @endif
+
 
                 <nav class="navbar-dark">
                     <div class="nav nav-tabs d-flex subjectNavs" id="nav-tab" role="tablist">

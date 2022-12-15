@@ -84,7 +84,7 @@ class fileController extends Controller
                 'thumbnail' => $base64Img,
             ]);
 
-            $fileID = $createFile->id;
+            $fileID = $createFile->fileID;
             $studentID =  $request->input('studentID');
 
             StudentFile::create([
@@ -123,7 +123,7 @@ class fileController extends Controller
                 'thumbnail' => $base64Img,
             ]);
 
-            $fileID = $createFile->id;
+            $fileID = $createFile->fileID;
             $courseID =  $request->input('courseID');
 
             CourseFile::create([

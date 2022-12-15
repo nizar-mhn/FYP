@@ -87,7 +87,7 @@ class adminController extends Controller
         $courseCode ="";
 
         Course::create([
-            'courseName' => $courseNam,
+            'courseName' => $courseName,
             'courseCode' => $courseCode,
         ]);
         
@@ -141,7 +141,11 @@ class adminController extends Controller
             
         }else{
             $courseList = CourseList::orderby('courseListID', 'DESC')->first();
-            $courseListID = $courseList->courseListID + 1;
+            if($courseList!=null){
+                $courseListID = $courseList->courseListID + 1;
+            }else{
+                $courseListID = 1;
+            }
     
             CourseList::create([
                 'courseListID' => $courseListID,

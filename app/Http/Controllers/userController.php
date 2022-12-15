@@ -28,12 +28,12 @@ class userController extends Controller
     {
         $user = new user;
         $user->createCourse();
-        $user->createCourseList();
-        $user->createProg();
-        $user->createProgDetails();
+        //$user->createCourseList();
+        //$user->createProg();
+        //$user->createProgDetails();
         $user->createAdmin();
-        $user->createStaff();
-        $user->createStudent();
+        //$user->createStaff();
+        //$user->createStudent();
         $user->createSupplier();
     }
 
