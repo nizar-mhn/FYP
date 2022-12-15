@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Program extends Model
 {
     use HasFactory;
-
+    protected $primaryKey = 'programID';
     public $timestamps = false;
 
     protected $fillable = [
