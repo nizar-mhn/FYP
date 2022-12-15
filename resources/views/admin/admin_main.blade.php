@@ -16,7 +16,6 @@
                 <h2 class="text-light header text-center">
                     Menu
                 </h2>
-                  
             </div>
         </div>
         <div class="col">
