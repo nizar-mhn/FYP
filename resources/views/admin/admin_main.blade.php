@@ -130,30 +130,30 @@
             @if (count($courseID))
             <div class="container">
                 <h3 class="mt-2">Course List</h3>
-                <div class="row border">
-                    <div class="col-md-12 fw-bold">
+                <div class="row border shadow rounded p-1" style="background-color: #12355B">
+                    <div class="col-md-12 fw-bold text-light">
                         @php
                         $programInfo = DB::table('programs')->where('programID',$programID)->first();
                         @endphp
                         {{ $programInfo->programName }}
                     </div>
                 </div>
-                <div class="row border">
-                    <div class="col-md-6">
+                <div class="row border p-1 rounded shadow mb-2 text-light" style="background-color:#12355B">
+                    <div class="col-md-4">
                         Year: {{ $programYear }}
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         Semester: {{ $programSem }}
                     </div>
                 </div>
-                <div class="row border">
+                <div class="row border p-1">
                     <div class="col-md-4">
                         Course Name
                     </div>
                     <div class="col-md-4">
                         Course Code
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 text-center">
                         Delete
                     </div>
                 </div>
@@ -163,14 +163,14 @@
                 ->where('courseID', $id->courseID)
                 ->first();
                 @endphp
-                <div class="row border">
+                <div class="row border p-2">
                     <div class="col-md-4">
                         {{ $courseInfo->courseName }}
                     </div>
                     <div class="col-md-4">
                         {{ $courseInfo->courseCode }}
                     </div>
-                    <div class="col-md-4 pt-2">
+                    <div class="col-md-4 pt-2 text-center">
                         <form action="{{route('deleteCourseList')}}" method="post">
                             @csrf
                             <input type="hidden" name="courseListID" value="{{ $courseListID }}">
@@ -213,15 +213,15 @@
             @else
             <div class="container">
                 <h3 class="mt-2">Course List</h3>
-                <div class="row border">
-                    <div class="col-md-12 fw-bold">
+                <div class="row border shadow rounded p-1" style="background-color: #12355B">
+                    <div class="col-md-12 fw-bold text-light">
                         @php
                         $programInfo = DB::table('programs')->where('programID',$programID)->first();
                         @endphp
                         {{ $programInfo->programName }}
                     </div>
                 </div>
-                <div class="row border">
+                <div class="row border p-1 rounded shadow mb-2 text-light" style="background-color:#12355B">
                     <div class="col-md-6">
                         Year: {{ $programYear }}
                     </div>
@@ -229,7 +229,7 @@
                         Semester: {{ $programSem }}
                     </div>
                 </div>
-                <div class="row border">
+                <div class="row border p-1">
                     <div class="col-md-4">
                         Course Name
                     </div>

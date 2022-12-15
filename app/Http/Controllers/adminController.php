@@ -23,7 +23,8 @@ class adminController extends Controller
 
     public function course()
     { 
-        return view('admin.admin_course');
+        $courseList = Course::paginate(5);
+        return view('admin.admin_course')->with('courseList',$courseList);
     }
 
 
@@ -83,13 +84,72 @@ class adminController extends Controller
 
 
     public function addCourse(Request $request){
-        $courseName ="";
-        $courseCode ="";
+        $courseName = $request->input('courseName');
+        $courseCode = $request->input('courseCode');
+        $courseList = Course::all();
+        $error = false;
+        $errorMsg = "";
+        if(count($courseList)){
+            foreach($courseList as $course){
+                if($courseName==$course->courseName){
+                    $error = true;
+                    $errorMsg = $errorMsg . " Duplicate Name.";
+                }
+                if($courseCode==$course->courseCode){
+                    $error = true;
+                    $errorMsg = $errorMsg . " Duplicate Code.";
+                }
+            }
+        }
 
-        Course::create([
-            'courseName' => $courseName,
-            'courseCode' => $courseCode,
-        ]);
+        if($error){
+            $courseList = Course::paginate(5);
+            return view('admin.admin_course')->with(['errorMsg'=>$errorMsg,'courseList'=>$courseList]);
+        }else{
+            Course::create([
+                'courseName' => $courseName,
+                'courseCode' => $courseCode,
+            ]);
+            return redirect()->route('adminCourse');
+        }
+        
+    }
+
+    public function editCourse(Request $request){
+        $courseName = $request->input('courseName');
+        $courseCode = $request->input('courseCode');
+        $courseID = $request->input('courseID');
+        $courseList = Course::all();
+        $error = false;
+        $errorMsg = "";
+        if(count($courseList)){
+            foreach($courseList as $course){
+                if($courseID==$course->courseID){
+                }else{
+                    if($courseName==$course->courseName){
+                        $error = true;
+                        $errorMsg = $errorMsg . " Duplicate Name.";
+                    }
+                    if($courseCode==$course->courseCode){
+                        $error = true;
+                        $errorMsg = $errorMsg . " Duplicate Code.";
+                    }
+                }
+            }
+        }
+
+        if($error){
+            $courseList = Course::paginate(5);
+            return view('admin.admin_course')->with(['errorMsg'=>$errorMsg,'courseList'=>$courseList]);
+        }else{
+            $currentCourse = Course::where('courseID', $courseID)->first();
+            $currentCourse->courseName = $courseName;
+            $currentCourse->courseCode = $courseCode;
+            $currentCourse->save();
+
+
+            return redirect()->route('adminCourse');
+        }
         
     }
 

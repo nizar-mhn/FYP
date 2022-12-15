@@ -80,7 +80,9 @@ Route::group(['middleware' => ['web', 'auth:admin']], function () {
     Route::post('admins/addProgram', [App\Http\Controllers\adminController::class, 'addProgram'] )->name('addProgram');
     Route::post('admins/addProgramCourse', [App\Http\Controllers\adminController::class, 'addProgramCourseList'] )->name('addCourseList');
     Route::post('admins/deleteProgramCourse', [App\Http\Controllers\adminController::class, 'deleteProgramCourseList'] )->name('deleteCourseList');
-    // Route::post('admins/addCourse', [App\Http\Controllers\adminController::class, 'addProgram'] )->name('addProgram');
+    Route::post('admins/admin_course', [App\Http\Controllers\adminController::class, 'addCourse'] )->name('addCourse');
+    Route::post('admins/editCourse', [App\Http\Controllers\adminController::class, 'editCourse'] )->name('editCourse');
+
 });
 
 Route::group(['middleware' => ['web', 'auth:supplier']], function () {
