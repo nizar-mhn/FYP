@@ -306,7 +306,7 @@
             @else
             <div class="row">
 
-                <div class="col-3 p-2 mt-2">
+                <div class="col-3 offset-2 p-2 mt-4">
                     <h3>No Programs</h3>
                     <a href="" class="btn text-light mt-3" style="background-color:#E76F51"><i
                             class="bi bi-plus-circle me-2"></i>Add Program</a>
