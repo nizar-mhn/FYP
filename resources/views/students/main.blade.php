@@ -81,6 +81,7 @@
                                 @php
                                     $fileList = DB::table('course_files')
                                         ->where('courseID', $currentCourseID)
+                                        ->orderbyDesc('fileID')
                                         ->get();
                                 @endphp
                                 @if (count($fileList))
@@ -128,7 +129,7 @@
                                 <h1 class="text-light">My Files</h1>
                                 <div class="ms-auto">
                                     <button type="button" class="btn uploadButton text-light" data-bs-toggle="modal"
-                                        data-bs-target="#uploadModal">Upload</button>
+                                       id="uploadButton" onclick="showModalUpload()" data-bs-target="#uploadModal">Upload</button>
                                     <div class="modal fade" id="uploadModal" tabindex="-1"
                                         aria-labelledby="uploadModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
@@ -158,7 +159,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                                        <button type="submit" class="btn btn-primary" id="uploadBtnModal" onclick="hideAfterUpload()">Submit</button>
                                                     </div>
                                                 </form>
                                             </div>
@@ -171,6 +172,7 @@
                                     @php
                                         $studentfileList = DB::table('student_files')
                                             ->where('studentID', Auth::user()->studentID)
+                                            ->orderbyDesc('fileID')
                                             ->get();
                                     @endphp
                                     @if (count($studentfileList))
@@ -182,14 +184,20 @@
                                             @endphp
                                             <div class="col">
                                                 <div class="card">
-                                                    <a href="/students/{{ $currentStudentFile->fileID }}">
-                                                        <img src="data:image/png;base64,{{ $currentStudentFile->thumbnail }}"
+                                                    <div class="card-header text-light text-break" style="background-color: #2A9D8F">
+                                                        <small class=" text-light">{{ $currentFile->fileName }}</small>
+                                                    </div>
+                                                    <a href="/students/{{ $currentFile->fileID }}">
+                                                        <img src="data:image/png;base64,{{ $currentFile->thumbnail }}"
                                                             class="card-img-top" alt="..."
                                                             style="height: 100px; object-fit: cover;">
                                                     </a>
-                                                    <div class="card-footer" style="background-color:#2A9D8F">
-                                                        <small
-                                                            class=" text-light">{{ $currentStudentFile->fileName }}</small>
+                                                    <div class="card-footer text-light" style="background-color:#2A9D8F">
+                                                        @php
+                                                            $dateTime = explode(' ', $currentStudentFile->dateUpload) 
+                                                        @endphp
+                                                        Date: {{ $dateTime[0] }} <br>
+                                                        Time: {{ $dateTime[1] }}
                                                     </div>
                                                 </div>
                                             </div>
@@ -220,5 +228,12 @@
             const alert = document.getElementById('paymentSuccess');
             alert.style.display = 'none';
         }, 3000);
+
+        function hideAfterUpload(){
+            document.getElementById('uploadBtnModal').style.display = 'none';
+        }
+        function showModalUpload(){
+            document.getElementById('uploadBtnModal').style.display = 'block';
+        }
     </script>
 @endsection

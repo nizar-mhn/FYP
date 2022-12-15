@@ -32,7 +32,7 @@ class userController extends Controller
         $user->createProg();
         $user->createProgDetails();
         $user->createAdmin();
-        $user->createStaff();
+        //$user->createStaff();
         //$user->createStudent();
         $user->createSupplier();
     }

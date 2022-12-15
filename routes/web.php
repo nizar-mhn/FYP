@@ -67,6 +67,7 @@ Route::group(['middleware' => ['web', 'auth:staff'], 'prefix' => 'staffs'], func
     Route::get('/{fileID}', function ($fileID) {
         return view('/staff/fileInfo')->with('fileID', $fileID);
     });
+    Route::get('/fileUpdate', [App\Http\Controllers\staffController::class, 'updateAvailability'])->name('updateAvailability');
 });
 
 Route::group(['middleware' => ['web', 'auth:admin']], function () {

@@ -71,7 +71,7 @@
                                 <h1 class="text-light">{{ $currentCourse->courseName }}</h1>
                                 <div class="ms-auto">
                                     <button type="button" class="btn uploadButton text-light" data-bs-toggle="modal"
-                                        data-bs-target="#uploadModal{{ $count }}">Upload</button>
+                                    id="uploadButton" onclick="showModalUpload()" data-bs-target="#uploadModal{{ $count }}">Upload</button>
                                     <div class="modal fade" id="uploadModal{{ $count }}" tabindex="-1"
                                         aria-labelledby="uploadModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
@@ -101,7 +101,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                                        <button type="submit" class="btn btn-primary" onclick="hideAfterUpload()">Submit</button>
                                                     </div>
                                                 </form>
                                             </div>
@@ -113,6 +113,7 @@
                                 @php
                                     $fileList = DB::table('course_files')
                                         ->where('courseID', $currentCourseID)
+                                        ->orderbyDesc('fileID')
                                         ->get();
                                 @endphp
                                 @if (count($fileList))
@@ -124,13 +125,20 @@
                                         @endphp
                                         <div class="col">
                                             <div class="card">
+                                                <div class="card-header text-light text-break" style="background-color: #2A9D8F">
+                                                    <small class=" text-light">{{ $currentFile->fileName }}</small>
+                                                </div>
                                                 <a href="/staffs/{{ $currentFile->fileID }}">
                                                     <img src="data:image/png;base64,{{ $currentFile->thumbnail }}"
                                                         class="card-img-top" alt="..."
-                                                        style="height: 100px;object-fit:cover">
+                                                        style="height: 100px; object-fit: cover;">
                                                 </a>
-                                                <div class="card-footer" style="background-color:#F4A261">
-                                                    <small class=" text-light">{{ $currentFile->fileName }}</small>
+                                                <div class="card-footer text-light" style="background-color:#2A9D8F">
+                                                    @php
+                                                        $dateTime = explode(' ', $currentFile->dateUpload) 
+                                                    @endphp
+                                                    Date: {{ $dateTime[0] }} <br>
+                                                    Time: {{ $dateTime[1] }}
                                                 </div>
                                             </div>
                                         </div>
@@ -152,4 +160,12 @@
             <div class="col"></div>
         </div>
     </div>
+    <script>
+        function hideAfterUpload(){
+            document.getElementById('uploadBtnModal').style.display = 'none';
+        }
+        function showModalUpload(){
+            document.getElementById('uploadBtnModal').style.display = 'block';
+        }
+    </script>
 @endsection
