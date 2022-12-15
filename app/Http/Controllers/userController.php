@@ -141,8 +141,6 @@ class userController extends Controller
                 $this->data['programDetails'] = DB::table('program_details')->where('programID', '=', $request->input('prog'))->groupBy('year')->get();
                 $this->data['programDetailsSem'] = DB::table('program_details')->where('programID', '=', $request->input('prog'))->groupBy('semester')->get();
                 return view('auth.register', $this->data);
-                //return redirect()->route('selectProgram',$this->data)->with('user', $request->input('user'))->with('prog', $request->input('prog'));
-                //return view('auth.register', $this->data)->with('user', $request->input('user'))->with('prog', $request->input('prog'));
             } else {
                 $programDetailsID = ProgramDetails::where('programID', '=', $this->data['prog'])->where('year', '=', $this->data['year'])->where('semester', '=', $this->data['sem'])->first();
 
@@ -175,7 +173,6 @@ class userController extends Controller
             $this->data['name'] = $request->input('name');
             $this->data['email'] = $request->input('email');
             $this->data['course'] = $request->input('course');
-            //dd($this->data['course']);
             $this->data['password'] = $request->input('password');
             $this->data['confirmPassword'] = $request->input('confirmPassword');
 
@@ -282,7 +279,7 @@ class userController extends Controller
         $message = 'Sorry your email cannot be identified.';
 
         if (!is_null($verifyUser)) {
-            $user = Student::where('id',$verifyUser->user_id)->first();
+            $user = Student::where('id', $verifyUser->user_id)->first();
 
             if (!$user->is_email_verified) {
                 $user->is_email_verified = 1;
@@ -303,8 +300,8 @@ class userController extends Controller
         $message = 'Sorry your email cannot be identified.';
 
         if (!is_null($verifyUser)) {
-            $user = Staff::where('id',$verifyUser->user_id)->first();
-            
+            $user = Staff::where('id', $verifyUser->user_id)->first();
+
             if (!$user->is_email_verified) {
                 $user->is_email_verified = 1;
                 $user->save();
@@ -315,6 +312,121 @@ class userController extends Controller
         }
 
         return redirect()->route('login')->with('info', $message);
+    }
+
+    public function forgotPassword()
+    {
+        return view('auth.passwords.email');
+    }
+
+    public function resetPassword(Request $request)
+    {
+        $error = false;
+        $user = "";
+        $this->data['email'] = $request->input('email');
+
+        //email
+        $studentEmail = DB::table('students')->where('email', '=', $this->data['email'])->first();
+        $staffEmail = DB::table('staff')->where('email', '=', $this->data['email'])->first();
+
+        if ($this->data['email'] == null) {
+            $this->data['errorEmail'] = "Please enter your Email";
+            $error = true;
+        } elseif (!filter_var($this->data['email'], FILTER_VALIDATE_EMAIL)) {
+            $this->data['errorEmail'] = "Email Must be a valid email address.";
+            $error = true;
+        } else if ($staffEmail == null && $studentEmail == null) {
+            $this->data['errorEmail'] = "This email address has not been registered.";
+            $error = true;
+        } else if ($staffEmail != null) {
+            $user = "Staff";
+
+            if (!$staffEmail->is_email_verified) {
+                $this->data['errorEmail'] = "This email address has not been verified. Please check your email to verify your account first.";
+                $error = true;
+            }
+        } else if ($studentEmail != null) {
+            $user = "Student";
+            if (!$studentEmail->is_email_verified) {
+                $this->data['errorEmail'] = "This email address has not been verified. Please check your email to verify your account first.";
+                $error = true;
+            }
+        }
+
+
+        if ($error) {
+            return view('auth.passwords.email', $this->data);
+        } else {
+
+            $token = Str::random(64);
+
+            Mail::send('email.passwordResetEmail', ['token' => $token, 'email' => $this->data['email'], 'user' => $user], function ($message) use ($request) {
+                $message->to($this->data['email']);
+                $message->subject('Email Verification Mail');
+            });
+
+
+            return redirect()->route('login')->with('info', 'Please check your email to reset your password.');
+        }
+    }
+
+    public function confirmEmail($token, $email, $user)
+    {
+        return view('auth.passwords.reset', [$token, 'email' => $email, 'user' => $user]);
+    }
+
+    public function passwordReset(Request $request)
+    {
+
+        $error = false;
+        $user = $request->input('user');
+        $email = $request->input('email');
+
+        $this->data['password'] = $request->input('password');
+        $this->data['confirmPassword'] = $request->input('confirmPassword');
+
+        //password
+        if ($this->data['password'] == null) {
+            $this->data['errorPassword'] = "Please enter your Password.";
+            $error = true;
+        } elseif (!preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/", $this->data['password'])) {
+            $this->data['errorPassword'] = "Minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter and 1 number.";
+            $error = true;
+        }
+        //confirm password
+        if ($this->data['confirmPassword'] == null) {
+            $this->data['errorConfirmPass'] = "Please enter your Confirm Password.";
+            $error = true;
+        } elseif ($this->data['confirmPassword'] != $this->data['password']) {
+            $this->data['errorConfirmPass'] = "Please enter the same Password for the Confirm Password.";
+            $error = true;
+        }
+
+        if (!$error) {
+            if ($user == "Staff") {
+                $staff = Staff::where('email', $email)->first();
+                if (Hash::check($this->data['password'], $staff->password)) {
+                    $this->data['errorPassword'] = "New password cannot same as Old password.";
+                    return view('auth.passwords.reset', ['email' => $email, 'user' => $user])->with($this->data);
+                } else {
+                    $staff->password = Hash::make($this->data['password']);
+                    $staff->save();
+                    return redirect()->route('login')->with('info', 'Your password has been reset, you may try to login.');
+                }
+            } else {
+                $student = Student::where('email', $email)->first();
+                if (Hash::check($this->data['password'], $student->password)) {
+                    $this->data['errorPassword'] = "New password cannot same as Old password.";
+                    return view('auth.passwords.reset', ['email' => $email, 'user' => $user])->with($this->data);
+                } else {
+                    $student->password = Hash::make($this->data['password']);
+                    $student->save();
+                    return redirect()->route('login')->with('info', 'Your password has been reset, you may try to login.');
+                }
+            }
+        } else {
+            return view('auth.passwords.reset', ['email' => $email, 'user' => $user])->with($this->data);
+        }
     }
 }
 

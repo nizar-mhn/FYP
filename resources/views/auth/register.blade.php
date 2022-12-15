@@ -156,7 +156,7 @@
                                         <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
 
                                         <div class="col-md-6">
-                                            @if(isset($name))
+                                            @if(isset($email))
                                             <input id="email" type="email" class="form-control" name="email" value="{{ $email }}" required autocomplete="email" placeholder="eg. alex@gmail.com">
                                             @else
                                             <input id="email" type="email" class="form-control" name="email" value="" required autocomplete="email" placeholder="eg. alex@gmail.com">

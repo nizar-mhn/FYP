@@ -26,10 +26,13 @@ Route::get('/register', [userController::class, 'index'])->name('register');
 Route::get('/register/userProg', [userController::class, 'selectUser'])->name('selectUser');
 Route::get('/register/userInfo', [userController::class, 'selectProg'])->name('selectProgram');
 Route::get('/register/userError', [userController::class, 'validation'])->name('validation');
-//Route::get('/register/staffError', [userController::class, 'validationStaff'])->name('validationStaff');
 Route::post('/registerUser', [userController::class, 'createUser'])->name('registerUser');
 Route::get('account/verify/{token}', [userController::class, 'verifyStudentAccount'])->name('student.verify');
 Route::get('accountStaff/verify/{token}', [userController::class, 'verifyStaffAccount'])->name('staff.verify');
+Route::get('forgotPassword', [userController::class, 'forgotPassword'])->name('forgotPassword');
+Route::get('forgotPassword/resetPassword', [userController::class, 'resetPassword'])->name('resetPassword');
+Route::get('forgotPassword/emailConfirmed/{token}/{email}/{user}', [userController::class, 'confirmEmail'])->name('confirmEmail');
+Route::get('forgotPassword/passwordReset', [userController::class, 'passwordReset'])->name('passwordReset');
 
 Route::get('/testing', [App\Http\Controllers\userController::class, 'create']);
 Route::get('/map', function () {

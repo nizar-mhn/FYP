@@ -102,7 +102,13 @@
 
                                     <div class="row mb-3">
                                         <div class="col-md-6 offset-md-4">
-                                           <span>New here? Let's </span><a href="{{route('register')}}">Register</a><span> Now</span>
+                                            </span><a href="{{route('forgotPassword')}}">Forgot your password?</a><span>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <div class="col-md-6 offset-md-4">
+                                            <span>New here? Let's </span><a href="{{route('register')}}">Register</a><span> Now</span>
                                         </div>
                                     </div>
 
