@@ -32,8 +32,8 @@ class userController extends Controller
         $user->createProg();
         $user->createProgDetails();
         $user->createAdmin();
-        //$user->createStaff();
-        //$user->createStudent();
+        $user->createStaff();
+        $user->createStudent();
         $user->createSupplier();
     }
 
@@ -465,6 +465,7 @@ class user
             'staffName' => 'Ho Wai Kit',
             'password' => Hash::make('waikit'),
             'email' => 'chan',
+            'is_email_verified' =>1,
 
         ]);
 
@@ -474,6 +475,7 @@ class user
             'staffName' => 'Goh Shu Hang',
             'password' => Hash::make('shuhang'),
             'email' => 'chan',
+            'is_email_verified' =>1,
 
         ]);
 
@@ -483,6 +485,7 @@ class user
             'staffName' => 'Chew Shen Heng',
             'password' => Hash::make('shenheng'),
             'email' => 'chan',
+            'is_email_verified' =>1,
 
         ]);
     }
@@ -495,6 +498,7 @@ class user
             'password' => Hash::make('owenowen'),
             'email' => 'chan',
             'programDetailsID' => 1,
+            'is_email_verified' =>1,
         ]);
 
         Student::create([
@@ -503,6 +507,7 @@ class user
             'password' => Hash::make('owenowen'),
             'email' => 'chan',
             'programDetailsID' => 2,
+            'is_email_verified' =>1,
         ]);
 
         return Student::create([
@@ -511,6 +516,7 @@ class user
             'password' => Hash::make('owenowen'),
             'email' => 'chan',
             'programDetailsID' => 3,
+            'is_email_verified' =>1,
         ]);
     }
 
