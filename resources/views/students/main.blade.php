@@ -128,8 +128,8 @@
                             <div class="container d-flex p-2">
                                 <h1 class="text-light">My Files</h1>
                                 <div class="ms-auto">
-                                    <button type="button" class="btn uploadButton text-light" data-bs-toggle="modal"
-                                       id="uploadButton" onclick="showModalUpload()" data-bs-target="#uploadModal">Upload</button>
+                                    <button type="button" class="btn uploadButton text-light" id="uploadButton" onclick="showModalUpload()" data-bs-toggle="modal"
+                                        data-bs-target="#uploadModal">Upload</button>
                                     <div class="modal fade" id="uploadModal" tabindex="-1"
                                         aria-labelledby="uploadModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
@@ -232,8 +232,10 @@
         function hideAfterUpload(){
             document.getElementById('uploadBtnModal').style.display = 'none';
         }
+
         function showModalUpload(){
             document.getElementById('uploadBtnModal').style.display = 'block';
         }
+        
     </script>
 @endsection
