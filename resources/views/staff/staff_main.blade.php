@@ -101,7 +101,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="submit" class="btn btn-primary" onclick="hideAfterUpload()">Submit</button>
+                                                        <button type="submit" class="btn btn-primary" id="uploadBtnModal" onclick="hideAfterUpload()">Submit</button>
                                                     </div>
                                                 </form>
                                             </div>
