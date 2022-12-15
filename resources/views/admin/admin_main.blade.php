@@ -1,16 +1,30 @@
 @extends("layouts.admin")
 <style>
-    .orderDetails:hover {
-        background-color: #E76F51 !important;
+    .sideBar{
+        background-color: #56CBF9;
+        height: 100vh;
     }
-
-    .filterButtons button:hover {
-        background-color: #F4A261 !important;
-    }
-
-    .searchButton:hover {
-        background-color: #2A9D8F !important;
+    .header{
+        background-color: #12355B;
     }
 </style>
 @section('content')
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-2">
+            <div class="sidebar pb-2">
+                <h2 class="text-light header text-center">
+                    Menu
+                </h2>
+                  
+            </div>
+        </div>
+        <div class="col">
+            
+        </div>
+    </div>
+</div>
+
+
+
 @endsection
