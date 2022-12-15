@@ -5,73 +5,82 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DateTime;
 use Illuminate\Support\Facades\DB;
+use App\Models\Program;
+use App\Models\ProgramDetails;
+use App\Models\Student;
+use App\Models\Staff;
+use App\Models\Course;
+use App\Models\CourseList;
 
 class adminController extends Controller
 {
     public function index()
-    {
-        return view('admin.admin_main');
+    { 
+        $programList = Program::all();
+        return view('admin.admin_main')->with('programList',$programList);
     }
+
+
+    public function course()
+    { 
+        return view('admin.admin_course');
+    }
+
 
     public function addProgram(Request $request){
-        $programName ="";
-        $year ="";
-        $sem ="";
-        $courseListID ="";
-
-        $newProgram = Program::create([
-            'programName' => $programName,
-        ]);
-
-        for($i=1;$i>$year;$i++){
-            for($j=1;$i>$sem;$j++){
-                ProgramDetails::create([
-                    'programID' => $newProgram->programID,
-                    'year' => $i,
-                    'semester' => $j,
-                ]);
+        $programName =$request->input('programName');
+        $year =3;
+        $sem =3;
+        $error = false;
+        $errorMsg = "";
+        $programList = Program::all();
+        if(count($programList)){
+            foreach($programList as $program){
+                if($program->programName==$programName){
+                    $error = true;
+                    $errorMsg = "Duplicate program name found.";
+                }
             }
-        }
-    }
-
-    public function addProgramCourseList(Request $request){
-        $programID = "";
-        $currentProgramDetails = ProgramDetails::where('programID', $programID)->first();
-        $courseList = CourseList::orderby('courseListID', 'DESC')->first();
-        $courseListID = $courseList->courseListID + 1;
-
-        foreach ($this->data['course'] as $courses) {
-            CourseList::create([
-                'courseListID' => $courseListID,
-                'courseID' => $courses,
+            if($error){
+                return view('admin.admin_main')->with(['errorProgram'=>$errorMsg,'programList'=>$programList]);
+            }else{
+                $newProgram = Program::create([
+                    'programName' => $programName,
+                ]);
+        
+                for($i=1;$i<=$year;$i++){
+                    for($j=1;$j<=$sem;$j++){
+                        ProgramDetails::create([
+                            'programID' => $newProgram->programID,
+                            'year' => $i,
+                            'semester' => $j,
+                        ]);
+                    }
+                }
+                $programList = Program::all();
+                return view('admin.admin_main')->with('programList',$programList);
+            }
+        }else{
+            $newProgram = Program::create([
+                'programName' => $programName,
             ]);
+    
+            for($i=1;$i<=$year;$i++){
+                for($j=1;$j<=$sem;$j++){
+                    ProgramDetails::create([
+                        'programID' => $newProgram->programID,
+                        'year' => $i,
+                        'semester' => $j,
+                    ]);
+                }
+            }
+            $programList = Program::all();
+            return view('admin.admin_main')->with('programList',$programList);
         }
-
-        $currentProgramDetails->courseListID = $courseListID;
-        $currentProgramDetails->save();
-
-    }
-
-    public function editProgram(Request $request){
         
-        $programID = "";
-        $programName ="";
-        $year ="";
-        $sem ="";
-        $courseListID ="";
-
-        $currentProgram = Program::where('programID', $programID)->first();
-        $currentProgram->programName = $programName;
-        $currentProgram->save();
-
-        $currentProgramDetails = ProgramDetails::where('programID', $programID)->first();
-        $currentProgram->year = $year;
-        $currentProgram->sem = $sem;
-        $currentProgram->courseListID = $courseListID;
-        $currentProgram->save();
-
         
     }
+
 
     public function addCourse(Request $request){
         $courseName ="";
@@ -84,18 +93,130 @@ class adminController extends Controller
         
     }
 
-    public function addCourseList(Request $request){
+    public function addProgramCourseList(Request $request){
+        $programID = $request->input('programID');
+        $programYear = $request->input('programYear');
+        $programSem = $request->input('programSem');
+        $courseListID = $request->input('courseListID');
+        $courseID = $request->input('courseID');
+        $error = false;
+        $msg = "";
 
-        $courseList = CourseList::orderby('courseListID', 'DESC')->first();
-        $courseListID = $courseList->courseListID + 1;
+        if($courseListID!=null){
+            $currentCourseList = CourseList::where('courseListID', $courseListID)->get();
+            foreach($currentCourseList as $courseList){
+                if($courseID == $courseList->courseID){
+                    $error = true;
+                    $msg = "Duplicate Course";
+                }
+            }
 
-        foreach ($this->data['course'] as $courses) {
+            if($error){
+                $courseListID = "";
+                $currentProgramDetails = ProgramDetails::where('programID', $programID)->where('year',$programYear)->where('semester',$programSem)->first();
+                if($currentProgramDetails){
+                    $courseListID =$currentProgramDetails->courseListID;
+                }
+                $programList = Program::all();
+                return view('admin.admin_main')->with(['errorMsg'=>$msg,'programList'=> $programList,'courseListID'=>$courseListID,'programID'=>$programID,'programYear'=>$programYear,'programSem'=>$programSem]);
+
+            }else{
+                CourseList::create([
+                    'courseListID' => $courseListID,
+                    'courseID' => $courseID,
+                ]);
+                $currentProgramDetails = ProgramDetails::where('programID', $programID)->where('year',$programYear)->where('semester',$programSem)->first();
+                $currentProgramDetails->courseListID = $courseListID;
+                $currentProgramDetails->save();
+
+                $courseListID = "";
+
+                if($currentProgramDetails){
+                    $courseListID =$currentProgramDetails->courseListID;
+                }
+                $programList = Program::all();
+                return view('admin.admin_main')->with(['programList'=> $programList,'courseListID'=>$courseListID,'programID'=>$programID,'programYear'=>$programYear,'programSem'=>$programSem]);
+
+            }
+            
+        }else{
+            $courseList = CourseList::orderby('courseListID', 'DESC')->first();
+            $courseListID = $courseList->courseListID + 1;
+    
             CourseList::create([
                 'courseListID' => $courseListID,
-                'courseID' => $courses,
+                'courseID' => $courseID,
             ]);
+
+            $currentProgramDetails = ProgramDetails::where('programID', $programID)->where('year',$programYear)->where('semester',$programSem)->first();
+            $currentProgramDetails->courseListID = $courseListID;
+            $currentProgramDetails->save();
+
+            $courseListID = "";
+
+            if($currentProgramDetails){
+                $courseListID =$currentProgramDetails->courseListID;
+            }
+            $programList = Program::all();
+            return view('admin.admin_main')->with(['programList'=> $programList,'courseListID'=>$courseListID,'programID'=>$programID,'programYear'=>$programYear,'programSem'=>$programSem]);
+
+
         }
 
+
+    }
+
+    public function deleteProgramCourseList(Request $request){
+        $programID = $request->input('programID');
+        $programYear = $request->input('programYear');
+        $programSem = $request->input('programSem');
+        $courseListID = $request->input('courseListID');
+        $courseID = $request->input('courseID');
+
+        $currentCourseList = CourseList::where('courseListID', $courseListID)->get();
+        if(count($currentCourseList)==1){
+            $deleted = DB::table('course_lists')->where('courseListID',$courseListID)->where('courseID',$courseID)->delete();
+
+            $currentProgramDetails = ProgramDetails::where('programID', $programID)->where('year',$programYear)->where('semester',$programSem)->first();
+            $currentProgramDetails->courseListID = null;
+            $currentProgramDetails->save();
+
+            $courseListID = "";
+
+            if($currentProgramDetails){
+                $courseListID =$currentProgramDetails->courseListID;
+            }
+            $programList = Program::all();
+            return view('admin.admin_main')->with(['programList'=> $programList,'courseListID'=>$courseListID,'programID'=>$programID,'programYear'=>$programYear,'programSem'=>$programSem]);
+
+        }else{
+            $deleted = DB::table('course_lists')->where('courseListID',$courseListID)->where('courseID',$courseID)->delete();
+
+            $courseListID = "";
+
+            $currentProgramDetails = ProgramDetails::where('programID', $programID)->where('year',$programYear)->where('semester',$programSem)->first();
+            if($currentProgramDetails){
+                $courseListID =$currentProgramDetails->courseListID;
+            }
+            $programList = Program::all();
+            return view('admin.admin_main')->with(['programList'=> $programList,'courseListID'=>$courseListID,'programID'=>$programID,'programYear'=>$programYear,'programSem'=>$programSem]);
+
+        }
+
+    }
+
+    public function getCourseList(Request $request){
+        $programID = $request->input('programID');
+        $programYear = $request->input('programYear');
+        $programSem = $request->input('programSem');
+        $courseListID = "";
+        $currentProgramDetails = ProgramDetails::where('programID', $programID)->where('year',$programYear)->where('semester',$programSem)->first();
+        if($currentProgramDetails){
+            $courseListID =$currentProgramDetails->courseListID;
+        }
+        
+        $programList = Program::all();
+        return view('admin.admin_main')->with(['programList'=> $programList,'courseListID'=>$courseListID,'programID'=>$programID,'programYear'=>$programYear,'programSem'=>$programSem]);
     }
 
     

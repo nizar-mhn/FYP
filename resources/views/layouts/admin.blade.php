@@ -56,7 +56,10 @@
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
                         <li class="nav-item">
-                            <a class="nav-link text-light" href="{{ route('adminMainPage') }}">Home</a>
+                            <a class="nav-link text-light" href="{{ route('adminMainPage') }}">Program</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="{{ route('adminCourse') }}">Course</a>
                         </li>
 
                         @guest

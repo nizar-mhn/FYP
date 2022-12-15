@@ -73,6 +73,14 @@ Route::group(['middleware' => ['web', 'auth:staff'], 'prefix' => 'staffs'], func
 
 Route::group(['middleware' => ['web', 'auth:admin']], function () {
     Route::get('admins/admin_main', [App\Http\Controllers\adminController::class, 'index'])->name('adminMainPage');
+    Route::get('admins/admin_course', [App\Http\Controllers\adminController::class, 'course'])->name('adminCourse');
+    Route::get('admins/admin_staff', [App\Http\Controllers\adminController::class, 'staff'])->name('adminStaff');
+    Route::get('admins/admin_student', [App\Http\Controllers\adminController::class, 'student'])->name('adminStudent');
+    Route::post('admins/admin_main', [App\Http\Controllers\adminController::class, 'getCourseList'] )->name('getCourseList');
+    Route::post('admins/addProgram', [App\Http\Controllers\adminController::class, 'addProgram'] )->name('addProgram');
+    Route::post('admins/addProgramCourse', [App\Http\Controllers\adminController::class, 'addProgramCourseList'] )->name('addCourseList');
+    Route::post('admins/deleteProgramCourse', [App\Http\Controllers\adminController::class, 'deleteProgramCourseList'] )->name('deleteCourseList');
+    // Route::post('admins/addCourse', [App\Http\Controllers\adminController::class, 'addProgram'] )->name('addProgram');
 });
 
 Route::group(['middleware' => ['web', 'auth:supplier']], function () {
