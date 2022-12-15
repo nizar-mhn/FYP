@@ -71,6 +71,13 @@ use App\Models\payment;
                 </div>
                 <div class="col-md-2 text-light">
                     <p class="fw-bold">{{ $id->status }}</p>
+                    @if($id->status=="Pending")
+                    <p class="fw-bold">Arrival: 2-3 days</p>
+                    @elseif($id->status=="Printed")
+                    <p class="fw-bold">Arrival: 1-2 days</p>
+                    @elseif($id->status=="Delivering")
+                    <p class="fw-bold">Arrival: Within 2 hours</p>
+                    @endif
                 </div>
                 <div class="col-md-2">
                     <form action="{{ route('invoiceView') }}" method="post">

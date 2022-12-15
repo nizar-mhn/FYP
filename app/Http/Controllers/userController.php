@@ -28,12 +28,7 @@ class userController extends Controller
     {
         $user = new user;
         $user->createCourse();
-        //$user->createCourseList();
-        //$user->createProg();
-        //$user->createProgDetails();
         $user->createAdmin();
-        //$user->createStaff();
-        //$user->createStudent();
         $user->createSupplier();
     }
 
@@ -457,68 +452,6 @@ class user
         ]);
     }
 
-    public function createStaff()
-    {
-        Staff::create([
-            'staffID' => 'p1111',
-            'courseListID' => 1,
-            'staffName' => 'Ho Wai Kit',
-            'password' => Hash::make('waikit'),
-            'email' => 'chan',
-            'is_email_verified' =>1,
-
-        ]);
-
-        Staff::create([
-            'staffID' => 'p2222',
-            'courseListID' => 1,
-            'staffName' => 'Goh Shu Hang',
-            'password' => Hash::make('shuhang'),
-            'email' => 'chan',
-            'is_email_verified' =>1,
-
-        ]);
-
-        return Staff::create([
-            'staffID' => 'p3333',
-            'courseListID' => 2,
-            'staffName' => 'Chew Shen Heng',
-            'password' => Hash::make('shenheng'),
-            'email' => 'chan',
-            'is_email_verified' =>1,
-
-        ]);
-    }
-
-    public function createStudent()
-    {
-        Student::create([
-            'studentID' => '2105086',
-            'studentName' => 'Chan Owen',
-            'password' => Hash::make('owenowen'),
-            'email' => 'chan',
-            'programDetailsID' => 1,
-            'is_email_verified' =>1,
-        ]);
-
-        Student::create([
-            'studentID' => '2105179',
-            'studentName' => 'Nizar Bin Hamid',
-            'password' => Hash::make('owenowen'),
-            'email' => 'chan',
-            'programDetailsID' => 2,
-            'is_email_verified' =>1,
-        ]);
-
-        return Student::create([
-            'studentID' => '1904338',
-            'studentName' => 'Micheal Owen',
-            'password' => Hash::make('owenowen'),
-            'email' => 'chan',
-            'programDetailsID' => 3,
-            'is_email_verified' =>1,
-        ]);
-    }
 
     public function createCourse()
     {
@@ -555,126 +488,6 @@ class user
         return Course::create([
             'courseName' => 'Operating Systems',
             'courseCode' => 'AACS2284',
-        ]);
-    }
-
-    public function createCourseList()
-    {
-
-        CourseList::create([
-            'courseListID' => 1,
-            'courseID' => 1,
-        ]);
-
-        CourseList::create([
-            'courseListID' => 1,
-            'courseID' => 2,
-        ]);
-
-        CourseList::create([
-            'courseListID' => 1,
-            'courseID' => 3,
-        ]);
-
-        CourseList::create([
-            'courseListID' => 2,
-            'courseID' => 4,
-        ]);
-
-        CourseList::create([
-            'courseListID' => 2,
-            'courseID' => 5,
-        ]);
-
-        CourseList::create([
-            'courseListID' => 3,
-            'courseID' => 2,
-        ]);
-
-        CourseList::create([
-            'courseListID' => 3,
-            'courseID' => 6,
-        ]);
-
-        CourseList::create([
-            'courseListID' => 4,
-            'courseID' => 7,
-        ]);
-
-        CourseList::create([
-            'courseListID' => 5,
-            'courseID' => 2,
-        ]);
-
-        CourseList::create([
-            'courseListID' => 5,
-            'courseID' => 5,
-        ]);
-
-        CourseList::create([
-            'courseListID' => 6,
-            'courseID' => 1,
-        ]);
-
-        return CourseList::create([
-            'courseListID' => 6,
-            'courseID' => 4,
-        ]);
-    }
-
-    public function createProg()
-    {
-        Program::create([
-            'programName' => 'RSD - Bachelor of Information Technology (Honours) in Software Systems Development',
-        ]);
-
-        return Program::create([
-            'programName' => 'DFT - Diploma in Information Technology',
-        ]);
-    }
-
-    public function createProgDetails()
-    {
-        ProgramDetails::create([
-            'programID' => 1,
-            'year' => 1,
-            'semester' => 1,
-            'courseListID' => 1,
-        ]);
-
-        ProgramDetails::create([
-            'programID' => 1,
-            'year' => 1,
-            'semester' => 2,
-            'courseListID' => 2,
-        ]);
-
-        ProgramDetails::create([
-            'programID' => 1,
-            'year' => 1,
-            'semester' => 3,
-            'courseListID' => 3,
-        ]);
-
-        ProgramDetails::create([
-            'programID' => 1,
-            'year' => 2,
-            'semester' => 1,
-            'courseListID' => 4,
-        ]);
-
-        ProgramDetails::create([
-            'programID' => 1,
-            'year' => 2,
-            'semester' => 2,
-            'courseListID' => 5,
-        ]);
-
-        ProgramDetails::create([
-            'programID' => 1,
-            'year' => 2,
-            'semester' => 3,
-            'courseListID' => 6,
         ]);
     }
 }
