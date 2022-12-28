@@ -27,14 +27,16 @@ class supplierController extends Controller
 
     public function report(Request $request)
     {
+        date_default_timezone_set("Asia/Kuala_Lumpur");
 
         $this->data['start_date']  = $request->input('start');
         $this->data['end_date']  = $request->input('end');
-
+        $today_date = new DateTime(date('Y-m-d h:i:sa'));
         $start_date = new DateTime($this->data['start_date']);
         $end_date = new DateTime($this->data['end_date']);
 
         $end_date->setTime(23, 59, 59);
+        $today_date->setTime(23, 59, 59);
 
         $this->data['orders'] = Order::select('orders.orderDate', 'order_printing_infos.bindingType', 'order_printing_infos.color', 'order_printing_infos.pageFormat',  'order_printing_infos.numCopies', 'payments.totalPrice', 'files.noPage', 'files.fileName')
             ->join('order_details', 'order_details.orderID', '=', 'orders.orderID')
@@ -52,6 +54,8 @@ class supplierController extends Controller
         if ($request->input('generate')) {
             if ($this->data['start_date'] > $this->data['end_date']) {
                 $errorMsg = "End date cannot be earlier than Start date";
+            } else if ($start_date > $today_date || $end_date > $today_date) {
+                $errorMsg = "Start date or End date cannot be in the future.";
             } else {
                 if (!count($this->data['orders'])) {
                     $infoMsg = "There is no Sales during <b>" . date_format($start_date, 'm/d/Y') . "-" . date_format($end_date, 'm/d/Y') . "</b>";

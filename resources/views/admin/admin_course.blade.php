@@ -7,7 +7,7 @@
 
     @endphp
     @if (!empty($courseList))
-    <h1 class="mt-3">Course Edit</h1>
+    <h1 class="mt-3">Manage Courses</h1>
     <hr>
     <div class="row mt-3">
         <div class="col-md-8 offset-2 mt-4">

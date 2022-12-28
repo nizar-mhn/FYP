@@ -20,7 +20,7 @@
 @section('content')
 <div class="container-fluid">
     <div class="container mt-3">
-        <h1 class="">Program Edit</h1>
+        <h1 class="">Manage Programs</h1>
         <hr>
     </div>
     <div class="row">
