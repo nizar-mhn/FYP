@@ -30,6 +30,7 @@ class userController extends Controller
         $user->createCourse();
         $user->createAdmin();
         $user->createSupplier();
+        return redirect()->route('login');
     }
 
     public function index()
